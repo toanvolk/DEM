@@ -28,41 +28,6 @@ namespace DEM.Web.Controllers
             return View(model);
         }
 
-        [HttpPost]
-        public JsonResult CreateCategory(CategoryDto category)
-        {
-            try
-            {
-                if (_categoryService.Add(category))
-                {
-                    var response = new DataResponeCommon() { Statu = StatuCodeEnum.OK, Message = "Thêm thành công" };
-                    return Json(response);
-                }
-                else
-                {
-                    var response = new DataResponeCommon() { Statu = StatuCodeEnum.InternalServerError, Message = "Thêm thất bại" };
-                    return Json(response);
-                }
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e.Message);
-                throw;
-            }
-            
-            
-        }
-
-        public JsonResult LoadDatas(string rootCategoryType)
-        {
-            var model = _categoryService.LoadDatas(rootCategoryType);
-            var response = new DataResponeCommon<List<CategoryDto>>()
-            {
-                Data = model,
-                Message = "OK",
-                Statu = StatuCodeEnum.OK
-            };
-            return Json(response);
-        }
+        
     }
 }

@@ -73,7 +73,7 @@
 }
 let _demHandle = function () {
     let _createCategory = function(data,callback) {
-        let _url = "/home/createcategory";        
+        let _url = "/category/create";        
         $.post(_url, { category: data }, function (res) {
             if (res.statu == 200) {
                 callback();
@@ -81,7 +81,7 @@ let _demHandle = function () {
         });
     }
     let _loadCategorys = function (rootCategoryType,callback) {
-        let _url = "/home/loaddatas"
+        let _url = "/category/loaddatas"
         $.get(_url, { rootCategoryType: rootCategoryType }, function (res) {
             if (res.statu == 200) {
                 callback(res.data);

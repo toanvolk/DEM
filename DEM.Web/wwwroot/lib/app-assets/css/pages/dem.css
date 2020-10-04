@@ -2,7 +2,8 @@
     cursor: pointer;
 }
 .dem-category-title{
-    color: #ffe4b3
+    color: #ffe4b3;
+    cursor: pointer;
 }
 .dem-card:hover {
     cursor: pointer;
