@@ -1,0 +1,15 @@
+﻿.dem-root-category:hover{
+    cursor: pointer;
+}
+.dem-category-title{
+    color: #ffe4b3
+}
+.dem-card:hover {
+    cursor: pointer;
+}
+
+.dem-category-item .dem-description-style {
+    max-height: 5rem;
+    height: 5rem;
+    overflow: auto;
+}
