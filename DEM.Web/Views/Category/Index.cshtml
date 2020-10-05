@@ -1,5 +1,35 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@using DEM.App
+@model Tuple<List<CategoryDto>>
+
+@foreach (var item in Model.Item1)
+{
+    <label>@item.Name</label>
 }
+@(Html.Kendo().Grid<TelerikAspNetCoreApp4.Models.OrderViewModel>()
+    .Name("grid")
+    .Columns(columns =>
+    {
+        columns.Bound(p => p.OrderID).Width(120);
+        columns.Bound(p => p.OrderDate).Format("{0:MM/dd/yyyy}");
+        columns.Bound(p => p.ShipName).Width(300);
+        columns.Bound(p => p.ShipCity).Width(250);
+    })
+    .Groupable()
+    .Sortable()
+    .Filterable()
+    .Pageable(pageable => pageable
+    .ButtonCount(5)
+    .Refresh(true)
+    .PageSizes(new[] { 5, 10, 20 }))
+    .DataSource(dataSource => dataSource
+        .Custom()
+        .Transport(transport => transport
+        .Read(read => read.Action("Orders_Read", "Grid")))
+        .Schema(schema => schema
+            .Data("Data")
+            .Model(model => {
+                model.Field("OrderDate", typeof(DateTime));
+            })
+        )
+    )
+)

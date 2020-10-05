@@ -3,7 +3,8 @@
         Add: "add",
         ShowCaption: "show-caption",
         CreateCategory: "create-category",
-        GetDescription: "get-description"
+        GetDescription: "get-description",
+        DirectToCategoryPage: "to-category-page"
     },
     clickEvent: function (e, actionType) {
         if (actionType == demIndex.actionType.ShowCaption) {
@@ -61,6 +62,11 @@
                 let _idRootCategory = _data.rootCategoryType.toLowerCase();
                 $('#' + _idRootCategory).click();
             });
+        }
+        if (actionType == demIndex.actionType.DirectToCategoryPage) {
+            let _data = $('#dem-category-for').data('setup');
+            let _url = '/category/rootCategoryType=' + _data.rootCategoryType;
+            open(_url);
         }
     },
     changeEvent: function (e, actionType) {

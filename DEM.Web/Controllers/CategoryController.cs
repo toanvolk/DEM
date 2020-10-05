@@ -19,9 +19,11 @@ namespace DEM.Web.Controllers
             _rootCategoryService = rootCategoryService;
             _categoryService = categoryService;
         }
-        public IActionResult Index()
+        public IActionResult Index(string rootCategoryType)
         {
-            return View();
+            var categorys = _categoryService.LoadDatas(rootCategoryType);
+            var model = new Tuple<List<CategoryDto>>(categorys);
+            return View(model);
         }
         [HttpPost]
         public JsonResult Create(CategoryDto category)
