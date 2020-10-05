@@ -1,35 +1,52 @@
-﻿@using DEM.App
-@model Tuple<List<CategoryDto>>
+﻿@using DEM.App;
+@model Tuple<List<CategoryDto>, string>;
 
-@foreach (var item in Model.Item1)
-{
-    <label>@item.Name</label>
+<link href="~/lib/app-assets/css/pages/dem-category.css" rel="stylesheet" />
+<input name="RootCategoryType" value="@Model.Item2" hidden />
+
+<div class="content-wrapper">
+    <div class="content-wrapper-before"></div>
+    <div class="content-header row">
+    </div>
+    <div class="content-body" style="padding-top:10px">
+        <!-- Chart -->
+        <div class="row match-height" hidden>
+            <div class="col-12">
+                <div class="">
+                    <div id="gradient-line-chart1" class="height-250 GradientlineShadow1"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Chart -->
+        <!-- eCommerce statistic -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card pull-up ecom-card-1 bg-white dem-category">
+                    <div class="card-content ecom-card2 height-180">
+                        <h5 class="text-muted danger position-absolute p-1">Caption</h5>
+                        <div>
+                            <i class="ft-pie-chart danger font-large-1 float-right p-1"></i>
+                        </div>
+                        <div class="progress-stats-container ct-golden-section height-75 position-relative pt-3  ">
+                            <div id="progress-stats-bar-chart"></div>
+                            <div id="progress-stats-line-chart" class="progress-stats-shadow"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ eCommerce statistic -->
+        <!-- Product Summary and Chat -->
+        <div class="row match-height dem-category">
+            <div class="dem-action btn-action-add" onclick="categoryIndex.clickEvent(this, categoryIndex.actionType.Add)">
+                <button type="button" class="btn btn-primary round btn-min-width mr-1 mb-1">Thêm</button>
+            </div>
+            <div class="dem-data dem-data-list">
+                <div class="grid"></div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script src="~/lib/app-assets/js/page/dem-category.js"></script>
 }
-@(Html.Kendo().Grid<TelerikAspNetCoreApp4.Models.OrderViewModel>()
-    .Name("grid")
-    .Columns(columns =>
-    {
-        columns.Bound(p => p.OrderID).Width(120);
-        columns.Bound(p => p.OrderDate).Format("{0:MM/dd/yyyy}");
-        columns.Bound(p => p.ShipName).Width(300);
-        columns.Bound(p => p.ShipCity).Width(250);
-    })
-    .Groupable()
-    .Sortable()
-    .Filterable()
-    .Pageable(pageable => pageable
-    .ButtonCount(5)
-    .Refresh(true)
-    .PageSizes(new[] { 5, 10, 20 }))
-    .DataSource(dataSource => dataSource
-        .Custom()
-        .Transport(transport => transport
-        .Read(read => read.Action("Orders_Read", "Grid")))
-        .Schema(schema => schema
-            .Data("Data")
-            .Model(model => {
-                model.Field("OrderDate", typeof(DateTime));
-            })
-        )
-    )
-)

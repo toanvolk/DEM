@@ -65,7 +65,7 @@
         }
         if (actionType == demIndex.actionType.DirectToCategoryPage) {
             let _data = $('#dem-category-for').data('setup');
-            let _url = '/category/rootCategoryType=' + _data.rootCategoryType;
+            let _url = '/category?rootCategoryType=' + _data.rootCategoryType;
             open(_url);
         }
     },

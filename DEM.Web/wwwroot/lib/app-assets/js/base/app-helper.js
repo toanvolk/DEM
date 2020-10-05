@@ -13,6 +13,19 @@
         }
         return color;
     },
+    showDialog: function (content) {
+        $(content).kendoWindow({
+            width: "600px",
+            title: "About Alvar Aalto",
+            visible: false,
+            actions: [
+                "Pin",
+                "Minimize",
+                "Maximize",
+                "Close"
+            ]
+        }).data("kendoWindow").center().open();
+    },
     inputValidate: {
         checkRequired: function (obj) {
             const VALIDATE_MESSAGE_REQUIRED = 'validate-message-required';
