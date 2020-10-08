@@ -49,14 +49,29 @@ var categoryIndex = {
         })
     },
     clickEvent: function (e, actionType) {
-        if (actionType == categoryIndex.actionType.Add) {
-            let _url = "/category/add";
-            $.get(_url, function (res) {
-                helper.showDialog(res);
-            });            
-        }
+        let _handle = categoryHandle();
+        if (actionType == categoryIndex.actionType.Add) categoryIndex.showFormAdd(e, _handle);
     },
+    //children event
+    showFormAdd: function (e, handle) {
+        handle.openFormAdd(function (res) {
+            helper.showDialog({
+                content: res,
+                title: "TẠO MỚI"
+            });
+        });
+    }
 }
-
+var categoryHandle = function () {
+    let _openFormAdd = function (callback) {
+        let _url = "/category/add";
+        $.get(_url, function (res) {
+            callback(res);
+        });
+    }
+    return {
+        openFormAdd: _openFormAdd
+    }
+}
 //
 categoryIndex.init();

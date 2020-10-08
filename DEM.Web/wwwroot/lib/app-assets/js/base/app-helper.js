@@ -13,17 +13,30 @@
         }
         return color;
     },
-    showDialog: function (content) {
-        $(content).kendoWindow({
+    showDialog: function (obj) {
+        let _data = {
+            content: "",
             width: "600px",
-            title: "About Alvar Aalto",
-            visible: false,
+            title: "",
             actions: [
-                "Pin",
-                "Minimize",
+                //"Pin",
+                //"Minimize",
                 "Maximize",
                 "Close"
             ]
+        }
+        if (obj) {
+            _data.content = obj.content ?? _data.content;
+            _data.width = obj.width ?? _data.width;
+            _data.title = obj.title ?? _data.title;
+            _data.actions = obj.actions ?? _data.actions;
+        }
+        if (!_data.content) return;
+        $(_data.content).kendoWindow({
+            width: _data.width,
+            title: _data.title,
+            visible: false,
+            actions: _data.actions
         }).data("kendoWindow").center().open();
     },
     inputValidate: {

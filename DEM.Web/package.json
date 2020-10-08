@@ -1,0 +1,7 @@
+{
+  "name": "DEM.WEB",
+  "version": "1.0.0",
+  "devDependencies": {
+    "materialize": "^1.0.0"
+  }
+}

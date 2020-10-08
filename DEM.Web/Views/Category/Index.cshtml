@@ -2,6 +2,7 @@
 @model Tuple<List<CategoryDto>, string>;
 
 <link href="~/lib/app-assets/css/pages/dem-category.css" rel="stylesheet" />
+<link href="~/lib/app-assets/css/pages/dem-category-add.css" rel="stylesheet" />
 <input name="RootCategoryType" value="@Model.Item2" hidden />
 
 <div class="content-wrapper">
@@ -49,4 +50,5 @@
 </div>
 @section Scripts{
     <script src="~/lib/app-assets/js/page/dem-category.js"></script>
+    <script src="~/lib/app-assets/js/page/dem-category-add.js"></script>
 }
