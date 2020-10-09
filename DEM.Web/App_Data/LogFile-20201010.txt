@@ -1,0 +1,4 @@
+2020-10-10T00:00:52.8374529+07:00  [INF] Now listening on: "http://localhost:5123" (d826f4b8)
+2020-10-10T00:00:52.8452763+07:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-10-10T00:00:52.8467877+07:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-10-10T00:00:52.8480614+07:00  [INF] Content root path: "D:\01.TOAN\05.PROJECT\05.FAMILY\DEM\DEM.Web" (b5d60022)

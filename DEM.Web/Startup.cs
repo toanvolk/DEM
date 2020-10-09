@@ -30,7 +30,7 @@ namespace DEM.Web
         public void ConfigureServices(IServiceCollection services)
         {
             //add kendo
-            services.AddKendo();
+            //services.AddKendo();
             // Auto Mapper Profile
             var mappingConfig = new MapperConfiguration(cfg =>
             {

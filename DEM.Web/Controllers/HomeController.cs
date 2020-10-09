@@ -27,7 +27,17 @@ namespace DEM.Web.Controllers
             var model = new Tuple<List<RootCategoryDto>>(_rootCategoryService.GetDatas());
             return View(model);
         }
+        public JsonResult LoadDatas(string rootCategoryType)
+        {
+            var model = _categoryService.LoadDatas(rootCategoryType, false);
+            var response = new DataResponeCommon<List<CategoryDto>>()
+            {
+                Data = model,
+                Message = "OK",
+                Statu = StatuCodeEnum.OK
+            };
+            return Json(response);
+        }
 
-        
     }
 }

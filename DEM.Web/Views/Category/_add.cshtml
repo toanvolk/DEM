@@ -1,10 +1,12 @@
-﻿@{
+﻿@model string;
+@{
     Layout = null;
 }
 
 <section id="dem-category-add" class="dem-app-materialize">
     <div class="card-content collpase show">
         <div class="card-body">
+            <input name="Type" value="@Model" hidden/>
             <div class="row">
                 <div class="input-field col s12">
                     <input type="text" placeholder="Nhập tên" class="form-control" name="Name" required validate-message-required="Thông tin bắt buộc nhập!">

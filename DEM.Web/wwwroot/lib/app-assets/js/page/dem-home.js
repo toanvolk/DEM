@@ -69,7 +69,7 @@
 }
 let _demHandle = function () {    
     let _loadCategorys = function (rootCategoryType,callback) {
-        let _url = "/category/loaddatas"
+        let _url = "/home/loaddatas"
         $.get(_url, { rootCategoryType: rootCategoryType }, function (res) {
             if (res.statu == 200) {
                 callback(res.data);

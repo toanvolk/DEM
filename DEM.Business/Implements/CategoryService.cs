@@ -20,9 +20,9 @@ namespace DEM.App
             _unitOfWorfkMedia = unitOfWorkMedia;
             _mapper = mapper;
         }
-        public List<CategoryDto> LoadDatas(string rootCategoryType)
+        public List<CategoryDto> LoadDatas(string rootCategoryType, bool isAll)
         {
-            var model = _unitOfWorfkMedia.CategoryRepository.Filter(q=>q.Type == rootCategoryType && q.NotUse != true ).ToList();
+            var model = _unitOfWorfkMedia.CategoryRepository.Filter(q=>q.Type == rootCategoryType && (q.NotUse != true || isAll == true)).ToList();
 
             return _mapper.Map<List<Category>, List<CategoryDto>>(model);
         }
@@ -36,14 +36,39 @@ namespace DEM.App
 
         public bool Delete(Guid id)
         {
-            throw new NotImplementedException();
+            _unitOfWorfkMedia.CategoryRepository.Delete(id);
+            return _unitOfWorfkMedia.SaveChanges() > 0;
         }
 
         public bool Edit(CategoryDto categoryDto)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var entity = _mapper.Map<CategoryDto, Category>(categoryDto);
+                _unitOfWorfkMedia.CategoryRepository.Update(entity, UpdateAccessMode.DENY_UPDATE, "CreatedBy", "CreatedDate", "NotUse", "Type");
+                return _unitOfWorfkMedia.SaveChanges() > 0;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            
         }
 
-       
+        public CategoryDto FindId(Guid id)
+        {
+            var entity = _unitOfWorfkMedia.CategoryRepository.FindById(id);
+            return _mapper.Map<Category, CategoryDto>(entity);
+        }
+
+        public bool ChangeStatu(Guid categoryId, bool notUse)
+        {
+            var entity = _unitOfWorfkMedia.CategoryRepository.FindById(categoryId);
+            entity.NotUse = !notUse;
+            entity.UpdatedDate = DateTime.Now;
+            _unitOfWorfkMedia.CategoryRepository.Update(entity, UpdateAccessMode.ALLOW_UPDATE, "NotUse", "UpdatedDate");
+
+            return _unitOfWorfkMedia.SaveChanges() > 0;
+        }
     }
 }

@@ -9,6 +9,7 @@ namespace DEM.App
         public CategoryProfileMapping()
         {
             CreateMap<CategoryDto, Category>().ConvertUsing<CategoryConvertMapping>();
+            CreateMap<Category, CategoryDto>().ConvertUsing<CategoryConvertMapping>();
             CreateMap<List<Category>, List<CategoryDto>>().ConvertUsing<CategoryConvertMapping>();
         }
     }

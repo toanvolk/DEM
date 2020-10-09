@@ -30,7 +30,7 @@ namespace DEM.Infrastructure
         {
             return _dbSet.Find(primaryKey) == null ? false : true;
         }
-        public virtual TEntity FindById(int id)
+        public virtual TEntity FindById(Guid id)
         {
             return _dbContext.Set<TEntity>().Find(id);
         }
@@ -86,7 +86,7 @@ namespace DEM.Infrastructure
             }
         }
 
-        public virtual void Delete(int id)
+        public virtual void Delete(Guid id)
         {
             TEntity entity = FindById(id);
             _dbContext.Set<TEntity>().Remove(entity);

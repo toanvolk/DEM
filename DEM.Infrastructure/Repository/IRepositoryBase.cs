@@ -13,7 +13,7 @@ namespace DEM.Infrastructure
 
         bool Any(object primaryKey);
 
-        TEntity FindById(int id);
+        TEntity FindById(Guid id);
         TEntity Find(Expression<Func<TEntity, bool>> predicate, string condition = "");
 
         IQueryable<TEntity> Filter(Expression<Func<TEntity, bool>> condition);
@@ -31,7 +31,7 @@ namespace DEM.Infrastructure
         /// <param name="accessMode">Chế độ cho phép (hoặc không) update property.</param>
         /// <param name="props">PropertyName</param>
         void Update(TEntity toUpdate, UpdateAccessMode accessMode, params string[] propertyNames);
-        void Delete(int id);
+        void Delete(Guid id);
 
         void Delete(TEntity entity);
         void Delete(Expression<Func<TEntity, bool>> condition);
