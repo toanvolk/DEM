@@ -57,7 +57,14 @@ var categoryIndex = {
         handle.openFormAdd(function (res) {
             helper.showDialog({
                 content: res,
-                title: "TẠO MỚI"
+                title: "TẠO MỚI",
+                actions: ["Refresh", "Close"],
+                onClose: function () {
+                    $('.grid').data('kendoGrid').dataSource.read();
+                },
+                onRefresh: function () {
+                    $('.grid').data('kendoGrid').dataSource.read();
+                }
             });
         });
     }

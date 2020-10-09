@@ -23,20 +23,37 @@
                 //"Minimize",
                 "Maximize",
                 "Close"
-            ]
+            ],
+            content_url: "",
+            onActivate: undefined,
+            onOpen: undefined,
+            onClose: undefined,
+            onRefresh: undefined,
         }
         if (obj) {
             _data.content = obj.content ?? _data.content;
             _data.width = obj.width ?? _data.width;
             _data.title = obj.title ?? _data.title;
+            _data.content_url = obj.content_url ?? _data.content_url;
             _data.actions = obj.actions ?? _data.actions;
+
+            _data.onActivate = obj.onActivate ?? _data.onActivate;
+            _data.onOpen = obj.onOpen ?? _data.onOpen;
+            _data.onRefresh = obj.onRefresh ?? _data.onRefresh;
+            _data.onClose = obj.onClose ?? _data.onClose;
         }
         if (!_data.content) return;
         $(_data.content).kendoWindow({
             width: _data.width,
             title: _data.title,
             visible: false,
-            actions: _data.actions
+            content: _data.content_url,
+            actions: _data.actions,
+
+            activate: _data.onActivate,
+            open: _data.onOpen,
+            refresh: _data.onRefresh,
+            close: _data.onClose,
         }).data("kendoWindow").center().open();
     },
     inputValidate: {
@@ -89,6 +106,51 @@
                 }
             });
             return _valid;
+        }
+    },
+    formData: {
+        inputToObject: function (content, callback) {
+            let _obj = {};
+
+            let _dataArray = $(content).find(":input").not('input[ignore]').serializeArray();
+            _dataArray.forEach(element => {
+                _obj[element.name] = element.value
+            });
+
+            if (typeof (callback) == "function") callback(_obj);
+            return _obj;
+        },
+        objectToInput: function (object, content, specifyMap, callback) {
+            if (typeof (specifyMap) == "undefined") {
+                $.each(object, function (key, value) {
+                    content.find("Input[name=" + key + "]")?.val(value);
+                });
+            }
+            else {
+                if (Array.isArray(specifyMap)) {
+                    specifyMap.forEach(element => {
+                        content.find("input[name=" + element.inputName + "]")?.val(object[element.property])
+                    });
+                }
+            }
+            if (typeof (callback) == "function") callback(object, content);
+        },
+        clearInput: function (obj) {
+            let _data = {
+                content: "",
+                callback: undefined
+            };
+            if (obj) {
+                _data.content = obj.content ?? _data.content;
+                _data.callback = obj.callback ?? _data.callback;
+            }
+            if (typeof (_data.content) == 'object') {
+                _data.content.find('input').val('');
+            }
+            else {
+                $(_data.content).find('input').val('');
+            }
+            if (_data.callback) _data.callback(_data.content);
         }
     }
 }

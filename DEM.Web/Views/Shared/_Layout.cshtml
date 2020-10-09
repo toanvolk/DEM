@@ -44,6 +44,7 @@
     <link href="@Url.Content("~/lib/kendo/material-theme/kendo.material.mobile.min.css")" rel="stylesheet" />
     <!-- END: Kendo CSS-->
     <!-- BEGIN: Custom CSS-->
+    <link href="~/lib/materialize/css/materialize-com.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="~/lib/assets/css/style.css">
     <!-- END: Custom CSS-->
 
@@ -53,34 +54,34 @@
 
 <body class="vertical-layout vertical-menu-modern 2-columns   fixed-navbar" data-open="click" data-menu="vertical-menu-modern" data-color="bg-chartbg" data-col="2-columns">
     <partial name="_header.cshtml">
-    <div class="app-content content">
-        @RenderBody()
-    </div>
-    <!-- BEGIN: Vendor JS-->
-    <script src="~/lib/app-assets/vendors/js/vendors.min.js" type="text/javascript"></script>
-    <!-- BEGIN Vendor JS-->
-    <!-- BEGIN: Page Vendor JS-->
-    @*<script src="~/lib/app-assets/vendors/js/charts/chartist.min.js" type="text/javascript"></script>
+        <div class="app-content content">
+            @RenderBody()
+        </div>
+        <!-- BEGIN: Vendor JS-->
+        <script src="~/lib/app-assets/vendors/js/vendors.min.js" type="text/javascript"></script>
+        <!-- BEGIN Vendor JS-->
+        <!-- BEGIN: Page Vendor JS-->
+        @*<script src="~/lib/app-assets/vendors/js/charts/chartist.min.js" type="text/javascript"></script>
         <script src="~/lib/app-assets/vendors/js/charts/chartist-plugin-tooltip.min.js" type="text/javascript"></script>*@
-    <script src="~/lib/app-assets/vendors/js/timeline/horizontal-timeline.js" type="text/javascript"></script>
-    <script src="~/lib/app-assets/vendors/js/extensions/dropzone.min.js" type="text/javascript"></script>
-    <script src="~/lib/app-assets/vendors/js/forms/icheck/icheck.min.js" type="text/javascript"></script>
-    <!-- END: Page Vendor JS-->
-    <!-- BEGIN: Theme JS-->
-    <script src="~/lib/app-assets/js/core/app-menu.js" type="text/javascript"></script>
-    <script src="~/lib/app-assets/js/core/app.js" type="text/javascript"></script>
-    <!-- END: Theme JS-->
-    <!-- BEGIN: Page JS-->
-    @*<script src="~/lib/app-assets/js/scripts/pages/dashboard-ecommerce.js" type="text/javascript"></script>*@
-    <!--BEGIN: Kendo JS-->
-    <script src="@Url.Content("~/lib/kendo/kendo.all.min.js")"></script>
-    <script src="@Url.Content("~/lib/kendo/kendo.aspnetmvc.min.js")"></script>
-    <script src="@Url.Content("~/lib/kendo/kendo.modernizr.custom.js")"></script>
-    <!-- END: Kendo JS-->
-    <!-- END: Page JS-->
-    <script src="~/lib/app-assets/js/base/repository.js"></script>
-    <script src="~/lib/app-assets/js/base/app-helper.js"></script>
-    @RenderSection("scripts", required: false)
+        <script src="~/lib/app-assets/vendors/js/timeline/horizontal-timeline.js" type="text/javascript"></script>
+        <script src="~/lib/app-assets/vendors/js/extensions/dropzone.min.js" type="text/javascript"></script>
+        <script src="~/lib/app-assets/vendors/js/forms/icheck/icheck.min.js" type="text/javascript"></script>
+        <!-- END: Page Vendor JS-->
+        <!-- BEGIN: Theme JS-->
+        <script src="~/lib/app-assets/js/core/app-menu.js" type="text/javascript"></script>
+        <script src="~/lib/app-assets/js/core/app.js" type="text/javascript"></script>
+        <!-- END: Theme JS-->
+        <!-- BEGIN: Page JS-->
+        @*<script src="~/lib/app-assets/js/scripts/pages/dashboard-ecommerce.js" type="text/javascript"></script>*@
+        <!--BEGIN: Kendo JS-->
+        <script src="@Url.Content("~/lib/kendo/kendo.all.min.js")"></script>
+        <script src="@Url.Content("~/lib/kendo/kendo.aspnetmvc.min.js")"></script>
+        <script src="@Url.Content("~/lib/kendo/kendo.modernizr.custom.js")"></script>
+        <!-- END: Kendo JS-->
+        <!-- END: Page JS-->
+        <script src="~/lib/materialize/js/materialize.js"></script>
+        <script src="~/lib/app-assets/js/base/app-helper.js"></script>
+        @RenderSection("scripts", required: false)
 </body>
 <!-- END: Body-->
 

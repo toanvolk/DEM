@@ -1,4 +1,3 @@
-﻿section#dem-category-add input, section#dem-category-add textarea {
-    padding:0px;
-    padding-left:10px
+﻿button.dem-action-submit {
+    background-color: #3f51b5 !important
 }

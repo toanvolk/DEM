@@ -51,17 +51,7 @@
             $('#dem-add-item-modal .dem-modal-title').text('TẠO MỚI LOẠI' + ' - ' + $('.dem-category .dem-category-title').text());  
         }
         if (actionType == demIndex.actionType.CreateCategory) {
-            let _jsonHandle = objectJsonHandle();
-            let _handle = _demHandle();
-
-            let _data = _jsonHandle.mappingInputToObject('#dem-add-item-modal');
-            let _rootCategoryData = $('#dem-category-for').data('setup');
-            _data.Type = _rootCategoryData.rootCategoryType;
-            _handle.createCategory(_data, function () {
-                let _data = $('#dem-category-for').data('setup');
-                let _idRootCategory = _data.rootCategoryType.toLowerCase();
-                $('#' + _idRootCategory).click();
-            });
+            
         }
         if (actionType == demIndex.actionType.DirectToCategoryPage) {
             let _data = $('#dem-category-for').data('setup');
@@ -77,15 +67,7 @@
         }
     }
 }
-let _demHandle = function () {
-    let _createCategory = function(data,callback) {
-        let _url = "/category/create";        
-        $.post(_url, { category: data }, function (res) {
-            if (res.statu == 200) {
-                callback();
-            }
-        });
-    }
+let _demHandle = function () {    
     let _loadCategorys = function (rootCategoryType,callback) {
         let _url = "/category/loaddatas"
         $.get(_url, { rootCategoryType: rootCategoryType }, function (res) {
@@ -95,7 +77,6 @@ let _demHandle = function () {
         });
     }
     return {
-        createCategory: _createCategory,
         loadCategorys: _loadCategorys
     }
 }
