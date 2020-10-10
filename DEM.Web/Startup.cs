@@ -29,8 +29,8 @@ namespace DEM.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //add kendo
-            //services.AddKendo();
+            // Add the Kendo UI services to the services container.
+            services.AddKendo();
             // Auto Mapper Profile
             var mappingConfig = new MapperConfiguration(cfg =>
             {

@@ -13,5 +13,6 @@ namespace DEM.EF
         [MaxLength(100)]
         public string Payer { get; set; }
         public DateTime PayTime { get; set; }
+        public Guid? CategoryId { get; set; }
     }
 }
