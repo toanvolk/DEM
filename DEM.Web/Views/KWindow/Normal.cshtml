@@ -1,0 +1,24 @@
+﻿@(Html.Kendo().Window()
+            .Name("window")
+            .Title("About Alvar Aalto")
+            .Content(@<text>
+                <div class="armchair">
+                    <img src="@Url.Content("~/lib/app-assets/images/backgrounds/01.jpg")"
+                            alt="Artek Alvar Aalto - Armchair 402" />
+                    Artek Alvar Aalto - Armchair 402
+                </div>
+
+                <p>
+                    Alvar Aalto is one of the greatest names in modern architecture and design.
+                    Glassblowers at the iittala factory still meticulously handcraft the legendary
+                    vases that are variations on one theme, fluid organic shapes that let the end user
+                    ecide the use. Interpretations of the shape in new colors and materials add to the
+                    growing Alvar Aalto Collection that remains true to his original design.
+                </p>
+            </text>)
+            .Draggable()
+            .Width(600)
+        )
+<script>
+    $("#window").data("kendoWindow").center().open();
+</script>

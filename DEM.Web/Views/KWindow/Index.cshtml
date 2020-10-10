@@ -1,0 +1,20 @@
+﻿@{
+    Layout = null;
+}
+@model DEM.App.Kendo.WindowDto
+
+<kendo-window name="@Model.Name"
+              title="@Model.Title"
+              draggable ="@Model.Draggable"
+              resizable="@Model.Draggable"
+              width="@Model.Width"
+              modal="true"
+              
+              on-close="@Model.CloseEvent"
+              content-url="@Url.Action(Model.ActionName, Model.ControllerName)"
+              actions="@Model.Actions">
+    <content>
+        loading user info...
+    </content>
+    <popup-animation enabled="false" />
+</kendo-window>

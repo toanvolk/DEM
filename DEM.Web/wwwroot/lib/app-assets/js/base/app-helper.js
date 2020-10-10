@@ -14,47 +14,45 @@
         return color;
     },
     showDialog: function (obj) {
+        let _url = "/kwindow";
         let _data = {
-            content: "",
-            width: "600px",
-            title: "",
-            actions: [
+            Name :"k-window-custom",
+            Title : "Title-window",
+            Draggable : true,
+            Resizable : false,
+            Width: 600,
+            Actions: [
                 //"Pin",
                 //"Minimize",
                 "Maximize",
                 "Close"
             ],
-            content_url: "",
-            onActivate: undefined,
-            onOpen: undefined,
-            onClose: undefined,
-            onRefresh: undefined,
+            ActivateEvent: undefined,
+            OpenEvent: undefined,
+            CloseEvent: undefined,
+            RefreshEvent: undefined,
+            ActionName: "",           
+            ControllerName:""
         }
         if (obj) {
-            _data.content = obj.content ?? _data.content;
-            _data.width = obj.width ?? _data.width;
-            _data.title = obj.title ?? _data.title;
-            _data.content_url = obj.content_url ?? _data.content_url;
-            _data.actions = obj.actions ?? _data.actions;
-
-            _data.onActivate = obj.onActivate ?? _data.onActivate;
-            _data.onOpen = obj.onOpen ?? _data.onOpen;
-            _data.onRefresh = obj.onRefresh ?? _data.onRefresh;
-            _data.onClose = obj.onClose ?? _data.onClose;
+            _data.Name = obj.Name ?? _data.Name;
+            _data.Title = obj.Title ?? _data.Title;
+            _data.Draggable = obj.Draggable ?? _data.Draggable;
+            _data.Resizable = obj.Resizable ?? _data.Resizable;
+            _data.Width = obj.Width ?? _data.Width;
+            _data.Actions = obj.Actions ?? _data.Actions;
+            _data.ActivateEvent = obj.ActivateEvent ?? _data.ActivateEvent;
+            _data.OpenEvent = obj.OpenEvent ?? _data.OpenEvent;
+            _data.CloseEvent = obj.CloseEvent ?? _data.CloseEvent;
+            _data.RefreshEvent = obj.RefreshEvent ?? _data.RefreshEvent;
+            _data.ActionName = obj.ActionName ?? _data.ActionName;
+            _data.ControllerName = obj.ControllerName ?? _data.ControllerName;
         }
-        if (!_data.content) return;
-        $(_data.content).kendoWindow({
-            width: _data.width,
-            title: _data.title,
-            visible: false,
-            content: _data.content_url,
-            actions: _data.actions,
-
-            activate: _data.onActivate,
-            open: _data.onOpen,
-            refresh: _data.onRefresh,
-            close: _data.onClose,
-        }).data("kendoWindow").center().open();
+        if (!(_data.ActionName + _data.ControllerName)) return;
+        $.get(_url, _data, function (res) {
+            $('body').append(res);
+            $(res).data("kendoWindow").center().open();
+        });
     },
     inputValidate: {
         checkRequired: function (obj) {

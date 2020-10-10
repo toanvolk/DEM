@@ -71,6 +71,9 @@
             ]
         })
     },
+    loadTable: function () {
+        $('.grid').data('kendoGrid').dataSource.read();
+    },
     clickEvent: function (e, actionType) {
         let _handle = categoryHandle();
         if (actionType == categoryIndex.actionType.Add) categoryIndex.showFormAdd(e, _handle);
@@ -83,17 +86,15 @@
     },
     //children event
     showFormAdd: function (e, handle) {
+        let _$container = $(e).closest('.dem-category');
         handle.openFormAdd($('input[name=RootCategoryType]').val(), function (res) {
             helper.showDialog({
-                content: res,
-                title: "TẠO MỚI",
-                actions: ["Refresh", "Close"],
-                onClose: function () {
-                    $('.grid').data('kendoGrid').dataSource.read();
-                },
-                onRefresh: function () {
-                    $('.grid').data('kendoGrid').dataSource.read();
-                }
+                Title: "TẠO MỚI",
+                Actions: ["Refresh", "Close"],
+                ActionName: "Add",
+                ControllerName: "Category"
+                //onClose: "categoryIndex.loadTable",
+                //onRefresh: "categoryIndex.loadTable"
             });
         });
     },
