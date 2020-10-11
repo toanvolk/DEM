@@ -6,7 +6,7 @@
 <section id="dem-category-add" class="dem-app-materialize">
     <div class="card-content collpase show">
         <div class="card-body">
-            <input name="Type" value="@Model" hidden/>
+            <input name="Type" value="@Model" hidden />
             <div class="row">
                 <div class="input-field col s12">
                     <input type="text" placeholder="Nhập tên" class="form-control" name="Name" required validate-message-required="Thông tin bắt buộc nhập!">
@@ -21,9 +21,11 @@
                 </div>
             </div>
             <div class="row">
-                <button class="btn waves-effect waves-light dem-action-submit" name="action" onclick="categoryAddIndex.clickEvent(this, categoryAddIndex.actionType.Save)">
-                    Thêm
-                </button>
+                <div class="col s12">
+                    <button class="btn waves-effect waves-light dem-action-submit" name="action" onclick="categoryAddIndex.clickEvent(this, categoryAddIndex.actionType.Save)">
+                        Thêm
+                    </button>
+                </div>
             </div>
         </div>
     </div>

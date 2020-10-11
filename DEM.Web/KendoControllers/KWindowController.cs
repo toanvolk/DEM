@@ -9,6 +9,7 @@ namespace DEM.Web.KendoControllers
 {
     public class KWindowController : Controller
     {
+        [HttpPost]
         public IActionResult Index(WindowDto windowDto)
         {
             return View(windowDto);

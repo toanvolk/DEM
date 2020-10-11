@@ -52,6 +52,16 @@
     <link rel="stylesheet" href="~/lib/kendo-ui/styles/kendo.default.min.css" />
     <link rel="stylesheet" href="~/lib/kendo-ui/styles/kendo.default.mobile.min.css" />
 
+    <style>
+        .k-widget.k-window {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            /*            margin-right: -50%;*/
+            transform: translate(-50%, -50%)
+        }
+    </style>
+
     @*<script src="~/lib/kendo-ui/js/jquery.min.js"></script>*@
     <script src="~/lib/kendo-ui/js/kendo.all.min.js"></script>
     <script src="~/lib/kendo/kendo.aspnetmvc.min.js"></script>
@@ -62,8 +72,11 @@
     <script src="~/lib/app-assets/vendors/js/forms/icheck/icheck.min.js" type="text/javascript"></script>
     <script src="~/lib/app-assets/vendors/js/extensions/sweetalert2.all.js"></script>
     <!-- END: Page Vendor JS-->
-
-
+    <!-- BEGIN: Project JS-->
+    <link href="~/lib/app-assets/css/plugins/forms/flipswitch.css" rel="stylesheet" />
+    <link href="~/lib/app-assets/css/pages/dem-category.css" rel="stylesheet" />
+    <link href="~/lib/app-assets/css/pages/dem-category-add.css" rel="stylesheet" />
+    <!-- END: Project JS-->
 </head>
 <!-- END: Head-->
 <!-- BEGIN: Body-->
@@ -80,7 +93,12 @@
         <!-- END: Page JS-->
         <script src="~/lib/materialize/js/materialize.js"></script>
         <script src="~/lib/app-assets/js/base/app-helper.js"></script>
-        @RenderSection("scripts", required: false)
+        <!-- BEGIN: Project JS-->
+        <script src="~/lib/app-assets/js/page/dem-home.js"></script>
+        <script src="~/lib/app-assets/js/page/dem-category.js"></script>
+        <script src="~/lib/app-assets/js/page/dem-category-add.js"></script>
+        <script src="~/lib/app-assets/js/page/dem-category-edit.js"></script>
+        <!-- END: Project JS-->
 </body>
 <!-- END: Body-->
 

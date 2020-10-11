@@ -1,20 +1,23 @@
-﻿@{
+﻿@using  DEM.App.Kendo;
+@model WindowDto;
+
+@{
     Layout = null;
 }
-@model DEM.App.Kendo.WindowDto
 
 <kendo-window name="@Model.Name"
               title="@Model.Title"
-              draggable ="@Model.Draggable"
+              draggable="@Model.Draggable"
               resizable="@Model.Draggable"
               width="@Model.Width"
               modal="true"
-              
+              visible="true"
               on-close="@Model.CloseEvent"
-              content-url="@Url.Action(Model.ActionName, Model.ControllerName)"
+              on-activate="@Model.ActivateEvent"
+              on-refresh="@Model.RefreshEvent"              
               actions="@Model.Actions">
     <content>
-        loading user info...
+        <partial name="/Views/Category/_add.cshtml" model="@Model.DataBridge" />
     </content>
     <popup-animation enabled="false" />
 </kendo-window>

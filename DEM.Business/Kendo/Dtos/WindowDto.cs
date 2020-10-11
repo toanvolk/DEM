@@ -18,5 +18,6 @@ namespace DEM.App.Kendo
         public string RefreshEvent { get; set; }
         public string ActionName { get; set; }
         public string ControllerName { get; set; }
+        public string DataBridge { get; set; }
     }
 }

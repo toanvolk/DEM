@@ -16,7 +16,7 @@
     showDialog: function (obj) {
         let _url = "/kwindow";
         let _data = {
-            Name :"k-window-custom",
+            Name :"k-window-custom-"+helper.createGUID(),
             Title : "Title-window",
             Draggable : true,
             Resizable : false,
@@ -32,7 +32,8 @@
             CloseEvent: undefined,
             RefreshEvent: undefined,
             ActionName: "",           
-            ControllerName:""
+            ControllerName: "",
+            DataBridge: ""
         }
         if (obj) {
             _data.Name = obj.Name ?? _data.Name;
@@ -47,11 +48,11 @@
             _data.RefreshEvent = obj.RefreshEvent ?? _data.RefreshEvent;
             _data.ActionName = obj.ActionName ?? _data.ActionName;
             _data.ControllerName = obj.ControllerName ?? _data.ControllerName;
+            _data.DataBridge = obj.DataBridge ?? _data.DataBridge;
         }
         if (!(_data.ActionName + _data.ControllerName)) return;
-        $.get(_url, _data, function (res) {
+        $.post(_url, _data, function (res) {
             $('body').append(res);
-            $(res).data("kendoWindow").center().open();
         });
     },
     inputValidate: {

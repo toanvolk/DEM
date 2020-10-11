@@ -87,15 +87,14 @@
     //children event
     showFormAdd: function (e, handle) {
         let _$container = $(e).closest('.dem-category');
-        handle.openFormAdd($('input[name=RootCategoryType]').val(), function (res) {
-            helper.showDialog({
-                Title: "TẠO MỚI",
-                Actions: ["Refresh", "Close"],
-                ActionName: "Add",
-                ControllerName: "Category"
-                //onClose: "categoryIndex.loadTable",
-                //onRefresh: "categoryIndex.loadTable"
-            });
+        helper.showDialog({
+            Title: "TẠO MỚI",
+            Actions: ["Refresh", "Close"],
+            ActionName: "Add",
+            ControllerName: "Category",
+            CloseEvent: "categoryIndex.loadTable",
+            RefreshEvent: "categoryIndex.loadTable",
+            DataBridge: $('input[name=RootCategoryType]').val()
         });
     },
     showFormEdit: function (e, handle) {
@@ -140,12 +139,6 @@
     }
 }
 var categoryHandle = function () {
-    let _openFormAdd = function (rootCategoryType,callback) {
-        let _url = "/category/add";
-        $.get(_url, { rootCategoryType: rootCategoryType}, function (res) {
-            callback(res);
-        });
-    }
     let _openFormEdit = function (categoryId, callback) {
         let _url = "/category/editform";
         $.get(_url, { categoryId: categoryId }, function (res) {
@@ -165,7 +158,6 @@ var categoryHandle = function () {
         });
     }
     return {
-        openFormAdd: _openFormAdd,
         openFormEdit: _openFormEdit,
         deleteData: _deleteData,
         changeStatu: _changeStatu
