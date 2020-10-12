@@ -22,6 +22,7 @@
             //clear input
             handle.data.clearInput({
                 content: _$rootSelector,
+                fieldExpel:["Type"],
                 callback: function (content) {
                     content.find('textarea').val('');
                 }

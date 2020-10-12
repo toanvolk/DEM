@@ -86,7 +86,6 @@
     },
     //children event
     showFormAdd: function (e, handle) {
-        let _$container = $(e).closest('.dem-category');
         helper.showDialog({
             contentData: {
                 url: "/category/add",
@@ -97,22 +96,25 @@
             config: {
                 title: "TẠO MỚI",
                 actions: ["Refresh", "Close"],
-                onClose: "categoryIndex.loadTable",
-                onRefresh: "categoryIndex.loadTable"
+                close: function () { categoryIndex.loadTable(); },
+                refresh: function () { categoryIndex.loadTable(); }
             }
         });
     },
     showFormEdit: function (e, handle) {
         handle.openFormEdit($(e).data("id"), function (res) {
             helper.showDialog({
-                content: res,
-                title: "CẬP NHẬT",
-                actions: ["Refresh", "Close"],
-                onClose: function () {
-                    $('.grid').data('kendoGrid').dataSource.read();
+                contentData: {
+                    url: "/category/EditForm",
+                    data: {
+                        categoryId: $(e).data("id")
+                    }
                 },
-                onRefresh: function () {
-                    $('.grid').data('kendoGrid').dataSource.read();
+                config: {
+                    title: "CẬP NHẬT",
+                    actions: ["Refresh", "Close"],
+                    close: function () { categoryIndex.loadTable(); },
+                    refresh: function () { categoryIndex.loadTable(); }
                 }
             });
         });

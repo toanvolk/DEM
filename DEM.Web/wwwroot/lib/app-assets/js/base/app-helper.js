@@ -139,17 +139,29 @@
         clearInput: function (obj) {
             let _data = {
                 content: "",
+                fieldExpel:[],
                 callback: undefined
             };
             if (obj) {
-                _data.content = obj.content ?? _data.content;
-                _data.callback = obj.callback ?? _data.callback;
+                $.each(obj, function (key, value) {
+                    _data[key] = value;
+                });
             }
+
+            let _inputString = 'input',_ignoreField = '';//$(temp1).find('input:not([name=Type], [name=Name])')
+            $.each(_data.fieldExpel, function (index,value) {
+                _ignoreField += '[name=' + value + '],';
+            });
+            if (_ignoreField) {
+                _ignoreField = _ignoreField.substr(0, _ignoreField.length - 1);
+                _inputString += ':not(' + _ignoreField+')';
+            }
+
             if (typeof (_data.content) == 'object') {
-                _data.content.find('input').val('');
+                _data.content.find(_inputString).val('');
             }
             else {
-                $(_data.content).find('input').val('');
+                $(_data.content).find(_inputString).val('');
             }
             if (_data.callback) _data.callback(_data.content);
         }
