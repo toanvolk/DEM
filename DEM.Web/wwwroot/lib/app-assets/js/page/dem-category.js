@@ -63,8 +63,8 @@
                     field: "",
                     width: "15%",
                     template: function (item) {
-                        let _html = '<button type="button" class="btn btn-outline-primary round mr-1 mb-1" onclick="categoryIndex.clickEvent(this, categoryIndex.actionType.EditForm)" data-id="'+item.id+'"><i class="ft-edit-3"></i> Sửa</button>';
-                        _html += '<button type="button" class="btn btn-outline-danger round mr-1 mb-1" onclick="categoryIndex.clickEvent(this, categoryIndex.actionType.Delete)" data-id="' + item.id + '" data-name="' + item.name +'"><i class="ft-trash-2"></i> Xóa</button>';
+                        let _html = '<button type="button" class="btn btn-outline-primary round mr-1 mb-1" onclick="categoryIndex.clickEvent(this, categoryIndex.actionType.EditForm)" data-id="' + item.id + '"><i class="ft-edit-3"></i> Sửa</button>';
+                        _html += '<button type="button" class="btn btn-outline-danger round mr-1 mb-1" onclick="categoryIndex.clickEvent(this, categoryIndex.actionType.Delete)" data-id="' + item.id + '" data-name="' + item.name + '"><i class="ft-trash-2"></i> Xóa</button>';
                         return _html;
                     },
                 }
@@ -88,13 +88,18 @@
     showFormAdd: function (e, handle) {
         let _$container = $(e).closest('.dem-category');
         helper.showDialog({
-            Title: "TẠO MỚI",
-            Actions: ["Refresh", "Close"],
-            ActionName: "Add",
-            ControllerName: "Category",
-            CloseEvent: "categoryIndex.loadTable",
-            RefreshEvent: "categoryIndex.loadTable",
-            DataBridge: $('input[name=RootCategoryType]').val()
+            contentData: {
+                url: "/category/add",
+                data: {
+                    rootCategoryType: $('input[name=RootCategoryType]').val()
+                }
+            },
+            config: {
+                title: "TẠO MỚI",
+                actions: ["Refresh", "Close"],
+                onClose: "categoryIndex.loadTable",
+                onRefresh: "categoryIndex.loadTable"
+            }
         });
     },
     showFormEdit: function (e, handle) {
@@ -116,7 +121,7 @@
         var _dataCategory = $(e).data();
         swal({
             title: 'Chắc xóa?',
-            text: 'Xóa [' + _dataCategory.name+']!',
+            text: 'Xóa [' + _dataCategory.name + ']!',
             type: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
@@ -130,8 +135,8 @@
                     $('.grid').data('kendoGrid').dataSource.read();
                 });
             }
-                
-        }).catch(swal.noop);       
+
+        }).catch(swal.noop);
     },
     changeStatu: function (e, handle) {
         let _categoryId = $(e).data("id");

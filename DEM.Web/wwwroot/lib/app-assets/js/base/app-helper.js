@@ -14,46 +14,48 @@
         return color;
     },
     showDialog: function (obj) {
-        let _url = "/kwindow";
-        let _data = {
-            Name :"k-window-custom-"+helper.createGUID(),
-            Title : "Title-window",
-            Draggable : true,
-            Resizable : false,
-            Width: 600,
-            Actions: [
-                //"Pin",
-                //"Minimize",
+        //obj{ contentData {url, type, data}, config}      
+        let _contentData = {
+            url: "",
+            type: "POST",
+            data: {},
+        }
+
+        if (obj.contentData) {
+            $.each(obj.contentData, function (key, value) {
+                _contentData[key] = value;
+            });
+        }
+
+        let _config = {
+            name :"k-window-custom-"+helper.createGUID(),
+            title : "Title-window",
+            draggable : true,
+            resizable : false,
+            width: "600px",
+            actions: [
                 "Maximize",
                 "Close"
             ],
-            ActivateEvent: undefined,
-            OpenEvent: undefined,
-            CloseEvent: undefined,
-            RefreshEvent: undefined,
-            ActionName: "",           
-            ControllerName: "",
-            DataBridge: ""
+            activate: function (e) {
+                this.center();
+            },
+            visible: true
         }
-        if (obj) {
-            _data.Name = obj.Name ?? _data.Name;
-            _data.Title = obj.Title ?? _data.Title;
-            _data.Draggable = obj.Draggable ?? _data.Draggable;
-            _data.Resizable = obj.Resizable ?? _data.Resizable;
-            _data.Width = obj.Width ?? _data.Width;
-            _data.Actions = obj.Actions ?? _data.Actions;
-            _data.ActivateEvent = obj.ActivateEvent ?? _data.ActivateEvent;
-            _data.OpenEvent = obj.OpenEvent ?? _data.OpenEvent;
-            _data.CloseEvent = obj.CloseEvent ?? _data.CloseEvent;
-            _data.RefreshEvent = obj.RefreshEvent ?? _data.RefreshEvent;
-            _data.ActionName = obj.ActionName ?? _data.ActionName;
-            _data.ControllerName = obj.ControllerName ?? _data.ControllerName;
-            _data.DataBridge = obj.DataBridge ?? _data.DataBridge;
+        if (obj.config) {
+            $.each(obj.config, function (key, value) {
+                _config[key] = value;
+            });
         }
-        if (!(_data.ActionName + _data.ControllerName)) return;
-        $.post(_url, _data, function (res) {
-            $('body').append(res);
-        });
+
+        $.ajax({
+            url: _contentData.url,
+            type: _contentData.type,
+            data: _contentData.data
+        }).done(function (res) {
+            $(res)
+                .kendoWindow(_config);
+        })
     },
     inputValidate: {
         checkRequired: function (obj) {
