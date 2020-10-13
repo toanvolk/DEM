@@ -1,16 +1,32 @@
-﻿@{
+﻿@model string;
+@{
     Layout = null;
 }
-<div class="armchair">
-    <img src="@Url.Content("~/lib/app-assets/images/carousel/01.jpg")"
-         alt="Artek Alvar Aalto - Armchair 402" />
-    Artek Alvar Aalto - Armchair 402
-</div>
 
-<p>
-    Alvar Aalto is one of the greatest names in modern architecture and design.
-    Glassblowers at the iittala factory still meticulously handcraft the legendary
-    vases that are variations on one theme, fluid organic shapes that let the end user
-    ecide the use. Interpretations of the shape in new colors and materials add to the
-    growing Alvar Aalto Collection that remains true to his original design.
-</p>
+<section id="dem-category-add" class="app-materialize">
+    <div class="card-content collpase show">
+        <div class="card-body">
+            <input name="Type" value="@Model" hidden />
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="text" placeholder="Nhập tên" class="form-control" name="Name" required validate-message-required="Thông tin bắt buộc nhập!">
+                    <label for="Name" class="active">Tên loại</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea class="materialize-textarea" placeholder="Thông tin chi tiết" onchange="categoryAddIndex.changeEvent(this,categoryAddIndex.actionType.MapDescription)"></textarea>
+                    <input type="text" hidden="" name="Description">
+                    <label for="Description" class="active">Mô tả</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <button class="btn waves-effect waves-light dem-action-submit" name="action" onclick="categoryAddIndex.clickEvent(this, categoryAddIndex.actionType.Save)">
+                        Thêm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

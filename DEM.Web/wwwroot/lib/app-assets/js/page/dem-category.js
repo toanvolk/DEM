@@ -96,8 +96,8 @@
             config: {
                 title: "TẠO MỚI",
                 actions: ["Refresh", "Close"],
-                close: function () { categoryIndex.loadTable(); },
-                refresh: function () { categoryIndex.loadTable(); }
+                close: function () {categoryIndex.loadTable();},
+                refresh: function () { categoryIndex.loadTable();}
             }
         });
     },

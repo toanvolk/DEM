@@ -1,0 +1,59 @@
+﻿@{
+    Layout = null;
+}
+@using DEM.App
+@model Tuple<Guid, List<Payer>>;
+
+
+<section id="dem-expense-add" class="app-materialize">
+    <div class="card-content collpase show">
+        <div class="card-body">
+            <input name="Id" hidden />
+            <input name="CategoryId" value="@Model.Item1" hidden />
+
+            <div class="row">
+                <div class="input-field col s4">
+                    <select>
+                        @for (int i = 0; i < Model.Item2.Count; i++)
+                        {
+                            if (i == 0)
+                            {
+                                <option value="@Model.Item2[i].Code" selected>@Model.Item2[i].Name</option>
+                            }
+                            else
+                            {
+                                <option value="@Model.Item2[i].Code">@Model.Item2[i].Name</option>
+                            }
+
+                        }
+                    </select>
+                    <input name="Payer" class="form-control" hidden />
+                    <label for="Payer" class="active">Người thực hiện</label>
+                </div>
+                <div class="input-field col s4">
+                    <input name="PayTime"  class="datepicker"/>
+                    <label for="PayTime" class="active">Thời gian</label>
+                </div>
+                <div class="input-field col s4">
+                    <input name="Money" class="form-control" />
+                    <label for="Money" class="active">Số tiền</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea class="materialize-textarea" placeholder="Thông tin chi tiết"></textarea>
+                    <input type="text" hidden="" name="Description">
+                    <label for="Description" class="active">Mô tả</label>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col s12">
+                    <button class="btn waves-effect waves-light dem-action-submit" name="action">
+                        Thêm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

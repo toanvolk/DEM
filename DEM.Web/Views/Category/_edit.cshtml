@@ -2,7 +2,12 @@
 @{
     Layout = null;
 }
-<section id="dem-category-edit" class="dem-app-materialize">
+<style>
+    section#dem-category-edit modal {
+        height: auto;
+    }
+</style>
+<section id="dem-category-edit" class="app-materialize">
     <div class="card-content collpase show">
         <div class="card-body">
             <input name="Id" value="@Model.Id" hidden />

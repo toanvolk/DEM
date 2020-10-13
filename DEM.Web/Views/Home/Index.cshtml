@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card pull-up ecom-card-1 bg-white dem-root-category" id="@Model.Item1[1].Name.ToLower()" onclick="demIndex.clickEvent(this, demIndex.actionType.ShowCaption)" data-caption="@Model.Item1[1].Caption" data-style="info" data-icon-category="icon-wallet" data-root-category-type="@Model.Item1[1].Name">
+                <div class="card pull-up ecom-card-1 bg-white dem-root-category" id="@Model.Item1[1].Name.ToLower()" onclick="demIndex.clickEvent(this, demIndex.actionType.ShowCaption)" data-caption="@Model.Item1[1].Caption" data-style="info" data-icon-category="icon-wallet" data-root-category-type="@Model.Item1[1].Name" >
                     <div class="card-content ecom-card2 height-180">
                         <h5 class="text-muted info position-absolute p-1">@Model.Item1[1].Caption</h5>
                         <div>
@@ -67,7 +67,7 @@
             <div class="col-md-12">
                 <h5 class="card-title text-bold-700 my-2 dem-category-title" onclick="demIndex.clickEvent(this, demIndex.actionType.DirectToCategoryPage)">Product Summary</h5>
                 <div class="row" hidden id="dem-category-template">
-                    <div class="col-md-3 dem-category-item" >
+                    <div class="col-md-3 dem-category-item" onclick="demIndex.clickEvent(this, demIndex.actionType.AddExpense)">
                         <div class="card dem-card">
                             <div class="card-content">
                                 <div class="card-body">
@@ -89,7 +89,7 @@
                 </div>
                 <div class="row dem-category-card">                    
                     <div class="col-md-3 dem-category-action">
-                        <div class="card dem-card dem-add-item" onclick="demIndex.clickEvent(this ,demIndex.actionType.Add)" data-toggle="modal" data-target="#dem-add-item-modal">
+                        <div class="card dem-card dem-add-item" onclick="demIndex.clickEvent(this ,demIndex.actionType.Add)">
                             <div class="card-content">
                                 <div class="card-body">
                                     <div class="media d-flex">
@@ -101,39 +101,12 @@
                                 Thêm mới
                             </h1>
                         </div>
-                        <div class="modal fade text-left" id="dem-add-item-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true" style="display: none;">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <label class="modal-title text-text-bold-600 dem-modal-title" id="myModalLabel33">Tạo mới loại</label>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">×</span>
-                                        </button>
-                                    </div>
-                                    <form action="#">
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <input type="text" placeholder="Nhập tên" class="form-control" name="Name">
-                                            </div>
-                                            <div class="form-group">
-                                                <textarea aria-label="Type your message here" class="form-control" placeholder="Nhập mô tả" rows="5" onchange="demIndex.changeEvent(this,demIndex.actionType.GetDescription)"></textarea>
-                                                <input type="text" hidden name="Description">
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <input type="reset" class="btn btn-secondary " data-dismiss="modal" value="close">
-                                            <button type="button" class="btn btn-primary dem-category-add-item" onclick="demIndex.clickEvent(this, demIndex.actionType.CreateCategory)">OK</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<script>
+@*<script>
         $('#@Model.Item1[0].Name.ToLower()' + '.dem-root-category').click();
-</script>
+</script>*@
