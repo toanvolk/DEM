@@ -108,10 +108,25 @@
                 actions: ["Refresh", "Close"],
                 activate: function (e) {
                     this.center();
-                    $('.app-materialize select').formSelect();
+                    $('.app-materialize select').formSelect().change();
                     $('.app-materialize .datepicker').datepicker({
-                        format: 'dd/mm/yyyy'
+                        format: 'dd/mm/yyyy',
+                        defaultDate: new Date(),
+                        setDefaultDate: true
                     });
+                    $('.decimal-inputmask').inputmask("decimal", {
+                        placeholder: "0",
+                        digits: 0,
+                        digitsOptional: false,
+                        radixPoint: ".",
+                        groupSeparator: ",",
+                        autoGroup: true,
+                        allowPlus: false,
+                        allowMinus: true,
+                        clearMaskOnLostFocus: false,
+                        removeMaskOnSubmit: true
+                    });
+                    
                 },
                 close: function () {},
                 refresh: function () {}
