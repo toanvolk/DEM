@@ -30,6 +30,8 @@
     },
     
     addData: function (e, handle) {
+
+        if (!handle.validate($(e).closest('section#dem-expense-add'))) return;
         handle.data.inputToObject($(e).closest('section#dem-expense-add'), function (obj) {
             let _dateString = obj.PayTime.split("/")
             obj.PayTime = new Date(_dateString[2], _dateString[1] - 1, _dateString[0]).toJSON();
@@ -119,6 +121,7 @@ let _expenseHandle = function () {
         addItem: _addItem,
         removeItem: _removeItem,
         saveData: _saveData,
-        closeDialog: helper.closeDialog
+        closeDialog: helper.closeDialog,
+        validate: helper.inputValidate.checkRequired
     }
 }

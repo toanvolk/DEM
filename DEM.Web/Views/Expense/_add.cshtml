@@ -35,14 +35,14 @@
                     <label for="PayTime" class="active">Thời gian</label>
                 </div>
                 <div class="input-field col s4">
-                    <input name="Money" class="form-control decimal-inputmask" />
+                    <input name="Money" class="form-control decimal-inputmask" required validate-message-required="Nhập số tiền"/>
                     <label for="Money" class="active">Số tiền</label>
                 </div>
             </div>
             <div class="row">
                 <div class="input-field col s12">
                     <textarea class="materialize-textarea" placeholder="Thông tin chi tiết" onchange="expenseIndex.changeEvent(this, expenseIndex.actionType.MapDescriptionInput)"></textarea>
-                    <input type="text" hidden="" name="Description">
+                    <input type="text" hidden="" name="Description" required validate-message-required="Nhập thông tin mô tả" >
                     <label for="Description" class="active">Mô tả</label>
                 </div>
             </div>
