@@ -1,0 +1,9 @@
+﻿section#dem-expense-add button.dem-action-submit {
+    background-color: #3f51b5 !important;
+    display: none;
+}
+section#dem-expense-add .btn-outline-danger {
+    border-color: #fa626b;
+    background-color: transparent;
+    color: #fa626b;
+}

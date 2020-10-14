@@ -31,7 +31,7 @@
                     <label for="Payer" class="active">Người thực hiện</label>
                 </div>
                 <div class="input-field col s4">
-                    <input name="PayTime"  class="datepicker"/>
+                    <input name="PayTime" class="datepicker" />
                     <label for="PayTime" class="active">Thời gian</label>
                 </div>
                 <div class="input-field col s4">
@@ -47,16 +47,23 @@
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row" >
                 <div class="col s12">
-                    <button class="btn waves-effect waves-light dem-action-submit" name="action" onclick="expenseIndex.clickEvent(this, expenseIndex.actionType.AddData)">
+                    <button class="btn waves-effect waves-light dem-action-info" name="action" onclick="expenseIndex.clickEvent(this, expenseIndex.actionType.AddData)">
                         Thêm
                     </button>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" style="max-height:150px; overflow: auto">
                 <div class="expense-grid">
 
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <button class="btn waves-effect waves-light dem-action-submit" name="action" onclick="expenseIndex.clickEvent(this, expenseIndex.actionType.SaveData)">
+                        Lưu
+                    </button>
                 </div>
             </div>
         </div>

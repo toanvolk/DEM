@@ -45,7 +45,7 @@
         let _caption = $(e).data('caption');
         let _handle = _demHandle();
 
-        $('.dem-category .dem-category-title').text(_caption);
+        $('.dem-category .dem-category-title').text('CÁC KHOẢN '+_caption);
 
         //map data
         let _data = $(e).data();
@@ -53,6 +53,10 @@
 
         //clear item old
         $('.dem-category-card .dem-category-item').remove();
+
+        //change statu dem-category-caption
+        $('.dem-category-card .dem-category-action').find('i').removeClass('danger').removeClass('info').removeClass('warning').addClass(_data.style);
+        $('.dem-category-card .dem-category-action').find('h1').removeClass('danger').removeClass('info').removeClass('warning').addClass(_data.style);
 
         //load data
         _handle.loadCategorys(_data.rootCategoryType, function (data) {

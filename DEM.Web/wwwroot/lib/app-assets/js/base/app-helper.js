@@ -57,6 +57,9 @@
                 .kendoWindow(_config);
         })
     },
+    closeDialog: function (content) {
+        content.data("handler").close();
+    },
     inputValidate: {
         checkRequired: function (obj) {
             const VALIDATE_MESSAGE_REQUIRED = 'validate-message-required';
