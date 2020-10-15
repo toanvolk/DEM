@@ -30,7 +30,7 @@
             config: {
                 title: "TẠO MỚI",
                 actions: ["Refresh", "Close"],
-                close: function () {
+                close: function (e) {
                     let _idDom = _rootCategoryType.toLowerCase();
                     $('#' + _idDom + '.dem-root-category').click();
                 },
@@ -132,7 +132,6 @@
                     });
                     
                 },
-                close: function () {},
                 refresh: function () {}
             }
         });

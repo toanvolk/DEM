@@ -50,6 +50,11 @@ namespace DEM.Infrastructure
         public IRepositoryBase<Category> CategoryRepository => _categoryRepository ?? (_categoryRepository = new RepositoryBase<Category>(_dbContext));
         private IRepositoryBase<Expense> _expenseRepository;
         public IRepositoryBase<Expense> ExpenseRepository => _expenseRepository ?? (_expenseRepository = new RepositoryBase<Expense>(_dbContext));
+        private IRepositoryBase<Payer> _payerRepository;
+        public IRepositoryBase<Payer> PayerRepository => _payerRepository ?? (_payerRepository = new RepositoryBase<Payer>(_dbContext));
+        public DbSet<Category> Categories => _dbContext.Categorys;
+        public DbSet<Expense> Expenses => _dbContext.Expenses;
+        public DbSet<Payer> Payers => _dbContext.Payers;
 
         #endregion end register reponsitory
     }

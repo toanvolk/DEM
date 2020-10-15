@@ -1,5 +1,6 @@
 ﻿
 using DEM.EF;
+using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
 namespace DEM.Infrastructure
@@ -17,7 +18,13 @@ namespace DEM.Infrastructure
 
         #region Implement Repository
         IRepositoryBase<Category> CategoryRepository { get; }
+        DbSet<Category> Categories { get; }
         IRepositoryBase<Expense> ExpenseRepository { get; }
+        DbSet<Expense> Expenses { get; }
+        IRepositoryBase<Payer> PayerRepository { get; }
+        DbSet<Payer> Payers { get; }
+
         #endregion   
+
     }
 }

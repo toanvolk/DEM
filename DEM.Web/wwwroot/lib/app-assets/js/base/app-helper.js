@@ -40,6 +40,9 @@
             activate: function (e) {
                 this.center();
             },
+            close: function (e) {
+                $(e)[0].sender.wrapper.data('handler').destroy();
+            },
             visible: true
         }
         if (obj.config) {

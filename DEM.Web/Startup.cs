@@ -51,6 +51,7 @@ namespace DEM.Web
             services.AddScoped<IRootCategoryService, RootCategoryService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IExpenseService, ExpenseService>();
+            services.AddScoped<IPayerService, PayerService>();
 
             services.AddControllersWithViews();
             
@@ -67,6 +68,9 @@ namespace DEM.Web
             {
                 app.UseExceptionHandler("/Home/Error");
             }
+            //Migrate database
+            MigrateDatabaseAuto.Migrate(app);
+
             // Add Logfile
             loggerFactory.AddFile(Configuration.GetSection("Logging:LogPath").Value);
 

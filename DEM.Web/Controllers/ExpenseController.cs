@@ -3,25 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DEM.App;
+using DEM.EF;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DEM.Web.Controllers
 {
     public class ExpenseController : Controller
     {
-        private readonly IExpenseService _expenseService;
+        private readonly IExpenseService _expenseService;        
         public ExpenseController(IExpenseService expenseService)
         {
             _expenseService = expenseService;
+            
         }
-        public IActionResult Index()
+        public IActionResult Index(string categoryId)
         {
-            return View();
+            var model = new Tuple<string>(categoryId);
+            return View(model);
         }
         public IActionResult Add(Guid categoryId)
         {
-            var payer = new MasterAppData().Payers;
-            var model = new Tuple<Guid,List<Payer>>(categoryId, payer);
+            var payer = _expenseService.GetPayers();
+            var model = new Tuple<Guid,List<Payer>>(categoryId, payer.ToList());
             return PartialView("_add", model);
         }
         [HttpPost]
@@ -46,6 +49,17 @@ namespace DEM.Web.Controllers
                 response.Statu = StatuCodeEnum.InternalServerError;
                 response.Message = e.Message;
             }
+            return Json(response);
+        }
+        public JsonResult LoadData(Guid categoryId)
+        {
+            var model = _expenseService.LoadData(categoryId);
+            var response = new DataResponeCommon<List<ExpenseDto>>()
+            {
+                Data = model,
+                Message = "OK",
+                Statu = StatuCodeEnum.OK
+            };
             return Json(response);
         }
     }

@@ -1,32 +1,49 @@
-﻿@model string;
-@{
-    Layout = null;
-}
+﻿@using DEM.App;
+@model Tuple<string>;
 
-<section id="dem-category-add" class="app-materialize">
-    <div class="card-content collpase show">
-        <div class="card-body">
-            <input name="Type" value="@Model" hidden />
-            <div class="row">
-                <div class="input-field col s12">
-                    <input type="text" placeholder="Nhập tên" class="form-control" name="Name" required validate-message-required="Thông tin bắt buộc nhập!">
-                    <label for="Name" class="active">Tên loại</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="input-field col s12">
-                    <textarea class="materialize-textarea" placeholder="Thông tin chi tiết" onchange="categoryAddIndex.changeEvent(this,categoryAddIndex.actionType.MapDescription)"></textarea>
-                    <input type="text" hidden="" name="Description">
-                    <label for="Description" class="active">Mô tả</label>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col s12">
-                    <button class="btn waves-effect waves-light dem-action-submit" name="action" onclick="categoryAddIndex.clickEvent(this, categoryAddIndex.actionType.Save)">
-                        Thêm
-                    </button>
+
+
+<div class="content-wrapper" id="dem-expense">
+    <input name="CategoryId" value="@Model.Item1" hidden />
+    <div class="content-wrapper-before"></div>
+    <div class="content-header row">
+    </div>
+    <div class="content-body" style="padding-top:10px">
+        <!-- Chart -->
+        <div class="row match-height" hidden>
+            <div class="col-12">
+                <div class="">
+                    <div id="gradient-line-chart1" class="height-250 GradientlineShadow1"></div>
                 </div>
             </div>
         </div>
+        <!-- Chart -->
+        <!-- eCommerce statistic -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card pull-up ecom-card-1 bg-white dem-expense">
+                    <div class="card-content ecom-card2 height-180">
+                        <h5 class="text-muted danger position-absolute p-1">Caption</h5>
+                        <div>
+                            <i class="ft-pie-chart danger font-large-1 float-right p-1"></i>
+                        </div>
+                        <div class="progress-stats-container ct-golden-section height-75 position-relative pt-3  ">
+                            <div id="progress-stats-bar-chart"></div>
+                            <div id="progress-stats-line-chart" class="progress-stats-shadow"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ eCommerce statistic -->
+        <!-- Product Summary and Chat -->
+        <div class="row dem-expense">
+            <div class="dem-action btn-action-add">
+                <button type="button" class="btn btn-primary round btn-min-width mr-1 mb-1" onclick="expenseIndex.clickEvent(this, expenseIndex.actionType.Add)">Thêm</button>
+            </div>
+            <div class="dem-data dem-data-list">
+                <div class="grid"></div>
+            </div>
+        </div>
     </div>
-</section>
+</div>

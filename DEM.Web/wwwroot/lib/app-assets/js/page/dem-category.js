@@ -1,4 +1,7 @@
 ﻿var categoryIndex = {
+    dom: {
+        grid: "#dem-category .grid"
+    },
     actionType: {
         Add: "add",
         EditForm: "form-edit",
@@ -6,9 +9,9 @@
         UpdateStatu: "update-statu"
     },
     init: function () {
-        let _rootCategoryType = $('input[name=RootCategoryType]').val();
+        let _rootCategoryType = $('#dem-category input[name=RootCategoryType]').val();
         let _url = "/category/loadDatas";
-        $('.grid').kendoGrid({
+        $(categoryIndex.dom.grid).kendoGrid({
             dataSource: {
                 transport: {
                     read: {
@@ -72,7 +75,7 @@
         })
     },
     loadTable: function () {
-        $('.grid').data('kendoGrid').dataSource.read();
+        $(categoryIndex.dom.grid).data('kendoGrid').dataSource.read();
     },
     clickEvent: function (e, actionType) {
         let _handle = categoryHandle();
@@ -134,7 +137,7 @@
             if (e.value == true) {
                 handle.deleteData(_dataCategory.id, function (res) {
                     swal('Đã xóa!', res.message, 'success');
-                    $('.grid').data('kendoGrid').dataSource.read();
+                    $(categoryIndex.dom.grid).data('kendoGrid').dataSource.read();
                 });
             }
 

@@ -1,4 +1,4 @@
-﻿var expenseIndex= {
+﻿var expenseAddIndex= {
     dataSource:[],
     actionType: {
         MapDescriptionInput: 'map-expense',
@@ -8,19 +8,19 @@
         DeleteItem: 'delete-item'
     },
     initForm: function () {
-        let _handle = _expenseHandle();        
-        expenseIndex.dataSource = [];
+        let _handle = _expenseAddHandle();        
+        expenseAddIndex.dataSource = [];
     },
     clickEvent: function (e, actionType) {
-        let _handle = _expenseHandle();
-        if (actionType == expenseIndex.actionType.AddData) expenseIndex.addData(e, _handle);
-        if (actionType == expenseIndex.actionType.SaveData) expenseIndex.saveData(e, _handle);
-        if (actionType == expenseIndex.actionType.DeleteItem) expenseIndex.deleteItem(e, _handle);
+        let _handle = _expenseAddHandle();
+        if (actionType == expenseAddIndex.actionType.AddData) expenseAddIndex.addData(e, _handle);
+        if (actionType == expenseAddIndex.actionType.SaveData) expenseAddIndex.saveData(e, _handle);
+        if (actionType == expenseAddIndex.actionType.DeleteItem) expenseAddIndex.deleteItem(e, _handle);
     },
     changeEvent: function (e, actionType) {
-        let _handle = _expenseHandle();
-        if (actionType == expenseIndex.actionType.MapDescriptionInput) expenseIndex.mapDescriptionInput(e, _handle);
-        if (actionType == expenseIndex.actionType.MapPayerInput) expenseIndex.mapPayerInput(e, _handle);
+        let _handle = _expenseAddHandle();
+        if (actionType == expenseAddIndex.actionType.MapDescriptionInput) expenseAddIndex.mapDescriptionInput(e, _handle);
+        if (actionType == expenseAddIndex.actionType.MapPayerInput) expenseAddIndex.mapPayerInput(e, _handle);
     },
     mapDescriptionInput: function (e, handle) {
         $(e).next().val($(e).val());
@@ -30,7 +30,6 @@
     },
     
     addData: function (e, handle) {
-
         if (!handle.validate($(e).closest('section#dem-expense-add'))) return;
         handle.data.inputToObject($(e).closest('section#dem-expense-add'), function (obj) {
             let _dateString = obj.PayTime.split("/")
@@ -38,10 +37,10 @@
             obj.Money = parseFloat(obj.Money.replaceAll(',', ''));
             obj.Id = handle.newId();
 
-            handle.addItem(expenseIndex.dataSource, obj);
-            expenseIndex.createorRefreshTable();
+            handle.addItem(expenseAddIndex.dataSource, obj);
+            expenseAddIndex.createorRefreshTable();
 
-            if (expenseIndex.dataSource.length > 0)
+            if (expenseAddIndex.dataSource.length > 0)
                 $(e).closest('section#dem-expense-add').find('button.dem-action-submit').last().show();
             else
                 $(e).closest('section#dem-expense-add').find('button.dem-action-submit').last().hide();
@@ -49,7 +48,7 @@
     },
     createorRefreshTable: function () {
         let _dataSource = new kendo.data.DataSource({
-            data: expenseIndex.dataSource,
+            data: expenseAddIndex.dataSource,
             aggregate: [
                 { field: "Money", aggregate: "sum" }
             ]
@@ -71,7 +70,7 @@
                     field: "",
                     width: '15%',
                     template: function (item) {
-                        let _html = '<button type="button" class="btn btn-small btn-outline-danger round" onclick="expenseIndex.clickEvent(this, expenseIndex.actionType.DeleteItem)" data-id="' + item.Id + '"><i class="ft-trash-2"></i></button>';
+                        let _html = '<button type="button" class="btn btn-small btn-outline-danger round" onclick="expenseAddIndex.clickEvent(this, expenseAddIndex.actionType.DeleteItem)" data-id="' + item.Id + '"><i class="ft-trash-2"></i></button>';
                         return _html;
                     },
                 }
@@ -83,7 +82,7 @@
     },
 
     saveData: function (e, handle) {
-        handle.saveData(expenseIndex.dataSource, function (res) {
+        handle.saveData(expenseAddIndex.dataSource, function (res) {
             if (res.statu == 200) {
                 handle.closeDialog($(e).closest('section#dem-expense-add'));
             }
@@ -94,12 +93,12 @@
     },
     deleteItem: function (e, handle) {
         let _id = $(e).data('id');
-        expenseIndex.dataSource = handle.removeItem(expenseIndex.dataSource, _id);
-        if (expenseIndex.dataSource.length == 0) $(e).closest('section#dem-expense-add').find('button.dem-action-submit').last().hide();
-        expenseIndex.createorRefreshTable();
+        expenseAddIndex.dataSource = handle.removeItem(expenseAddIndex.dataSource, _id);
+        if (expenseAddIndex.dataSource.length == 0) $(e).closest('section#dem-expense-add').find('button.dem-action-submit').last().hide();
+        expenseAddIndex.createorRefreshTable();
     }
 }
-let _expenseHandle = function () {
+let _expenseAddHandle = function () {
     let _addItem = function (source, obj) {
         source.push(obj);
     }

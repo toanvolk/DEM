@@ -2,8 +2,8 @@
 @model Tuple<List<CategoryDto>, string>;
 
 
-<input name="RootCategoryType" value="@Model.Item2" hidden />
-<div class="content-wrapper">
+
+<div class="content-wrapper" id="dem-category">
     <div class="content-wrapper-before"></div>
     <div class="content-header row">
     </div>
@@ -37,6 +37,7 @@
         <!--/ eCommerce statistic -->
         <!-- Product Summary and Chat -->
         <div class="row dem-category">
+            <input name="RootCategoryType" value="@Model.Item2" hidden />
             <div class="dem-action btn-action-add" onclick="categoryIndex.clickEvent(this, categoryIndex.actionType.Add)">
                 <button type="button" class="btn btn-primary round btn-min-width mr-1 mb-1">Thêm</button>
             </div>
