@@ -28,13 +28,25 @@ namespace DEM.App
 
             return _unitOfWorfkMedia.SaveChanges() > 0;
         }
-        public List<ExpenseDto> LoadData(Guid categoryId)
+        public bool Update(ExpenseDto data)
+        {
+            var expenseEntitie = _mapper.Map<ExpenseDto, Expense>(data);
+            _unitOfWorfkMedia.ExpenseRepository.Update(expenseEntitie, UpdateAccessMode.DENY_UPDATE, "CreatedBy", "CreatedDate");
+
+            return _unitOfWorfkMedia.SaveChanges() > 0;
+        }
+        public bool Delete(Guid expenseId)
+        {
+            _unitOfWorfkMedia.ExpenseRepository.Delete(expenseId);
+            return _unitOfWorfkMedia.SaveChanges() > 0;
+        }
+        public List<ExpenseDto> LoadData(Guid categoryId, DateTime startTime, DateTime endTime)
         {
             var payers = _payerService.getData();
             var model = (from expense in _unitOfWorfkMedia.Expenses
                      join category in _unitOfWorfkMedia.Categories on expense.CategoryId equals category.Id
                      join payer in _unitOfWorfkMedia.Payers on expense.Payer equals payer.Code
-                     where category.Id == categoryId
+                     where category.Id == categoryId && (expense.PayTime >= startTime.Date && expense.PayTime <= endTime.Date)
                      select  new ExpenseDto
                      {
                          Id =expense.Id,
@@ -51,5 +63,15 @@ namespace DEM.App
             return model;
         }        
         public ICollection<Payer> GetPayers() => _payerService.getData();
+
+        public ExpenseDto GetData(Guid expenseId)
+        {
+            var expenseEntity = _unitOfWorfkMedia.ExpenseRepository.FindById(expenseId);
+            //Map into ExpenseDto
+            var expenseDto = _mapper.Map<Expense, ExpenseDto>(expenseEntity);
+            return expenseDto;
+        }
+
+       
     }
 }

@@ -33,7 +33,7 @@
         if (!handle.validate($(e).closest('section#dem-expense-add'))) return;
         handle.data.inputToObject($(e).closest('section#dem-expense-add'), function (obj) {
             let _dateString = obj.PayTime.split("/")
-            obj.PayTime = new Date(_dateString[2], _dateString[1] - 1, _dateString[0]).toJSON();
+            obj.PayTime = new Date(_dateString[2] + '/' + _dateString[1] + '/' + _dateString[0]).toJSON();
             obj.Money = parseFloat(obj.Money.replaceAll(',', ''));
             obj.Id = handle.newId();
 
@@ -51,7 +51,15 @@
             data: expenseAddIndex.dataSource,
             aggregate: [
                 { field: "Money", aggregate: "sum" }
-            ]
+            ], 
+            group: [
+                {
+                    field: "Payer",
+                    aggregates: [
+                        { field: "Money", aggregate: "sum" }
+                    ]
+                }
+            ],
         });
         let _grid = $('section#dem-expense-add .expense-grid').data('kendoGrid');
         if (_grid) {
@@ -59,11 +67,18 @@
         }
         $('section#dem-expense-add .expense-grid').kendoGrid({
             columns: [
+                {
+                    field: "Payer",
+                    title: "Người ghi",
+                    width: "15%",
+                    hidden: true,
+                    groupHeaderTemplate: "Người thực hiện: #= value # - Tổng: #= kendo.toString(aggregates.Money.sum, '\\#\\#,\\#') #"
+                },
                 { field: "Description", title: 'Mô tả', width: '60%' },
                 {
                     field: "Money", title: 'Số tiền',
+                    template: "#= kendo.toString(Money, '\\#\\#,\\#') #",
                     footerTemplate: "<div class='text-right'>Tổng: #: kendo.toString(sum, '\\#\\#,\\#') # </div>",
-                    format: "{0:##,#}",
                     attributes: { class: "text-right" }
                 },
                 {
@@ -76,6 +91,13 @@
                 }
 
             ],
+            groupable: true,
+            groupExpand: function (e) {
+                for (let i = 0; i < e.group.items.length; i++) {
+                    var expanded = e.group.items[i].value
+                    e.sender.expandGroup(".k-grouping-row:contains(" + expanded + ")");
+                }
+            },
             dataSource: _dataSource,
             
         });
@@ -84,7 +106,11 @@
     saveData: function (e, handle) {
         handle.saveData(expenseAddIndex.dataSource, function (res) {
             if (res.statu == 200) {
-                handle.closeDialog($(e).closest('section#dem-expense-add'));
+                handle.closeDialog(
+                    $(e).closest('section#dem-expense-add'), function () {
+                        expenseAddIndex.dataSource = [];
+                    }                    
+                );
             }
             else {
                 swal(res.statu, res.message, 'error');

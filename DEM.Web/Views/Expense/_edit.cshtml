@@ -1,0 +1,58 @@
+﻿@{
+    Layout = null;
+}
+@using DEM.EF
+@using DEM.App
+@model Tuple<ExpenseDto, ICollection<Payer>>
+
+
+<section id="dem-expense-edit" class="app-materialize">
+    <div class="card-content collpase show">
+        <div class="card-body">
+            <input name="Id" value="@Model.Item1.Id" hidden />
+            <input name="CategoryId" value="@Model.Item1.CategoryId" hidden />
+
+            <div class="row">
+                <div class="input-field col s4">
+                    <select onchange="expenseEditIndex.changeEvent(this, expenseEditIndex.actionType.MapPayerInput)">
+                        @foreach (var item in Model.Item2)
+                        {
+                            if (item.Code == Model.Item1.Payer)
+                            {
+                                <option value="@item.Code" selected>@item.Name</option>
+                            }
+                            else
+                            {
+                                <option value="@item.Code">@item.Name</option>
+                            }
+                        }
+                    </select>
+                    <input name="Payer" class="form-control" hidden />
+                    <label for="Payer" class="active">Người thực hiện</label>
+                </div>
+                <div class="input-field col s4">
+                    <input name="PayTime" class="datepicker" value="@Model.Item1.PayTime.ToString("dd/MM/yyyy")"/>
+                    <label for="PayTime" class="active">Thời gian</label>
+                </div>
+                <div class="input-field col s4">
+                    <input name="Money" class="form-control decimal-inputmask" required validate-message-required="Nhập số tiền" value="@Model.Item1.Money"/>
+                    <label for="Money" class="active">Số tiền</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea class="materialize-textarea" placeholder="Thông tin chi tiết" onchange="expenseEditIndex.changeEvent(this, expenseEditIndex.actionType.MapDescriptionInput)">@Model.Item1.Description</textarea>
+                    <input type="text" hidden="" name="Description" required validate-message-required="Nhập thông tin mô tả" value="@Model.Item1.Description">
+                    <label for="Description" class="active">Mô tả</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <button class="btn waves-effect waves-light dem-action-submit" name="action" onclick="expenseEditIndex.clickEvent(this, expenseEditIndex.actionType.SaveData)">
+                        Lưu
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

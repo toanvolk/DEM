@@ -130,3 +130,4 @@ System.InvalidOperationException: The view '44f8974d-0846-44b2-6a55-08d86f259cfa
 2020-10-15T17:08:05.5463570+07:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
 2020-10-15T17:08:05.5469864+07:00  [INF] Hosting environment: "Development" (c3307c92)
 2020-10-15T17:08:05.5470278+07:00  [INF] Content root path: "D:\01.SOURCE\00.DEMO\DEM\DEM.Web" (b5d60022)
+2020-10-15T18:02:59.0419968+07:00  [INF] Application is shutting down... (90f52c38)

@@ -41,13 +41,27 @@
                 this.center();
             },
             close: function (e) {
-                $(e)[0].sender.wrapper.data('handler').destroy();
+                e.sender.element.data('handler').destroy();
             },
             visible: true
         }
         if (obj.config) {
             $.each(obj.config, function (key, value) {
-                _config[key] = value;
+                if (key == 'close') {
+                    _config[key] = function (e) {
+                        value(e);
+                        e.sender.element.data('handler').destroy();
+                    }
+                }
+                else if (key == 'activate') {
+                    _config[key] = function (e) {
+                        value(e);   
+                        e.sender.center();
+                    }
+                }
+                else {
+                    _config[key] = value;
+                }
             });
         }
 
@@ -60,7 +74,8 @@
                 .kendoWindow(_config);
         })
     },
-    closeDialog: function (content) {
+    closeDialog: function (content, callback) {
+        if (callback) callback(content);
         content.data("handler").close();
     },
     inputValidate: {

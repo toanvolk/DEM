@@ -111,7 +111,7 @@
                 title: "TẠO GIAO DỊCH",
                 actions: ["Refresh", "Close"],
                 activate: function (e) {
-                    this.center();
+                    //this.center();
                     $('.app-materialize select').formSelect().change();
                     $('.app-materialize .datepicker').datepicker({
                         format: 'dd/mm/yyyy',
@@ -132,7 +132,7 @@
                     });
                     
                 },
-                refresh: function () {}
+                width: 800
             }
         });
     }

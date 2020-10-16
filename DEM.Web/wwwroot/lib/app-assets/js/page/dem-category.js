@@ -105,8 +105,8 @@
         });
     },
     showFormEdit: function (e, handle) {
-        handle.openFormEdit($(e).data("id"), function (res) {
-            helper.showDialog({
+        handle.showForm(
+            {
                 contentData: {
                     url: "/category/EditForm",
                     data: {
@@ -119,8 +119,8 @@
                     close: function () { categoryIndex.loadTable(); },
                     refresh: function () { categoryIndex.loadTable(); }
                 }
-            });
-        });
+            }
+        );
     },
     deleteComfirm: function (e, handle) {
         var _dataCategory = $(e).data();
@@ -148,13 +148,7 @@
         handle.changeStatu(_categoryId, $(e).prop('checked'), function (res) { });
     }
 }
-var categoryHandle = function () {
-    let _openFormEdit = function (categoryId, callback) {
-        let _url = "/category/editform";
-        $.get(_url, { categoryId: categoryId }, function (res) {
-            callback(res);
-        });
-    }
+var categoryHandle = function () {   
     let _deleteData = function (categoryId, callback) {
         let _url = "/category/delete";
         $.post(_url, { categoryId: categoryId }, function (res) {
@@ -168,7 +162,7 @@ var categoryHandle = function () {
         });
     }
     return {
-        openFormEdit: _openFormEdit,
+        showForm: helper.showDialog,
         deleteData: _deleteData,
         changeStatu: _changeStatu
     }

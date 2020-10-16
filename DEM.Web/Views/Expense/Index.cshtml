@@ -38,8 +38,42 @@
         <!--/ eCommerce statistic -->
         <!-- Product Summary and Chat -->
         <div class="row dem-expense">
-            <div class="dem-action btn-action-add">
-                <button type="button" class="btn btn-primary round btn-min-width mr-1 mb-1" onclick="expenseIndex.clickEvent(this, expenseIndex.actionType.Add)">Thêm</button>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class='input-group'>
+                        <input type='text' class="form-control shawCalRanges" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <span class="ft-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    $('.shawCalRanges').daterangepicker({
+                        //startDate: moment().subtract('days', 7),
+                        ranges: {
+                            'Today': [moment(), moment()],
+                            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                            'This Month': [moment().startOf('month'), moment().endOf('month')],
+                            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                        },
+                        alwaysShowCalendars: true,
+                        locale: {
+                            format: 'DD/MM/YYYY'
+                        }
+                    },
+                        function (start, end) {
+                            return expenseIndex.dateRangeChanged(start, end);
+                        });
+                </script>
+            </div>
+            <div class="col-md-8">
+                <div class="dem-action btn-action-add">
+                    <button type="button" class="btn btn-primary round btn-min-width mr-1 mb-1" onclick="expenseIndex.clickEvent(this, expenseIndex.actionType.Add)">Thêm</button>
+                </div>
             </div>
             <div class="dem-data dem-data-list">
                 <div class="grid"></div>
