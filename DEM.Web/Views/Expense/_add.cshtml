@@ -12,7 +12,7 @@
             <input name="Id" hidden />
             <input name="CategoryId" value="@Model.Item1" hidden />
             <div class="row">
-                <div class="col-12">
+                <div class="col s12">
                     <label for="CategoryName" class="active">Loại khoản Thu - Chi</label>
                     <div class="chips chips-initial dem-chips">
                         @foreach (var item in @Model.Item3)
@@ -30,15 +30,15 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-9">
-                    <div class="input-field  s9">
+                <div class="col s9">
+                    <div class="input-field">
                         <textarea class="materialize-textarea" placeholder="Thông tin chi tiết" onchange="expenseAddIndex.changeEvent(this, expenseAddIndex.actionType.MapDescriptionInput)" name="Description"></textarea>
                         <input type="text" hidden="" name="Description" required validate-message-required="Nhập thông tin mô tả">
                         <label for="Description" class="active">Mô tả</label>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="input-field s2">
+                <div class="col s3">
+                    <div class="input-field">
                         <input name="Money" class="decimal-inputmask" required validate-message-required="Nhập số tiền" onkeypress=" expenseAddIndex.keyupEvent(this, expenseAddIndex.actionType.EnterMoney)" />
                         <label for="Money" class="active">Số tiền</label>
 
@@ -47,7 +47,7 @@
             </div>
 
             <div class="row">
-                <div class="col-4">
+                <div class="col s4">
                     <div class="input-field">
                         <select onchange="expenseAddIndex.changeEvent(this, expenseAddIndex.actionType.MapPayerInput)" map-input-name="PayerName" id="Payer">
                             @for (int i = 0; i < Model.Item2.Count; i++)
@@ -67,13 +67,13 @@
                         <label for="Payer" class="active">Người thực hiện</label>
                     </div>
                 </div>
-                <div class="col-4">
+                <div class="col s4">
                     <div class="input-field">
                         <input name="PayTime" class="datepicker" />
                         <label for="PayTime" class="active">Thời gian</label>
                     </div>
                 </div>
-                <div class="col-1">
+                <div class="col s4">
                     <div class="input-field">
                         <button class="btn waves-effect waves-light dem-action-info" name="action" onclick="expenseAddIndex.clickEvent(this, expenseAddIndex.actionType.AddData)">
                             <i class="ft-plus-circle"></i>
