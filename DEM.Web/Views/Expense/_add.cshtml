@@ -2,7 +2,8 @@
     Layout = null;
 }
 @using DEM.EF
-@model Tuple<Guid, List<Payer>>;
+@using DEM.App
+@model Tuple<Guid, List<Payer>, List<CategoryDto>>;
 
 
 <section id="dem-expense-add" class="app-materialize">
@@ -10,50 +11,84 @@
         <div class="card-body">
             <input name="Id" hidden />
             <input name="CategoryId" value="@Model.Item1" hidden />
-
             <div class="row">
-                <div class="input-field col s4">
-                    <select onchange="expenseAddIndex.changeEvent(this, expenseAddIndex.actionType.MapPayerInput)">
-                        @for (int i = 0; i < Model.Item2.Count; i++)
+                <div class="col-12">
+                    <label for="CategoryName" class="active">Loại khoản Thu - Chi</label>
+                    <div class="chips chips-initial dem-chips">
+                        @foreach (var item in @Model.Item3)
                         {
-                            if (i == 0)
+                            var activeString = "";
+                            if (item.Id == Model.Item1)
                             {
-                                <option value="@Model.Item2[i].Code" selected>@Model.Item2[i].Name</option>
+                                activeString = "active";
                             }
-                            else
-                            {
-                                <option value="@Model.Item2[i].Code">@Model.Item2[i].Name</option>
-                            }
-
+                            <div class="chip btn @activeString" data-id="@item.Id" tabindex="0" onclick="expenseAddIndex.clickEvent(this, expenseAddIndex.actionType.CategoryChange)">
+                                @item.Name
+                            </div>
                         }
-                    </select>
-                    <input name="Payer" class="form-control" hidden />
-                    <label for="Payer" class="active">Người thực hiện</label>
-                </div>
-                <div class="input-field col s4">
-                    <input name="PayTime" class="datepicker" />
-                    <label for="PayTime" class="active">Thời gian</label>
-                </div>
-                <div class="input-field col s4">
-                    <input name="Money" class="form-control decimal-inputmask" required validate-message-required="Nhập số tiền"/>
-                    <label for="Money" class="active">Số tiền</label>
+                    </div>
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col s12">
-                    <textarea class="materialize-textarea" placeholder="Thông tin chi tiết" onchange="expenseAddIndex.changeEvent(this, expenseAddIndex.actionType.MapDescriptionInput)"></textarea>
-                    <input type="text" hidden="" name="Description" required validate-message-required="Nhập thông tin mô tả" >
-                    <label for="Description" class="active">Mô tả</label>
+                <div class="col-9">
+                    <div class="input-field  s9">
+                        <textarea class="materialize-textarea" placeholder="Thông tin chi tiết" onchange="expenseAddIndex.changeEvent(this, expenseAddIndex.actionType.MapDescriptionInput)" name="Description"></textarea>
+                        <input type="text" hidden="" name="Description" required validate-message-required="Nhập thông tin mô tả">
+                        <label for="Description" class="active">Mô tả</label>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="input-field s2">
+                        <input name="Money" class="decimal-inputmask" required validate-message-required="Nhập số tiền" onkeypress=" expenseAddIndex.keyupEvent(this, expenseAddIndex.actionType.EnterMoney)" />
+                        <label for="Money" class="active">Số tiền</label>
+
+                    </div>
                 </div>
             </div>
 
-            <div class="row" >
-                <div class="col s12">
-                    <button class="btn waves-effect waves-light dem-action-info" name="action" onclick="expenseAddIndex.clickEvent(this, expenseAddIndex.actionType.AddData)">
-                        Thêm
-                    </button>
+            <div class="row">
+                <div class="col-4">
+                    <div class="input-field">
+                        <select onchange="expenseAddIndex.changeEvent(this, expenseAddIndex.actionType.MapPayerInput)" map-input-name="PayerName" id="Payer">
+                            @for (int i = 0; i < Model.Item2.Count; i++)
+                            {
+                                if (i == 0)
+                                {
+                                    <option value="@Model.Item2[i].Code" selected>@Model.Item2[i].Name</option>
+                                }
+                                else
+                                {
+                                    <option value="@Model.Item2[i].Code">@Model.Item2[i].Name</option>
+                                }
+
+                            }
+                        </select>
+                        <input name="Payer" class="form-control" hidden />
+                        <label for="Payer" class="active">Người thực hiện</label>
+                    </div>
+                </div>
+                <div class="col-4">
+                    <div class="input-field">
+                        <input name="PayTime" class="datepicker" />
+                        <label for="PayTime" class="active">Thời gian</label>
+                    </div>
+                </div>
+                <div class="col-1">
+                    <div class="input-field">
+                        <button class="btn waves-effect waves-light dem-action-info" name="action" onclick="expenseAddIndex.clickEvent(this, expenseAddIndex.actionType.AddData)">
+                            <i class="ft-plus-circle"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
+
+            @*<div class="row">
+                    <div class="col-2 s12">
+                        <button class="btn waves-effect waves-light dem-action-info" name="action" onclick="expenseAddIndex.clickEvent(this, expenseAddIndex.actionType.AddData)">
+                            Thêm
+                        </button>
+                    </div>
+                </div>*@
             <div class="row" style="max-height:390px; overflow: auto">
                 <div class="expense-grid">
 

@@ -46,7 +46,7 @@ namespace DEM.App
             var model = (from expense in _unitOfWorfkMedia.Expenses
                      join category in _unitOfWorfkMedia.Categories on expense.CategoryId equals category.Id
                      join payer in _unitOfWorfkMedia.Payers on expense.Payer equals payer.Code
-                     where category.Id == categoryId && (expense.PayTime >= startTime.Date && expense.PayTime <= endTime.Date)
+                     where (expense.PayTime >= startTime.Date && expense.PayTime <= endTime.Date)
                      select  new ExpenseDto
                      {
                          Id =expense.Id,

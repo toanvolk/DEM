@@ -4,7 +4,8 @@
         ShowCaption: "show-caption",
         GetDescription: "get-description",
         DirectToCategoryPage: "to-category-page",
-        AddExpense: "add-expense"
+        AddExpense: "add-expense",
+        ExpenseList: "view-expense"
     },
     clickEvent: function (e, actionType) {
         let _handle = _demHandle();
@@ -12,6 +13,7 @@
         if (actionType == demIndex.actionType.Add) demIndex.showFormAdd(e, _handle);
         if (actionType == demIndex.actionType.DirectToCategoryPage) demIndex.directToCategoryPage(e, _handle);
         if (actionType == demIndex.actionType.AddExpense) demIndex.addExpense(e, _handle);
+        if (actionType == demIndex.actionType.ExpenseList) demIndex.expenseList(e, _handle);
     },
     changeEvent: function (e, actionType) {
         let _handle = _demHandle();
@@ -99,7 +101,7 @@
         console.log(_value);
     },
     addExpense: function (e, handle) {
-        let _data = $(e).data();
+        let _data = $(e).closest('.dem-category-item').data();
         helper.showDialog({
             contentData: {
                 url: "/expense/add",
@@ -132,9 +134,14 @@
                     });
                     
                 },
-                width: 800
+                width: 920
             }
         });
+    },
+    expenseList: function (e, handle) {
+        let _data = $(e).closest('.dem-category-item').data();
+        let _url = '/expense?categoryId=' + _data.categoryData.id;
+        open(_url);
     }
 }
 let _demHandle = function () {    

@@ -33,13 +33,11 @@ namespace DEM.App
 
             return _unitOfWorfkMedia.SaveChanges() > 0;
         }
-
         public bool Delete(Guid id)
         {
             _unitOfWorfkMedia.CategoryRepository.Delete(id);
             return _unitOfWorfkMedia.SaveChanges() > 0;
         }
-
         public bool Edit(CategoryDto categoryDto)
         {
             try
@@ -54,13 +52,11 @@ namespace DEM.App
             }
             
         }
-
         public CategoryDto FindId(Guid id)
         {
             var entity = _unitOfWorfkMedia.CategoryRepository.FindById(id);
             return _mapper.Map<Category, CategoryDto>(entity);
         }
-
         public bool ChangeStatu(Guid categoryId, bool notUse)
         {
             var entity = _unitOfWorfkMedia.CategoryRepository.FindById(categoryId);

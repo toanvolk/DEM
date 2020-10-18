@@ -11,10 +11,11 @@ namespace DEM.Web.Controllers
     public class ExpenseController : Controller
     {
         private readonly IExpenseService _expenseService;        
-        public ExpenseController(IExpenseService expenseService)
+        private readonly ICategoryService _categoryService;        
+        public ExpenseController(IExpenseService expenseService, ICategoryService categoryService)
         {
             _expenseService = expenseService;
-            
+            _categoryService = categoryService;
         }
         public IActionResult Index(string categoryId)
         {
@@ -24,14 +25,21 @@ namespace DEM.Web.Controllers
         public IActionResult Add(Guid categoryId)
         {
             var payer = _expenseService.GetPayers();
-            var model = new Tuple<Guid,List<Payer>>(categoryId, payer.ToList());
+            var category = _categoryService.FindId(categoryId);
+            var categorys = _categoryService.LoadDatas(Enum.GetName(typeof(RootCategoryEnum),category.Type), false);
+            var model = new Tuple<Guid,List<Payer>, List<CategoryDto>>(categoryId, payer.ToList(), categorys);
             return PartialView("_add", model);
         }
         public IActionResult Edit(Guid expenseId)
         {
             var expenseDto = _expenseService.GetData(expenseId);
+
             var payers = _expenseService.GetPayers();
-            var model = new Tuple<ExpenseDto, ICollection<Payer>>(expenseDto, payers);
+
+            var category = _categoryService.FindId(expenseDto.CategoryId.GetValueOrDefault());
+            var categorys = _categoryService.LoadDatas(Enum.GetName(typeof(RootCategoryEnum), category.Type), false);
+
+            var model = new Tuple<ExpenseDto, ICollection<Payer>, List<CategoryDto>>(expenseDto, payers, categorys);
             return PartialView("_edit", model);
         }
         [HttpPost]

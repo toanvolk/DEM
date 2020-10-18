@@ -117,7 +117,10 @@
                     });
 
                 },
-                width: 800
+                close: function (e) {
+                    expenseIndex.loadTable();
+                },
+                width: 920
             }
         });
     },

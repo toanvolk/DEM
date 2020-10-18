@@ -2115,12 +2115,14 @@
     content: "";
     display: table;
     clear: both; }
-  .app-materialize .row .col {
-    float: left;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
-    padding: 0 0.75rem;
-    min-height: 1px; }
+    .app-materialize .row .col {
+        float: left;
+        -webkit-box-sizing: border-box;
+        box-sizing: border-box;
+        padding: 0 0.75rem;
+        min-height: 1px;
+        -webkit-flex-basis: auto;
+    }
   .app-materialize .row .col[class*="push-"], .app-materialize .row .col[class*="pull-"] {
     position: relative; }
   .app-materialize .row .col.s1 {
@@ -3808,6 +3810,11 @@
     outline: none;
     background-color: #3f51b5;
     color: #fff; }
+    .app-materialize .chip.active {
+        outline: none;
+        background-color: #3f51b5;
+        color: #fff;
+    }
   .app-materialize .chip > img {
     float: left;
     margin: 0 8px 0 -12px;

@@ -4,10 +4,13 @@
         MapDescriptionInput: 'map-expense',
         MapPayerInput: 'map-payer',
         SaveData: 'save-data',
+        CategoryChange: "category-change"
     },
     clickEvent: function (e, actionType) {
         let _handle = _expenseEditHandle();
         if (actionType == expenseEditIndex.actionType.SaveData) expenseEditIndex.saveData(e, _handle);
+        if (actionType == expenseEditIndex.actionType.CategoryChange) expenseEditIndex.categoryChange(e, _handle);
+
     },
     changeEvent: function (e, actionType) {
         let _handle = _expenseEditHandle();
@@ -36,6 +39,16 @@
             }
         });
     },
+    categoryChange: function (e, handle) {
+        let _$demChips = $(e).closest('.dem-chips');
+        _$demChips.find('.chip').removeClass('active');
+        $(e).addClass('active');
+
+        //set value
+        let _categoryId = $(e).data('id');
+        let _$container = $(e).closest('section#dem-expense-edit');
+        _$container.find('input[name=CategoryId]').last().val(_categoryId);
+    }
 }
 let _expenseEditHandle = function () {   
     let _saveData = function (data,callback) {

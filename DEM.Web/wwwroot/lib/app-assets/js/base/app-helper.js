@@ -111,10 +111,11 @@
                 if (!$(dom).val()) {
                     if (!$(dom).next().hasClass('invalid-feedback')) {
                         let _message = $(dom).attr(VALIDATE_MESSAGE_REQUIRED);
+                        let _htmlAppend = _html;
                         _message = _message || "Please enter..!";
                         let _regex = new RegExp("{{message}}", "gi");
-                        _html = _html.replace(_regex, _message)
-                        $(_html).insertAfter($(dom));
+                        _htmlAppend = _htmlAppend.replace(_regex, _message)
+                        $(_htmlAppend).insertAfter($(dom));
                     }
                     $(dom).next().show();
                     _valid = false;
@@ -151,7 +152,7 @@
             else {
                 if (Array.isArray(specifyMap)) {
                     specifyMap.forEach(element => {
-                        content.find("input[name=" + element.inputName + "]")?.val(object[element.property])
+                        content.find("input[name=" + element.inputName + "]")?.val(object[element.propertyName])
                     });
                 }
             }

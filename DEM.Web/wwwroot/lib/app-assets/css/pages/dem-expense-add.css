@@ -7,3 +7,8 @@ section#dem-expense-add .btn-outline-danger {
     background-color: transparent;
     color: #fa626b;
 }
+section#dem-expense-add .btn-outline-info {
+    border-color: #6967ce;
+    background-color: transparent;
+    color: #6967ce;
+}
