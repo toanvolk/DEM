@@ -1,6 +1,8 @@
 ﻿@using DEM.App
-@model Tuple<List<RootCategoryDto>>
-
+@model Tuple<List<RootCategoryDto>,string>
+@{ 
+    ViewData["Title"] = Model.Item2;
+}
 
 <div class="content-wrapper">
     <div class="content-wrapper-before"></div>
@@ -15,100 +17,94 @@
                 </div>
             </div>
         </div>
-        <!-- Chart -->
-        <!-- eCommerce statistic -->
+        
         <div class="row">
             <div class="col-md-4">
-                <div class="card pull-up ecom-card-1 bg-white dem-root-category" id="@Model.Item1[0].Name.ToLower()" onclick="demIndex.clickEvent(this, demIndex.actionType.ShowCaption)" data-caption="@Model.Item1[0].Caption" data-style="danger" data-icon-category="icon-basket-loaded" data-root-category-type="@Model.Item1[0].Name">
+                <div class="card pull-up ecom-card-1 bg-white dem-root-category" id="@Model.Item1[0].Name.ToLower()" 
+                     data-caption="@Model.Item1[0].Caption" 
+                     data-style="danger" 
+                     data-icon-category="icon-basket-loaded" 
+                     data-root-category-type="@Model.Item1[0].Name">
                     <div class="card-content ecom-card2 height-180">
                         <h5 class="text-muted danger position-absolute p-1">@Model.Item1[0].Caption</h5>
                         <div>
                             <i class="ft-pie-chart danger font-large-1 float-right p-1"></i>
                         </div>
-                        <div class="progress-stats-container ct-golden-section height-75 position-relative pt-3  ">
+                        <div class="progress-stats-container ct-golden-section height-50 position-relative pt-3">
                             <div id="progress-stats-bar-chart"></div>
                             <div id="progress-stats-line-chart" class="progress-stats-shadow"></div>
                         </div>
+                        <div class="dem-reference-action">
+                            <button type="button" class="btn btn-glow btn-bg-gradient-x-purple-red" 
+                                    onclick="demIndex.clickEvent(this, demIndex.actionType.AddExpense)">Tạo giao dịch</button>
+                            <div class="clear-fix"></div>
+                            <button type="button" class="btn btn-glow btn-bg-gradient-x-orange-yellow"
+                                    onclick="demIndex.clickEvent(this, demIndex.actionType.ToCategoryPage)">Danh sách khoản mục</button>
+                            <div class="clear-fix"></div>
+                            <button type="button" class="btn btn-glow btn-bg-gradient-x-red-pink"
+                                    onclick="demIndex.clickEvent(this, demIndex.actionType.ToExpensePage)">Danh sách giao dịch</button>
+                        </div>
                     </div>
+                    
                 </div>
+                
             </div>
             <div class="col-md-4">
-                <div class="card pull-up ecom-card-1 bg-white dem-root-category" id="@Model.Item1[1].Name.ToLower()" onclick="demIndex.clickEvent(this, demIndex.actionType.ShowCaption)" data-caption="@Model.Item1[1].Caption" data-style="info" data-icon-category="icon-wallet" data-root-category-type="@Model.Item1[1].Name" >
+                <div class="card pull-up ecom-card-1 bg-white dem-root-category" id="@Model.Item1[1].Name.ToLower()" 
+                     data-caption="@Model.Item1[1].Caption" 
+                     data-style="info" 
+                     data-icon-category="icon-wallet" 
+                     data-root-category-type="@Model.Item1[1].Name" >
                     <div class="card-content ecom-card2 height-180">
                         <h5 class="text-muted info position-absolute p-1">@Model.Item1[1].Caption</h5>
                         <div>
                             <i class="ft-activity info font-large-1 float-right p-1"></i>
                         </div>
-                        <div class="progress-stats-container ct-golden-section height-75 position-relative pt-3">
+                        <div class="progress-stats-container ct-golden-section height-50 position-relative pt-3">
                             <div id="progress-stats-bar-chart1"></div>
                             <div id="progress-stats-line-chart1" class="progress-stats-shadow"></div>
+                        </div>
+                        <div class="dem-reference-action">
+                            <button type="button" class="btn btn-glow btn-bg-gradient-x-purple-red" 
+                                    onclick="demIndex.clickEvent(this, demIndex.actionType.AddExpense)">Tạo giao dịch</button>
+                            <div class="clear-fix"></div>
+                            <button type="button" class="btn btn-glow btn-bg-gradient-x-orange-yellow"
+                                    onclick="demIndex.clickEvent(this, demIndex.actionType.ToCategoryPage)">Danh sách khoản mục</button>
+                            <div class="clear-fix"></div>
+                            <button type="button" class="btn btn-glow btn-bg-gradient-x-red-pink"
+                                    onclick="demIndex.clickEvent(this, demIndex.actionType.ToExpensePage)">Danh sách giao dịch</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card pull-up ecom-card-1 bg-white dem-root-category" id="@Model.Item1[2].Name.ToLower()" onclick="demIndex.clickEvent(this,demIndex.actionType.ShowCaption)" data-caption="@Model.Item1[2].Caption" data-style="warning" data-icon-category="ft-pocket" data-root-category-type="@Model.Item1[2].Name">
+                <div class="card pull-up ecom-card-1 bg-white dem-root-category" id="@Model.Item1[2].Name.ToLower()"
+                     data-caption="@Model.Item1[2].Caption" 
+                     data-style="warning" 
+                     data-icon-category="ft-pocket" 
+                     data-root-category-type="@Model.Item1[2].Name">
                     <div class="card-content ecom-card2 height-180">
                         <h5 class="text-muted warning position-absolute p-1">@Model.Item1[2].Caption</h5>
                         <div>
                             <i class="ft-shopping-cart warning font-large-1 float-right p-1"></i>
                         </div>
-                        <div class="progress-stats-container ct-golden-section height-75 position-relative pt-3">
+                        <div class="progress-stats-container ct-golden-section height-50 position-relative pt-3">
                             <div id="progress-stats-bar-chart2"></div>
                             <div id="progress-stats-line-chart2" class="progress-stats-shadow"></div>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!--/ eCommerce statistic -->
-        <!-- Product Summary and Chat -->
-        <div class="row match-height dem-category" id="dem-category-for">
-            <div class="col-md-12">
-                <h5 class="card-title text-bold-700 my-2 dem-category-title" onclick="demIndex.clickEvent(this, demIndex.actionType.DirectToCategoryPage)">CÁC KHOẢN</h5>
-                <div class="row" hidden id="dem-category-template">
-                    <div class="col-md-3 dem-category-item">
-                        <div class="card dem-card">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <div class="media d-flex">
-                                        <div class="align-self-top" onclick="demIndex.clickEvent(this, demIndex.actionType.AddExpense)">
-                                            <i class="{{style}} {{icon}} icon-opacity font-large-4"></i>
-                                        </div>
-                                        <div class="media-body text-right align-self-bottom">
-                                            <h1 class="btn btn-sm btn-outline-{{style}} round " title="Nhấp vào xem chi tiêt" onclick="demIndex.clickEvent(this, demIndex.actionType.ExpenseList)">{{categoryName}}</h1>
-                                            <div class="dem-description-style">
-                                                <p class="mb-0">{{description}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row dem-category-card">                    
-                    <div class="col-md-3 dem-category-action">
-                        <div class="card dem-card dem-add-item" onclick="demIndex.clickEvent(this ,demIndex.actionType.Add)">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <div class="media d-flex">
-                                        <i class="icon-plus icon-opacity success font-large-4" style="margin: 0 auto;"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <h1 class="success mb-0" style="text-align: center;">
-                                Thêm mới
-                            </h1>                            
+                        <div class="dem-reference-action">
+                            <button type="button" class="btn btn-glow btn-bg-gradient-x-purple-red" 
+                                    onclick="demIndex.clickEvent(this, demIndex.actionType.AddExpense)">Tạo giao dịch</button>
+                            <div class="clear-fix"></div>
+                            <button type="button" class="btn btn-glow btn-bg-gradient-x-orange-yellow"
+                                    onclick="demIndex.clickEvent(this, demIndex.actionType.ToCategoryPage)">Danh sách khoản mục</button>
+                            <div class="clear-fix"></div>
+                            <button type="button" class="btn btn-glow btn-bg-gradient-x-red-pink"
+                                    onclick="demIndex.clickEvent(this, demIndex.actionType.ToExpensePage)">Danh sách giao dịch</button>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>        
     </div>
 </div>
-<script>
-    setTimeout(function () {
-        $('#@Model.Item1[0].Name.ToLower()' + '.dem-root-category').click();
-    }, 1230);
-</script>

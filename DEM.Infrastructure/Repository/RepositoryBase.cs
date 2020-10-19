@@ -131,6 +131,11 @@ namespace DEM.Infrastructure
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+        public string GetDatabaseName()
+        {
+            return _dbContext.Database.GetDbConnection().Database;
+        }
     }
 
 }

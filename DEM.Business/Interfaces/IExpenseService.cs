@@ -6,7 +6,7 @@ namespace DEM.App
     public interface IExpenseService
     {
         bool Create(List<ExpenseDto> expenses);
-        List<ExpenseDto> LoadData(Guid categoryId, DateTime startTime, DateTime endTime);
+        Tuple<List<ExpenseDto>, int> LoadData(RootCategoryEnum rootCategoryType, DateTime startTime, DateTime endTime, int page, int pageSize);
         ICollection<Payer> GetPayers();
         ExpenseDto GetData(Guid expenseId);
         bool Update(ExpenseDto data);

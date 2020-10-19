@@ -66,5 +66,10 @@ namespace DEM.App
 
             return _unitOfWorfkMedia.SaveChanges() > 0;
         }
+
+        public string GetDatabaseName()
+        {
+            return _unitOfWorfkMedia.CategoryRepository.GetDatabaseName();
+        }
     }
 }

@@ -12,5 +12,6 @@ namespace DEM.App
         bool Delete(Guid id);
         CategoryDto FindId(Guid id);
         bool ChangeStatu(Guid categoryId, bool notUse);
+        string GetDatabaseName();
     }
 }

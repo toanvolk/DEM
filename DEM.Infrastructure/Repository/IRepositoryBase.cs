@@ -1,6 +1,4 @@
-﻿
-using DEM.Infrastructure;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -43,5 +41,6 @@ namespace DEM.Infrastructure
 
         IQueryable<TEntity> OrderByDescending<TKey>(Expression<Func<TEntity, TKey>> condition);
 
+        string GetDatabaseName();
     }
 }

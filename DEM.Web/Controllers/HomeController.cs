@@ -24,7 +24,8 @@ namespace DEM.Web.Controllers
 
         public IActionResult Index()
         {
-            var model = new Tuple<List<RootCategoryDto>>(_rootCategoryService.GetDatas());
+            string providerName = _categoryService.GetDatabaseName();
+            var model = new Tuple<List<RootCategoryDto>, string>(_rootCategoryService.GetDatas(), providerName);
             return View(model);
         }
         public JsonResult LoadDatas(string rootCategoryType)
