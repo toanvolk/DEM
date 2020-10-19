@@ -23,6 +23,10 @@ namespace DEM.Infrastructure
         DbSet<Expense> Expenses { get; }
         IRepositoryBase<Payer> PayerRepository { get; }
         DbSet<Payer> Payers { get; }
+        IRepositoryBase<Intended> IntendedRepository { get; }
+        DbSet<Intended> Intended { get; }
+        IRepositoryBase<IntendedDetail> IntendedDetailRepository { get; }
+        DbSet<IntendedDetail> IntendedDetail { get; }
 
         #endregion   
 

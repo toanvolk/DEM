@@ -58,7 +58,7 @@
       border-top: 6px solid #fff; }
   .daterangepicker.dropdown-menu {
     max-width: none;
-    z-index: 3001; }
+    z-index: 30010; }
   .daterangepicker.single .ranges, .daterangepicker.single .calendar {
     float: none; }
   .daterangepicker.show-calendar .calendar {

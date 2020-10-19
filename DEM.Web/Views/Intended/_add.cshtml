@@ -1,0 +1,36 @@
+﻿@{
+    Layout = null;
+}
+
+<section id="dem-intended-add" class="app-materialize">
+    <div class="card-content collpase show">
+        <div class="card-body">
+            <div class="row">
+                <div class="col s6">
+                    <div class="input-field">
+                        <input type='text' class="shawCalRanges" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <span class="ft-calendar"></span>
+                            </span>
+                        </div>                        
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <textarea class="materialize-textarea" placeholder="Thông tin chi tiết" onchange="intendedAddIndex.changeEvent(this,intendedAddIndex.actionType.MapDescription)"></textarea>
+                    <input type="text" hidden="" name="Description">
+                    <label for="Description" class="active">Mô tả</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <button class="btn waves-effect waves-light dem-action-submit" name="action" onclick="intendedAddIndex.clickEvent(this, intendedAddIndex.actionType.Save)">
+                        Thêm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -52,9 +52,16 @@ namespace DEM.Infrastructure
         public IRepositoryBase<Expense> ExpenseRepository => _expenseRepository ?? (_expenseRepository = new RepositoryBase<Expense>(_dbContext));
         private IRepositoryBase<Payer> _payerRepository;
         public IRepositoryBase<Payer> PayerRepository => _payerRepository ?? (_payerRepository = new RepositoryBase<Payer>(_dbContext));
+        private IRepositoryBase<Intended> _intendedRepository;
+        public IRepositoryBase<Intended> IntendedRepository => _intendedRepository ?? (_intendedRepository = new RepositoryBase<Intended>(_dbContext));
+        private IRepositoryBase<IntendedDetail> _intendedDetailRepository;
+        public IRepositoryBase<IntendedDetail> IntendedDetailRepository => _intendedDetailRepository ?? (_intendedDetailRepository = new RepositoryBase<IntendedDetail>(_dbContext));
+
         public DbSet<Category> Categories => _dbContext.Categorys;
         public DbSet<Expense> Expenses => _dbContext.Expenses;
         public DbSet<Payer> Payers => _dbContext.Payers;
+        public DbSet<Intended> Intended => _dbContext.Intendeds;
+        public DbSet<IntendedDetail> IntendedDetail => _dbContext.IntendedDetails;
 
         #endregion end register reponsitory
     }

@@ -33,6 +33,7 @@
             draggable : true,
             resizable : false,
             width: "600px",
+            modal: true,
             actions: [
                 "Maximize",
                 "Close"

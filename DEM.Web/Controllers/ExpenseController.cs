@@ -28,7 +28,7 @@ namespace DEM.Web.Controllers
             var payer = _expenseService.GetPayers();
             var rootCategoryEnum = (RootCategoryEnum)Enum.Parse(typeof(RootCategoryEnum), categoryType);
             var categorys = _categoryService.LoadDatas(Enum.GetName(typeof(RootCategoryEnum), rootCategoryEnum), false);
-            var model = new Tuple<Guid,List<Payer>, List<CategoryDto>>(Guid.NewGuid(), payer.ToList(), categorys);
+            var model = new Tuple<List<Payer>, List<CategoryDto>>(payer.ToList(), categorys);
             return PartialView("_add", model);
         }
         public IActionResult Edit(Guid expenseId)
