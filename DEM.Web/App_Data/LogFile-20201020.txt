@@ -273,3 +273,7 @@ System.InvalidOperationException: The partial view '/_referenceAction.cshtml' wa
 2020-10-20T15:26:41.2822193+07:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
 2020-10-20T15:26:41.2823622+07:00  [INF] Hosting environment: "Development" (c3307c92)
 2020-10-20T15:26:41.2824114+07:00  [INF] Content root path: "D:\01.SOURCE\00.DEMO\DEM\DEM.Web" (b5d60022)
+2020-10-20T23:10:22.6437687+07:00  [INF] Now listening on: "http://localhost:5123" (d826f4b8)
+2020-10-20T23:10:22.6468125+07:00  [INF] Application started. Press Ctrl+C to shut down. (dcaefe54)
+2020-10-20T23:10:22.6469333+07:00  [INF] Hosting environment: "Development" (c3307c92)
+2020-10-20T23:10:22.6469786+07:00  [INF] Content root path: "D:\01.TOAN\05.PROJECT\05.FAMILY\DEM\DEM.Web" (b5d60022)

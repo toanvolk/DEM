@@ -1,1 +1,78 @@
-﻿
+﻿@using DEM.App;
+<div class="content-wrapper" id="dem-intended">
+    <div class="content-wrapper-before"></div>
+    <div class="content-header row">
+    </div>
+    <div class="content-body" style="padding-top:10px">
+        <!-- Chart -->
+        <div class="row match-height" hidden>
+            <div class="col-12">
+                <div class="">
+                    <div id="gradient-line-chart1" class="height-250 GradientlineShadow1"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Chart -->
+        <!-- eCommerce statistic -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card pull-up ecom-card-1 bg-white dem-intended">
+                    <div class="card-content ecom-card2 height-180">
+                        <h5 class="text-muted danger position-absolute p-1">Caption</h5>
+                        <div>
+                            <i class="ft-pie-chart danger font-large-1 float-right p-1"></i>
+                        </div>
+                        <div class="progress-stats-container ct-golden-section height-75 position-relative pt-3  ">
+                            <div id="progress-stats-bar-chart"></div>
+                            <div id="progress-stats-line-chart" class="progress-stats-shadow"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--/ eCommerce statistic -->
+        <!-- Product Summary and Chat -->
+        <div class="row dem-intended">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <div class='input-group'>
+                        <input type='text' class="form-control shawCalRanges" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <span class="ft-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <script>
+                    $('.shawCalRanges').daterangepicker({
+                        //startDate: moment().subtract('days', 7),
+                        ranges: {
+                            'Today': [moment(), moment()],
+                            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                            'This Month': [moment().startOf('month'), moment().endOf('month')],
+                            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                        },
+                        alwaysShowCalendars: true,
+                        locale: {
+                            format: 'DD/MM/YYYY'
+                        }
+                    },
+                        function (start, end) {
+                            return intendedIndex.dateRangeChanged(start, end);
+                        });
+                </script>
+            </div>
+            <div class="col-md-8">
+                <div class="dem-action btn-action-add">
+                    <button type="button" class="btn btn-primary round btn-min-width mr-1 mb-1" onclick="intendedIndex.clickEvent(this, intendedIndex.actionType.Add)">Thêm</button>
+                </div>
+            </div>
+            <div class="dem-data dem-data-list">
+                <div class="grid"></div>
+            </div>
+        </div>
+    </div>
+</div>
