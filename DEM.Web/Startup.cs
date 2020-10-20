@@ -40,6 +40,7 @@ namespace DEM.Web
             {
                 cfg.AddProfile(new CategoryProfileMapping());
                 cfg.AddProfile(new ExpenseProfileMapping());
+                cfg.AddProfile(new IntendedProfileMapping());
             });
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
@@ -56,6 +57,7 @@ namespace DEM.Web
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IExpenseService, ExpenseService>();
             services.AddScoped<IPayerService, PayerService>();
+            services.AddScoped<IIntendedService, IntendedService>();
 
             services.AddControllersWithViews();
             

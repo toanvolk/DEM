@@ -65,12 +65,13 @@
         });
     },
     buildIntended: function (e, handle) {
+        let _data = $(e).closest('.dem-root-category').data();
         helper.showDialog({
             contentData: {
                 url: "/intended/add",
-                //data: {
-                //    rootCategoryType: _data
-                //}
+                data: {
+                    rootCategory: _data.rootCategoryType
+                }
             },
             
             config: {
@@ -93,8 +94,20 @@
                         }
                     },
                         function (start, end) {
-                            //return expenseIndex.dateRangeChanged(start, end);
+                            //return intendedAdd.dateRangeChanged(start, end);
                         });
+                    $('.decimal-inputmask').inputmask("decimal", {
+                        placeholder: "0",
+                        digits: 0,
+                        digitsOptional: false,
+                        radixPoint: ".",
+                        groupSeparator: ",",
+                        autoGroup: true,
+                        allowPlus: false,
+                        allowMinus: true,
+                        clearMaskOnLostFocus: false,
+                        removeMaskOnSubmit: true
+                    });
                 },
                 width: 600
             }
