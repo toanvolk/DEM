@@ -2,15 +2,16 @@
     Layout = null;
 }
 @using DEM.App
-@model Tuple<ICollection<CategoryDto>>
+@model Tuple<ICollection<CategoryDto>,string>
 
 <section id="dem-intended-add" class="app-materialize">
     <div class="card-content collpase show">
         <div class="card-body">
             <div class="row">
+                <input type="text" hidden="" name="RootCategory" value="@Model.Item2">
                 <div class="col s6">
                     <div class='input-field input-group'>
-                        <input type='text' class="shawCalRanges" name="RangeTime"/>
+                        <input type='text' class="shawCalRanges" name="RangeTime" />
                         <div class="input-group-append">
                             <span class="input-group-text">
                                 <span class="ft-calendar"></span>

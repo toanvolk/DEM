@@ -4,7 +4,9 @@ using DEM.Infrastructure;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
+using System.Linq; 
 
 namespace DEM.App
 {
@@ -37,6 +39,25 @@ namespace DEM.App
             _unitOfWorfkMedia.IntendedDetailRepository.AddRange(intendedDetails);
 
             return _unitOfWorfkMedia.SaveChanges() > 0;
+        }
+
+        public Tuple<ICollection<IntendedDto>, int> LoadData(string rootCategory, DateTime startTime, DateTime endTime, int page, int pageSize)
+        {
+            var query = from intended in _unitOfWorfkMedia.Intendeds
+                         where intended.RootCategory == rootCategory
+                                && (intended.FromDate <= endTime && intended.ToDate >= startTime)
+                            orderby intended.FromDate descending
+                         select new IntendedDto()
+                         {
+                             Id = intended.Id,
+                             FromDate = intended.FromDate,
+                             ToDate = intended.ToDate,
+                             Description = intended.Description
+                         };
+            var model = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            var total = query.Count();
+
+            return new Tuple<ICollection<IntendedDto>, int>(model, total);
         }
     }
 }

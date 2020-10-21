@@ -28,7 +28,7 @@
     mapDescription: function (e, handle, rootContent) {
         $(e).next().val($(e).val());
     },
-    save: function (e, handle, rootContent) {        
+    save: function (e, handle, rootContent) {       
         var _data = handle.data.inputToObject(rootContent, function (obj) {
             //generic Id
             obj.Id = handle.newId();

@@ -10,6 +10,7 @@ namespace DEM.App
         public string Description { get; set; }
         public DateTime FromDate { get; set; }
         public DateTime ToDate { get; set; }
+        public string RootCategory { get; set; }
         public List<IntendedDetailDto> Details { get; set; }
     }
     public class IntendedDetailDto

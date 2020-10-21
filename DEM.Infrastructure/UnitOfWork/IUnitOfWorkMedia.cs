@@ -24,7 +24,7 @@ namespace DEM.Infrastructure
         IRepositoryBase<Payer> PayerRepository { get; }
         DbSet<Payer> Payers { get; }
         IRepositoryBase<Intended> IntendedRepository { get; }
-        DbSet<Intended> Intended { get; }
+        DbSet<Intended> Intendeds { get; }
         IRepositoryBase<IntendedDetail> IntendedDetailRepository { get; }
         DbSet<IntendedDetail> IntendedDetail { get; }
 

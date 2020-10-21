@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DEM.App;
+using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DEM.Web.Controllers
@@ -14,14 +15,15 @@ namespace DEM.Web.Controllers
         {
             _intendedService = intendedService;
         }
-        public IActionResult Index()
+        public IActionResult Index(string rootCategory)
         {
-            return View();
+            var model = new Tuple<string>(rootCategory);
+            return View(model);
         }
         public IActionResult Add(string rootCategory)
         {
             var categorys = _intendedService.GetCategories(rootCategory);
-            var model = new Tuple<ICollection<CategoryDto>>(categorys);
+            var model = new Tuple<ICollection<CategoryDto>,string>(categorys, rootCategory);
             return PartialView("_add", model);
         }
         public JsonResult Create(IntendedDto data)
@@ -47,5 +49,17 @@ namespace DEM.Web.Controllers
             }
             return Json(response);
         }
+        public JsonResult LoadData(string rootCategory, DateTime startTime, DateTime endTime, [DataSourceRequest] DataSourceRequest request)
+        {
+            var model = _intendedService.LoadData(rootCategory, startTime, endTime, request.Page, request.PageSize);
+            var response = new DataResponeCommon<ICollection<IntendedDto>>()
+            {
+                Data = model.Item1,
+                Total = model.Item2,
+                Message = "OK",
+                Statu = StatuCodeEnum.OK
+            };
+            return Json(response);
+        } 
     }
 }

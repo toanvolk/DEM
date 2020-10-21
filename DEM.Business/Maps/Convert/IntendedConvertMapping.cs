@@ -12,6 +12,7 @@ namespace DEM.App
         public Intended Convert(IntendedDto source, Intended destination, ResolutionContext context)
         {
             destination ??= new Intended();
+            destination.RootCategory = source.RootCategory;
             destination.Description = source.Description;
             destination.FromDate = source.FromDate;
             destination.ToDate = source.ToDate;

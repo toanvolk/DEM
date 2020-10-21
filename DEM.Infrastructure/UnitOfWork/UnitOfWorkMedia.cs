@@ -60,7 +60,7 @@ namespace DEM.Infrastructure
         public DbSet<Category> Categories => _dbContext.Categorys;
         public DbSet<Expense> Expenses => _dbContext.Expenses;
         public DbSet<Payer> Payers => _dbContext.Payers;
-        public DbSet<Intended> Intended => _dbContext.Intendeds;
+        public DbSet<Intended> Intendeds => _dbContext.Intendeds;
         public DbSet<IntendedDetail> IntendedDetail => _dbContext.IntendedDetails;
 
         #endregion end register reponsitory

@@ -13,5 +13,7 @@ namespace DEM.EF
         public DateTime ToDate { get; set; }
         [MaxLength(500)]
         public string Description { get; set; }
+        [MaxLength(50)]
+        public string RootCategory { get; set; }
     }
 }
