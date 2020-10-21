@@ -10,7 +10,10 @@ namespace DEM.App
         {
             //Create
             CreateMap<IntendedDto, Intended>().ConvertUsing<IntendedConvertMapping>();
-            CreateMap<List<IntendedDetailDto>, List<IntendedDetail>>().ConvertUsing<IntendedConvertMapping>();            
+            CreateMap<List<IntendedDetailDto>, List<IntendedDetail>>().ConvertUsing<IntendedConvertMapping>();
+            CreateMap<Intended, IntendedDto>().ConvertUsing<IntendedConvertMapping>();
+            CreateMap<List<IntendedDetail>, List<IntendedDetailDto>>().ConvertUsing<IntendedConvertMapping>();
+
         }
     }
 }

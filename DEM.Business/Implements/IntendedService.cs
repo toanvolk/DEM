@@ -59,5 +59,16 @@ namespace DEM.App
 
             return new Tuple<ICollection<IntendedDto>, int>(model, total);
         }
+
+        public IntendedDto GetData(Guid intendedId)
+        {
+            var intended = _unitOfWorfkMedia.IntendedRepository.FindById(intendedId);
+            var intendedDto = _mapper.Map<Intended, IntendedDto>(intended);
+
+            var intendedDetail = _unitOfWorfkMedia.IntendedDetailRepository.Filter(o => o.IntendedId == intendedId).ToList();
+            intendedDto.Details = _mapper.Map<List<IntendedDetail>, List<IntendedDetailDto>>(intendedDetail);
+
+            return intendedDto;
+        }
     }
 }

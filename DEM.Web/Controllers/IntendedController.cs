@@ -26,6 +26,13 @@ namespace DEM.Web.Controllers
             var model = new Tuple<ICollection<CategoryDto>,string>(categorys, rootCategory);
             return PartialView("_add", model);
         }
+        public IActionResult Edit(Guid intendedId)
+        {
+            var intendedDto = _intendedService.GetData(intendedId);
+            var categorys = _intendedService.GetCategories(intendedDto.RootCategory);
+            var model = new Tuple<ICollection<CategoryDto>, IntendedDto>(categorys, intendedDto);
+            return PartialView("_edit", model);
+        }
         public JsonResult Create(IntendedDto data)
         {
             var response = new DataResponeCommon();

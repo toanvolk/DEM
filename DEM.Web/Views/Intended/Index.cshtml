@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <script>
-                    $('.shawCalRanges').daterangepicker({
+                    $('#dem-intended .shawCalRanges').daterangepicker({
                         startDate: moment().startOf('month'),
                         endDate: moment().endOf('month'),
                         ranges: {
@@ -65,9 +65,9 @@
                         function (start, end) {
                             return intendedIndex.dateRangeChanged(start, end);
                         });
-                    $('.shawCalRanges').on('change.datepicker', function (ev) {
+                    $('#dem-intended .shawCalRanges').off('change.datepicker').on('change.datepicker', function (ev) {
                         var picker = $(ev.target).data('daterangepicker');
-                        return intendedIndex.dateRangeChanged(picker.startDate, picker.endDate);
+                        if (picker) intendedIndex.dateRangeChanged(picker.startDate, picker.endDate);
                     });
                 </script>
             </div>

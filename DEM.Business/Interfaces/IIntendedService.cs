@@ -9,5 +9,6 @@ namespace DEM.App
         ICollection<CategoryDto> GetCategories(string roostCategory);
         bool Create(IntendedDto intendedDto);
         Tuple<ICollection<IntendedDto>, int> LoadData(string rootCategory, DateTime startTime, DateTime endTime, int page, int pageSize);
+        IntendedDto GetData(Guid intendedId);
     }
 }

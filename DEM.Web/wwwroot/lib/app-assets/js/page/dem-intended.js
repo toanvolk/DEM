@@ -4,13 +4,17 @@
         grid: "#dem-intended .grid"
     },
     actionType: {
-        Add: "add"
+        Add: "add",
+        EditForm: "edit-form",
+        Delete: "delete"
     },
     clickEvent: function (e,actionType) {
         let _$root = $(e).closest(intendedIndex.dom.demIntended);
         let _handle = _intendedHandle();
 
         if (actionType == intendedIndex.actionType.Add) intendedIndex.add(e, _handle, _$root);
+        if (actionType == intendedIndex.actionType.EditForm) intendedIndex.editForm(e, _handle, _$root);
+        if (actionType == intendedIndex.actionType.Delete) intendedIndex.delete(e, _handle, _$root);
     },
     changeEvent: function (e, actionType) {
 
@@ -27,19 +31,18 @@
     //event child
     add: function (e, handle, root) {
         let _data = root.data();
-        helper.showDialog({
+        handle.showDialog({
             contentData: {
                 url: "/intended/add",
                 data: {
                     rootCategory: _data.rootCategoryType
                 }
-            },
-            
+            },            
             config: {
                 title: "TẠO KẾ HOẠCH",
                 actions: ["Refresh", "Close"],
                 activate: function (e) {
-                    $('.shawCalRanges').daterangepicker({
+                    $('section#dem-intended-add .shawCalRanges').daterangepicker({
                         //startDate: moment().subtract('days', 7),
                         ranges: {
                             'Today': [moment(), moment()],
@@ -103,8 +106,8 @@
                     field: "",
                     width: "15%",
                     template: function (item) {
-                        let _html = '<button type="button" class="btn btn-outline-primary round mr-1 mb-1" onclick="categoryIndex.clickEvent(this, categoryIndex.actionType.EditForm)" data-id="' + item.id + '"><i class="ft-edit-3"></i> Sửa</button>';
-                        _html += '<button type="button" class="btn btn-outline-danger round mr-1 mb-1" onclick="categoryIndex.clickEvent(this, categoryIndex.actionType.Delete)" data-id="' + item.id + '" data-name="' + item.name + '"><i class="ft-trash-2"></i> Xóa</button>';
+                        let _html = '<button type="button" class="btn btn-outline-primary round mr-1 mb-1" onclick="intendedIndex.clickEvent(this, intendedIndex.actionType.EditForm)" data-id="' + item.id + '"><i class="ft-edit-3"></i> Sửa</button>';
+                        _html += '<button type="button" class="btn btn-outline-danger round mr-1 mb-1" onclick="intendedIndex.clickEvent(this, intendedIndex.actionType.Delete)" data-id="' + item.id + '"><i class="ft-trash-2"></i> Xóa</button>';
                         return _html;
                     },
                 }
@@ -112,6 +115,59 @@
         });
         $('.shawCalRanges').change();
     },
+    editForm: function (e, handle, root) {
+        let _id = $(e).data('id');
+        handle.showDialog({
+            contentData: {
+                url: "/intended/edit",
+                data: {
+                    intendedId: _id
+                }
+            },
+            config: {
+                title: "CẬP NHẬT KẾ HOẠCH",
+                actions: ["Refresh", "Close"],
+                activate: function (e) {
+                    let _dataTime = $('section#dem-intended-edit .shawCalRanges').data();
+                    $('section#dem-intended-edit .shawCalRanges').daterangepicker({
+                        startDate: moment(_dataTime.fromDate),
+                        endDate: moment(_dataTime.endDate),
+                        ranges: {
+                            'Today': [moment(), moment()],
+                            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                            'This Month': [moment().startOf('month'), moment().endOf('month')],
+                            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                        },
+                        alwaysShowCalendars: true,
+                        locale: {
+                            format: 'DD/MM/YYYY'
+                        }
+                    },
+                        function (start, end) {
+                            //return intendedAdd.dateRangeChanged(start, end);
+                        });
+                    $('.decimal-inputmask').inputmask("decimal", {
+                        placeholder: "0",
+                        digits: 0,
+                        digitsOptional: false,
+                        radixPoint: ".",
+                        groupSeparator: ",",
+                        autoGroup: true,
+                        allowPlus: false,
+                        allowMinus: true,
+                        clearMaskOnLostFocus: false,
+                        removeMaskOnSubmit: true
+                    });
+                },
+                width: 600
+            }
+        });
+    },
+    delete: function (e, handle, root) {
+
+    }
 }
 let _intendedHandle = function () {
     let _getDataSource = function (rootCategory, startTime, endTime) {
@@ -140,7 +196,8 @@ let _intendedHandle = function () {
         return _source;
     }
     return {
-        getDataSource: _getDataSource
+        getDataSource: _getDataSource,
+        showDialog: helper.showDialog
     }
 }
 intendedIndex.init();
