@@ -44,7 +44,12 @@ namespace DEM.Web.Controllers
         public JsonResult GetDailyInMonthCurrent_Dashboard()
         {
             var model = _homeService.GetDailyInMonthCurrent();
-            return Json("");
+            return Json(new
+            {
+                Dailys= model.Item1,
+                Moneys = model.Item2
+            }
+            );
         }
     }
 }

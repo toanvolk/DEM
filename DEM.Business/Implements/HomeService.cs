@@ -19,10 +19,17 @@ namespace DEM.App
             _mapper = mapper;
         }
 
-        public Tuple<ICollection<string>, ICollection<string>> GetDailyInMonthCurrent()
+        public Tuple<ICollection<string>, ICollection<decimal>> GetDailyInMonthCurrent()
         {
             var datas = _unitOfWorfkMedia.GetDynamicResult("sp_DailyInMonthCurrent_Dashboard");
-            throw new NotImplementedException();
+            var collectDaily = new List<string>();
+            var collectMoney = new List<decimal>();
+            foreach (var item in datas)
+            {
+                collectDaily.Add(item.Daily);
+                collectMoney.Add(item.Money);
+            }
+            return new Tuple<ICollection<string>, ICollection<decimal>>(collectDaily, collectMoney);
         }
     }
 }

@@ -6,6 +6,6 @@ namespace DEM.App
 {
     public interface IHomeService : IBaseService
     {
-        Tuple<ICollection<string>, ICollection<string>> GetDailyInMonthCurrent();
+        Tuple<ICollection<string>, ICollection<decimal>> GetDailyInMonthCurrent();
     }
 }
