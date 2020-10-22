@@ -1,11 +1,23 @@
-﻿using System;
+﻿using AutoMapper;
+using DEM.Infrastructure;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace DEM.App.Implements
+namespace DEM.App
 {
-    public class RootCategoryService : IRootCategoryService
+    public class RootCategoryService : BaseService, IRootCategoryService
     {
+        private ILogger<RootCategoryService> _logger { get; set; }
+        private readonly IUnitOfWorkMedia _unitOfWorfkMedia;
+        private readonly IMapper _mapper;
+        public RootCategoryService(ILogger<RootCategoryService> logger, IUnitOfWorkMedia unitOfWorkMedia, IMapper mapper) : base(logger, unitOfWorkMedia, mapper)
+        {
+            _logger = logger;
+            _unitOfWorfkMedia = unitOfWorkMedia;
+            _mapper = mapper;
+        }
         public List<RootCategoryDto> GetDatas()
         {
             var datas = new List<RootCategoryDto>();

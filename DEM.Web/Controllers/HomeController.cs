@@ -13,18 +13,20 @@ namespace DEM.Web.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IHomeService _homeService;
         private readonly IRootCategoryService _rootCategoryService;
         private readonly ICategoryService _categoryService;
-        public HomeController(ILogger<HomeController> logger, IRootCategoryService rootCategoryService, ICategoryService categoryService)
+        public HomeController(ILogger<HomeController> logger, IRootCategoryService rootCategoryService, ICategoryService categoryService, IHomeService homeService)
         {
             _logger = logger;
             _rootCategoryService = rootCategoryService;
             _categoryService = categoryService;
+            _homeService = homeService;
         }
 
         public IActionResult Index()
         {
-            string providerName = _categoryService.GetDatabaseName();
+            string providerName = _homeService.GetDatabaseName();
             var model = new Tuple<List<RootCategoryDto>, string>(_rootCategoryService.GetDatas(), providerName);
             return View(model);
         }
@@ -39,6 +41,10 @@ namespace DEM.Web.Controllers
             };
             return Json(response);
         }
-
+        public JsonResult GetDailyInMonthCurrent_Dashboard()
+        {
+            var model = _homeService.GetDailyInMonthCurrent();
+            return Json("");
+        }
     }
 }

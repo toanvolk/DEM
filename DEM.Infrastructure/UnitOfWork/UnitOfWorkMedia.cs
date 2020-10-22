@@ -1,5 +1,6 @@
 ﻿
 using DEM.EF;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
@@ -11,9 +12,11 @@ namespace DEM.Infrastructure
         //  var context = services.GetRequiredService<DEMContext>();
         //  public DEMContext dbContext =>  new DEMContext;
         private DEMContext _dbContext;
-        public UnitOfWorkMedia(DEMContext dbContext)
+        private readonly IRepositoryBase _repositoryBase;
+        public UnitOfWorkMedia(DEMContext dbContext, IRepositoryBase repositoryBase)
         {
             _dbContext = dbContext;
+            _repositoryBase = repositoryBase;
         }
 
         #region method
@@ -43,6 +46,11 @@ namespace DEM.Infrastructure
 
         [Obsolete]
         public Task<int> ExecQueryCommandAsync(string sqlQuery, params object[] param) => _dbContext.Database.ExecuteSqlCommandAsync(sqlQuery, param); //"CreateTable @p0, @p1", parameters: new[]
+
+        public string GetDatabaseName()=> _repositoryBase.GetDatabaseName();
+
+        public System.Collections.Generic.IEnumerable<dynamic> GetDynamicResult(string commandText, params SqlParameter[] parameters)=> _repositoryBase.GetDynamicResult(commandText, parameters);
+
         #endregion end method
 
         #region register reponsitory
@@ -63,6 +71,9 @@ namespace DEM.Infrastructure
         public DbSet<Intended> Intendeds => _dbContext.Intendeds;
         public DbSet<IntendedDetail> IntendedDetail => _dbContext.IntendedDetails;
 
+        //Not table on database
+        
         #endregion end register reponsitory
     }
+  
 }

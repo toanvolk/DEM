@@ -4,8 +4,8 @@ using System.Text;
 
 namespace DEM.App
 {
-    public interface IRootCategoryService: IBaseService
+    public interface IBaseService
     {
-        List<RootCategoryDto> GetDatas();
+        public string GetDatabaseName();
     }
 }

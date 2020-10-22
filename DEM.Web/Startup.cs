@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using DEM.App;
-using DEM.App.Implements;
 using DEM.EF;
 using DEM.Infrastructure;
 using Microsoft.AspNetCore.Builder;
@@ -49,10 +48,18 @@ namespace DEM.Web
             services.AddDbContext<DEMContext>(options =>
             options.UseSqlServer(Configuration.GetConnectionString("DEMConnection")));
 
+            // Register DbContext
+            services.AddScoped<DEMContext>();
             // Register UnitOfWork
             services.AddScoped<IUnitOfWorkMedia, UnitOfWorkMedia>();
+            // Register RepositoryBase
+            services.AddScoped<IRepositoryBase, RepositoryBase>();
+
+            // Register BaseService
+            services.AddScoped<IBaseService, BaseService>();
 
             //Dependency
+            services.AddScoped<IHomeService, HomeService>();
             services.AddScoped<IRootCategoryService, RootCategoryService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IExpenseService, ExpenseService>();

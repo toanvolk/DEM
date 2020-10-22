@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -40,7 +41,10 @@ namespace DEM.Infrastructure
         IQueryable<TEntity> OrderBy<TKey>(Expression<Func<TEntity, TKey>> condition);
 
         IQueryable<TEntity> OrderByDescending<TKey>(Expression<Func<TEntity, TKey>> condition);
-
+    }    
+    public interface IRepositoryBase
+    {
         string GetDatabaseName();
+        IEnumerable<dynamic> GetDynamicResult(string commandText, params SqlParameter[] parameters);
     }
 }

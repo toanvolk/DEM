@@ -1,6 +1,8 @@
 ﻿
 using DEM.EF;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace DEM.Infrastructure
@@ -28,7 +30,11 @@ namespace DEM.Infrastructure
         IRepositoryBase<IntendedDetail> IntendedDetailRepository { get; }
         DbSet<IntendedDetail> IntendedDetail { get; }
 
-        #endregion   
+        #endregion
 
+        #region Implement reponsitory not entity
+        string GetDatabaseName();
+        IEnumerable<dynamic> GetDynamicResult(string commandText, params SqlParameter[] parameters);
+        #endregion
     }
 }
