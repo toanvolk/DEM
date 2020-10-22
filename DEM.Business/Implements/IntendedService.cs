@@ -70,5 +70,24 @@ namespace DEM.App
 
             return intendedDto;
         }
+
+        public bool Update(IntendedDto data)
+        {
+            var intended = _mapper.Map<IntendedDto, Intended>(data);
+            var intendedDetails = _mapper.Map<List<IntendedDetailDto>, List<IntendedDetail>>(data.Details);
+
+            _unitOfWorfkMedia.IntendedRepository.Update(intended, UpdateAccessMode.DENY_UPDATE, "CreateBy", "CreateDate");
+            _unitOfWorfkMedia.IntendedDetailRepository.Delete(o=>o.IntendedId == data.Id);
+            _unitOfWorfkMedia.IntendedDetailRepository.AddRange(intendedDetails);
+
+            return _unitOfWorfkMedia.SaveChanges() > 0;
+        }
+        public bool Delete(Guid id)
+        {
+            _unitOfWorfkMedia.IntendedRepository.Delete(id);
+            _unitOfWorfkMedia.IntendedDetailRepository.Delete(o=>o.IntendedId == id);
+
+            return _unitOfWorfkMedia.SaveChanges() > 0;
+        }
     }
 }

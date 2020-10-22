@@ -19,9 +19,11 @@ namespace DEM.App
             destination.Description = source.Description;
             destination.FromDate = source.FromDate;
             destination.ToDate = source.ToDate;
+
             destination.CreatedBy = "ADMIN";
             destination.CreatedDate = DateTime.Now;
-
+            destination.UpdatedBy = "ADMIN";
+            destination.UpdatedDate = DateTime.Now;
             return destination;
         }
 

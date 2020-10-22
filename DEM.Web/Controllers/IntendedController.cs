@@ -67,6 +67,50 @@ namespace DEM.Web.Controllers
                 Statu = StatuCodeEnum.OK
             };
             return Json(response);
-        } 
+        }
+        public JsonResult Update(IntendedDto data)
+        {
+            var response = new DataResponeCommon();
+            try
+            {
+                if (_intendedService.Update(data))
+                {
+                    response.Statu = StatuCodeEnum.OK;
+                    response.Message = "Cập nhật thành công!";
+                }
+                else
+                {
+                    response.Statu = StatuCodeEnum.InternalServerError;
+                    response.Message = "Cập nhật không thành công!";
+                }
+            }
+            catch (Exception e)
+            {
+                response.Statu = StatuCodeEnum.InternalServerError;
+                response.Message = e.Message;
+            }
+            return Json(response);
+        }
+        [HttpPost]
+        public JsonResult Delete(Guid id)
+        {
+            try
+            {
+                if (_intendedService.Delete(id))
+                {
+                    var response = new DataResponeCommon() { Statu = StatuCodeEnum.OK, Message = "Xóa thành công" };
+                    return Json(response);
+                }
+                else
+                {
+                    var response = new DataResponeCommon() { Statu = StatuCodeEnum.InternalServerError, Message = "Xóa thất bại" };
+                    return Json(response);
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
     }
 }

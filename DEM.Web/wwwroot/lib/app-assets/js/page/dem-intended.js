@@ -73,6 +73,8 @@
                         removeMaskOnSubmit: true
                     });
                 },
+                close: function () { intendedIndex.loadTable(); },
+                refresh: function () { intendedIndex.loadTable(); },
                 width: 600
             }
         });
@@ -107,7 +109,7 @@
                     width: "15%",
                     template: function (item) {
                         let _html = '<button type="button" class="btn btn-outline-primary round mr-1 mb-1" onclick="intendedIndex.clickEvent(this, intendedIndex.actionType.EditForm)" data-id="' + item.id + '"><i class="ft-edit-3"></i> Sửa</button>';
-                        _html += '<button type="button" class="btn btn-outline-danger round mr-1 mb-1" onclick="intendedIndex.clickEvent(this, intendedIndex.actionType.Delete)" data-id="' + item.id + '"><i class="ft-trash-2"></i> Xóa</button>';
+                        _html += '<button type="button" class="btn btn-outline-danger round mr-1 mb-1" onclick="intendedIndex.clickEvent(this, intendedIndex.actionType.Delete)" data-id="' + item.id + '" data-description="' + item.description + '"><i class="ft-trash-2"></i> Xóa</button>';
                         return _html;
                     },
                 }
@@ -161,12 +163,36 @@
                         removeMaskOnSubmit: true
                     });
                 },
+                close: function () { intendedIndex.loadTable(); },
+                refresh: function () { intendedIndex.loadTable(); },
                 width: 600
             }
         });
     },
     delete: function (e, handle, root) {
+        var _dataIntended = $(e).data();
+        swal({
+            title: 'Chắc xóa?',
+            text: 'Xóa [' + _dataIntended.description + ']!',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText: 'Quay lại',
+            confirmButtonText: 'Vâng, xóa!'
+        }).then(function (e) {
+            if (e.value == true) {
+                handle.delete(_dataIntended.id, function (res) {
+                    swal('Đã xóa!', res.message, 'success');
+                    intendedIndex.loadTable();
+                });
+            }
 
+        }).catch(swal.noop);
+    },
+    //-------------------function
+    loadTable: function () {
+        $(intendedIndex.dom.grid).data('kendoGrid').dataSource.read();
     }
 }
 let _intendedHandle = function () {
@@ -195,9 +221,16 @@ let _intendedHandle = function () {
         });    
         return _source;
     }
+    let _delete = function (id, callback) {
+        let _url = 'intended/delete';
+        $.post(_url, { id: id }, function (res) {
+            callback(res);
+        });
+    }
     return {
         getDataSource: _getDataSource,
-        showDialog: helper.showDialog
+        showDialog: helper.showDialog,
+        delete: _delete
     }
 }
 intendedIndex.init();

@@ -9,6 +9,7 @@
         <div class="card-body">
             <div class="row">
                 <input type="text" hidden="" name="RootCategory" value="@Model.Item2.RootCategory">
+                <input type="text" hidden="" name="Id" value="@Model.Item2.Id">
                 <div class="col s6">
                     <div class='input-field input-group'>
                         <input type='text' class="shawCalRanges" name="RangeTime" 
@@ -46,7 +47,7 @@
                         <span class="item-category-caption">&nbsp;&nbsp;@item.Name</span>
                         <div class="input-field inline">
                             <input name="Money" class="decimal-inputmask"
-                                   onkeyup=" intendedEdit.keyupEvent(this, intendedEdit.actionType.EnterMoney)"
+                                   onkeyup="intendedEdit.keyupEvent(this, intendedEdit.actionType.EnterMoney)"
                                    data-id="@item.Id" 
                                    value="@(Model.Item2.Details.FirstOrDefault(o=>o.CategoryId == item.Id)?.Money)"/>
                         </div>
