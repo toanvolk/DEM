@@ -3,6 +3,7 @@ using DEM.Infrastructure;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace DEM.App
@@ -19,17 +20,44 @@ namespace DEM.App
             _mapper = mapper;
         }
 
-        public Tuple<ICollection<string>, ICollection<decimal>> GetDailyInMonthCurrent()
+        public Tuple<ICollection<string>, List<List<decimal>>> GetDailyInMonthCurrent()
         {
             var datas = _unitOfWorfkMedia.GetDynamicResult("sp_DailyInMonthCurrent_Dashboard");
             var collectDaily = new List<string>();
-            var collectMoney = new List<decimal>();
+            var collectMoneys = new List<List<decimal>>();
+            var collectMoney_EXPENSE = new List<decimal>();
+            var collectMoney_REVENUE = new List<decimal>();
+            var collectMoney_SAVING = new List<decimal>();
             foreach (var item in datas)
             {
-                collectDaily.Add(item.Daily);
-                collectMoney.Add(item.Money);
+                collectDaily.Add(item.TimeDisplay);
+                collectMoney_EXPENSE.Add(item.EXPENSE.Equals(DBNull.Value) ? 0 : item.EXPENSE);
+                collectMoney_REVENUE.Add(item.REVENUE.Equals(DBNull.Value) ? 0 : item.REVENUE);
+                collectMoney_SAVING.Add(item.SAVING.Equals(DBNull.Value) ? 0 : item.SAVING);
             }
-            return new Tuple<ICollection<string>, ICollection<decimal>>(collectDaily, collectMoney);
+            collectMoneys.Add(collectMoney_EXPENSE);
+            collectMoneys.Add(collectMoney_REVENUE);
+            collectMoneys.Add(collectMoney_SAVING);
+            return new Tuple<ICollection<string>, List<List<decimal>>>(collectDaily, collectMoneys);
+        }
+
+        public Tuple<ICollection<string>, List<List<decimal>>> GetExpenseRealAndIntended()
+        {
+            var datas = _unitOfWorfkMedia.GetDynamicResult("sp_ExpenseRealAndIntended");
+            var collectDaily = new List<string>();
+            var collectMoneys = new List<List<decimal>>();
+            var collectMoney_Expendse = new List<decimal>();
+            var collectMoney_Intended = new List<decimal>();
+            foreach (var item in datas)
+            {
+                collectDaily.Add(item.Name);
+                collectMoney_Expendse.Add(item.MoneyExpense.Equals(DBNull.Value) ? 0 : item.MoneyExpense);
+                collectMoney_Intended.Add(item.MoneyIntended.Equals(DBNull.Value) ? 0 : item.MoneyIntended);
+            }
+
+            collectMoneys.Add(collectMoney_Expendse);
+            collectMoneys.Add(collectMoney_Intended);
+            return new Tuple<ICollection<string>, List<List<decimal>>>(collectDaily, collectMoneys);
         }
     }
 }

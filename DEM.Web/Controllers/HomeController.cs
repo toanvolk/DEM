@@ -48,8 +48,16 @@ namespace DEM.Web.Controllers
             {
                 Dailys= model.Item1,
                 Moneys = model.Item2
-            }
-            );
+            });
+        }
+        public JsonResult GetExpenseRealAndIntended_Dashboard()
+        {
+            var model = _homeService.GetExpenseRealAndIntended();
+            return Json(new
+            {
+                Names = model.Item1,
+                Moneys = model.Item2
+            });
         }
     }
 }

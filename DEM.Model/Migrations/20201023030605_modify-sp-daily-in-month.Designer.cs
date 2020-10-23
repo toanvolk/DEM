@@ -4,14 +4,16 @@ using DEM.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DEM.EF.Migrations
 {
     [DbContext(typeof(DEMContext))]
-    partial class DEMContextModelSnapshot : ModelSnapshot
+    [Migration("20201023030605_modify-sp-daily-in-month")]
+    partial class modifyspdailyinmonth
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -191,18 +193,18 @@ namespace DEM.EF.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("e472a16a-0542-4a62-aca5-a25733661f24"),
+                            Id = new Guid("8299dfd3-2228-4f8c-a311-c26c213199bc"),
                             Code = "VK",
                             CreatedBy = "ADMIN",
-                            CreatedDate = new DateTime(2020, 10, 23, 17, 49, 52, 94, DateTimeKind.Local).AddTicks(3148),
+                            CreatedDate = new DateTime(2020, 10, 23, 10, 6, 4, 321, DateTimeKind.Local).AddTicks(6988),
                             Name = "Vợ"
                         },
                         new
                         {
-                            Id = new Guid("90c5345b-a16c-49b7-a2e5-a781d5c82e81"),
+                            Id = new Guid("12601c62-30ee-410c-a418-7283cc0434e3"),
                             Code = "CK",
                             CreatedBy = "ADMIN",
-                            CreatedDate = new DateTime(2020, 10, 23, 17, 49, 52, 95, DateTimeKind.Local).AddTicks(2956),
+                            CreatedDate = new DateTime(2020, 10, 23, 10, 6, 4, 323, DateTimeKind.Local).AddTicks(2163),
                             Name = "Chồng"
                         });
                 });

@@ -4,14 +4,16 @@ using DEM.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DEM.EF.Migrations
 {
     [DbContext(typeof(DEMContext))]
-    partial class DEMContextModelSnapshot : ModelSnapshot
+    [Migration("20201023104952_modify-sp-expense-real-and-intended-time-1")]
+    partial class modifyspexpenserealandintendedtime1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

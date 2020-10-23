@@ -1,6 +1,6 @@
 ﻿@using DEM.App
-@model Tuple<List<RootCategoryDto>,string>
-@{ 
+@model Tuple<List<RootCategoryDto>, string>
+@{
     ViewData["Title"] = Model.Item2;
 }
 
@@ -17,13 +17,13 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="row">
             <div class="col-md-4">
-                <div class="card pull-up ecom-card-1 bg-white dem-root-category" id="@Model.Item1[0].Name.ToLower()" 
-                     data-caption="@Model.Item1[0].Caption" 
-                     data-style="danger" 
-                     data-icon-category="icon-basket-loaded" 
+                <div class="card pull-up ecom-card-1 bg-white dem-root-category" id="@Model.Item1[0].Name.ToLower()"
+                     data-caption="@Model.Item1[0].Caption"
+                     data-style="danger"
+                     data-icon-category="icon-basket-loaded"
                      data-root-category-type="@Model.Item1[0].Name">
                     <div class="card-content ecom-card2 height-180">
                         <h5 class="text-muted danger position-absolute p-1">@Model.Item1[0].Caption</h5>
@@ -36,16 +36,16 @@
                         </div>
                         <partial name="_referenceAction.cshtml" />
                     </div>
-                    
+
                 </div>
-                
+
             </div>
             <div class="col-md-4">
-                <div class="card pull-up ecom-card-1 bg-white dem-root-category" id="@Model.Item1[1].Name.ToLower()" 
-                     data-caption="@Model.Item1[1].Caption" 
-                     data-style="info" 
-                     data-icon-category="icon-wallet" 
-                     data-root-category-type="@Model.Item1[1].Name" >
+                <div class="card pull-up ecom-card-1 bg-white dem-root-category" id="@Model.Item1[1].Name.ToLower()"
+                     data-caption="@Model.Item1[1].Caption"
+                     data-style="info"
+                     data-icon-category="icon-wallet"
+                     data-root-category-type="@Model.Item1[1].Name">
                     <div class="card-content ecom-card2 height-180">
                         <h5 class="text-muted info position-absolute p-1">@Model.Item1[1].Caption</h5>
                         <div>
@@ -56,15 +56,15 @@
                             <div id="progress-stats-line-chart1" class="progress-stats-shadow"></div>
                         </div>
                         <partial name="_referenceAction.cshtml" />
-                        
+
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card pull-up ecom-card-1 bg-white dem-root-category" id="@Model.Item1[2].Name.ToLower()"
-                     data-caption="@Model.Item1[2].Caption" 
-                     data-style="warning" 
-                     data-icon-category="ft-pocket" 
+                     data-caption="@Model.Item1[2].Caption"
+                     data-style="warning"
+                     data-icon-category="ft-pocket"
                      data-root-category-type="@Model.Item1[2].Name">
                     <div class="card-content ecom-card2 height-180">
                         <h5 class="text-muted warning position-absolute p-1">@Model.Item1[2].Caption</h5>
@@ -79,27 +79,55 @@
                     </div>
                 </div>
             </div>
-        </div>   
+        </div>
+
         <div class="row">
-            <div class="card" style="width:100%">
-                <div class="card-header">
-                    <h4 class="card-title">Giao dịch trong tháng</h4>
-                    <a class="heading-elements-toggle">
-                        <i class="la la-ellipsis-v font-medium-3"></i>
-                    </a>
-                    <div class="heading-elements">
-                        <ul class="list-inline mb-0">
-                            <li>
-                                <a data-action="reload">
-                                    <i class="ft-rotate-cw"></i>
-                                </a>
-                            </li>
-                        </ul>
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Giao dịch trong tháng</h4>
+                        <a class="heading-elements-toggle">
+                            <i class="la la-ellipsis-v font-medium-3"></i>
+                        </a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li>
+                                    <a data-action="reload" onclick="demIndex.init(demIndex.actionType.DailyInMonth)">
+                                        <i class="ft-rotate-cw"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <div id="quarterly-daily" class="height-300 BarChartShadow"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="card-content collapse show">
-                    <div class="card-body">
-                        <div id="quarterly-sales" class="height-300 BarChartShadow"></div>
+            </div>
+
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Thực chi và kế hoạch chi</h4>
+                        <a class="heading-elements-toggle">
+                            <i class="la la-ellipsis-v font-medium-3"></i>
+                        </a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li>
+                                    <a data-action="reload" onclick="demIndex.init(demIndex.actionType.ExpendedRealAndIntended)">
+                                        <i class="ft-rotate-cw"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <div id="dashboard-expense-real" class="height-300 BarChartShadow"></div>
+                        </div>
                     </div>
                 </div>
             </div>
