@@ -1,8 +1,10 @@
 ﻿@using DEM.App
-@model Tuple<List<RootCategoryDto>>
+@model Tuple<List<RootCategoryDto>, string>
+@{
+    ViewData["Title"] = Model.Item2;
+}
 
-
-<div class="content-wrapper">
+<div class="content-wrapper" id="dem-home">
     <div class="content-wrapper-before"></div>
     <div class="content-header row">
     </div>
@@ -15,91 +17,202 @@
                 </div>
             </div>
         </div>
-        <!-- Chart -->
-        <!-- eCommerce statistic -->
+
         <div class="row">
             <div class="col-md-4">
-                <div class="card pull-up ecom-card-1 bg-white dem-root-category" id="@Model.Item1[0].Name.ToLower()" onclick="demIndex.clickEvent(this, demIndex.actionType.ShowCaption)" data-caption="@Model.Item1[0].Caption" data-style="danger" data-icon-category="icon-basket-loaded" data-root-category-type="@Model.Item1[0].Name">
+                <div class="card pull-up ecom-card-1 bg-white dem-root-category" id="@Model.Item1[0].Name.ToLower()"
+                     data-caption="@Model.Item1[0].Caption"
+                     data-style="danger"
+                     data-icon-category="icon-basket-loaded"
+                     data-root-category-type="@Model.Item1[0].Name">
                     <div class="card-content ecom-card2 height-180">
                         <h5 class="text-muted danger position-absolute p-1">@Model.Item1[0].Caption</h5>
                         <div>
                             <i class="ft-pie-chart danger font-large-1 float-right p-1"></i>
                         </div>
-                        <div class="progress-stats-container ct-golden-section height-75 position-relative pt-3  ">
+                        <div class="progress-stats-container ct-golden-section height-50 position-relative pt-3">
                             <div id="progress-stats-bar-chart"></div>
                             <div id="progress-stats-line-chart" class="progress-stats-shadow"></div>
                         </div>
+                        <partial name="_referenceAction.cshtml" />
                     </div>
+
                 </div>
+
             </div>
             <div class="col-md-4">
-                <div class="card pull-up ecom-card-1 bg-white dem-root-category" id="@Model.Item1[1].Name.ToLower()" onclick="demIndex.clickEvent(this, demIndex.actionType.ShowCaption)" data-caption="@Model.Item1[1].Caption" data-style="info" data-icon-category="icon-wallet" data-root-category-type="@Model.Item1[1].Name" >
+                <div class="card pull-up ecom-card-1 bg-white dem-root-category" id="@Model.Item1[1].Name.ToLower()"
+                     data-caption="@Model.Item1[1].Caption"
+                     data-style="info"
+                     data-icon-category="icon-wallet"
+                     data-root-category-type="@Model.Item1[1].Name">
                     <div class="card-content ecom-card2 height-180">
                         <h5 class="text-muted info position-absolute p-1">@Model.Item1[1].Caption</h5>
                         <div>
                             <i class="ft-activity info font-large-1 float-right p-1"></i>
                         </div>
-                        <div class="progress-stats-container ct-golden-section height-75 position-relative pt-3">
+                        <div class="progress-stats-container ct-golden-section height-50 position-relative pt-3">
                             <div id="progress-stats-bar-chart1"></div>
                             <div id="progress-stats-line-chart1" class="progress-stats-shadow"></div>
                         </div>
+                        <partial name="_referenceAction.cshtml" />
+
                     </div>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="card pull-up ecom-card-1 bg-white dem-root-category" id="@Model.Item1[2].Name.ToLower()" onclick="demIndex.clickEvent(this,demIndex.actionType.ShowCaption)" data-caption="@Model.Item1[2].Caption" data-style="warning" data-icon-category="ft-pocket" data-root-category-type="@Model.Item1[2].Name">
+                <div class="card pull-up ecom-card-1 bg-white dem-root-category" id="@Model.Item1[2].Name.ToLower()"
+                     data-caption="@Model.Item1[2].Caption"
+                     data-style="warning"
+                     data-icon-category="ft-pocket"
+                     data-root-category-type="@Model.Item1[2].Name">
                     <div class="card-content ecom-card2 height-180">
                         <h5 class="text-muted warning position-absolute p-1">@Model.Item1[2].Caption</h5>
                         <div>
                             <i class="ft-shopping-cart warning font-large-1 float-right p-1"></i>
                         </div>
-                        <div class="progress-stats-container ct-golden-section height-75 position-relative pt-3">
+                        <div class="progress-stats-container ct-golden-section height-50 position-relative pt-3">
                             <div id="progress-stats-bar-chart2"></div>
                             <div id="progress-stats-line-chart2" class="progress-stats-shadow"></div>
+                        </div>
+                        <partial name="_referenceAction.cshtml" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row dem-expense-search">
+            <div class="col-md-12 col-lg-8">
+                <div class="card">
+                    <div class="card-header p-1">
+                        <div class="card-title float-left" style="padding-top: 0.6%; margin-right: 12px;">Thời gian </div>
+                        <div class="blue-grey lighten-2 font-small-2 mb-0 float-left">
+                            <div class='input-group'>
+                                <input type='text' class="form-control shawCalRanges" style=" font-size: 0.9rem;" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <span class="ft-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <script>
+                                $('#dem-home .shawCalRanges').daterangepicker({
+                                    startDate: moment().subtract('days', 7),
+                                    ranges: {
+                                        'Today': [moment(), moment()],
+                                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                                        'This Month': [moment().startOf('month'), moment().endOf('month')],
+                                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                                    },
+                                    alwaysShowCalendars: true,
+                                    locale: {
+                                        format: 'DD/MM/YYYY'
+                                    }
+                                },
+                                    function (start, end) {
+                                        return $('#dem-home a.expense-statistical[data-action=reload]').click();
+                                    });
+                            </script>
+                        </div>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li>
+                                    <a class="expense-statistical" data-action="reload" onclick="demIndex.init(demIndex.actionType.ExpenseStatistical)">
+                                        <i class="ft-rotate-cw"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-footer text-center p-1">
+                            <div class="row">
+                                <div class="col-md-3 col-12 border-right-blue-grey border-right-lighten-5 text-center">
+                                    <p class="blue-grey lighten-2 mb-0">Khoản chi nhiều nhất</p>
+                                    <p class="font-medium-5 text-bold-400 expense-max-money">26</p> [<span class="expense-max-name"></span>]
+                                </div>
+                                <div class="col-md-3 col-12 border-right-blue-grey border-right-lighten-5 text-center">
+                                    <p class="blue-grey lighten-2 mb-0">Tổng chi</p>
+                                    <p class="font-medium-5 text-bold-400 money_total">58%</p>
+                                </div>
+                                <div class="col-md-3 col-12 border-right-blue-grey border-right-lighten-5 text-center">
+                                    <p class="blue-grey lighten-2 mb-0">Vợ chi</p>
+                                    <p class="font-medium-5 text-bold-400 money_vk">42%</p>
+                                </div>
+                                <div class="col-md-3 col-12 text-center">
+                                    <p class="blue-grey lighten-2 mb-0">Chồng chi</p>
+                                    <p class="font-medium-5 text-bold-400 money_ck">4.5</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <span class="text-muted"><a href="#" class="danger darken-2">Expense</a> Statistics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-4">
+                <div class="card pull-up border-top-info border-top-3 rounded-0">
+                    <div class="card-header">
+                        <h4 class="card-title">New Clients <span class="badge badge-pill badge-info float-right m-0">5+</span></h4>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body p-1">
+                            <h4 class="font-large-1 text-bold-400">18.5% <i class="ft-users float-right"></i></h4>
+                        </div>
+                        <div class="card-footer p-1">
+                            <span class="text-muted"><i class="la la-arrow-circle-o-up info"></i> 23.67% increase</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!--/ eCommerce statistic -->
-        <!-- Product Summary and Chat -->
-        <div class="row match-height dem-category" id="dem-category-for">
-            <div class="col-md-12">
-                <h5 class="card-title text-bold-700 my-2 dem-category-title" onclick="demIndex.clickEvent(this, demIndex.actionType.DirectToCategoryPage)">CÁC KHOẢN</h5>
-                <div class="row" hidden id="dem-category-template">
-                    <div class="col-md-3 dem-category-item">
-                        <div class="card dem-card">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <div class="media d-flex">
-                                        <div class="align-self-top" onclick="demIndex.clickEvent(this, demIndex.actionType.AddExpense)">
-                                            <i class="{{style}} {{icon}} icon-opacity font-large-4"></i>
-                                        </div>
-                                        <div class="media-body text-right align-self-bottom">
-                                            <h1 class="btn btn-sm btn-outline-{{style}} round " title="Nhấp vào xem chi tiêt" onclick="demIndex.clickEvent(this, demIndex.actionType.ExpenseList)">{{categoryName}}</h1>
-                                            <div class="dem-description-style">
-                                                <p class="mb-0">{{description}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Giao dịch trong tháng</h4>
+                        <a class="heading-elements-toggle">
+                            <i class="la la-ellipsis-v font-medium-3"></i>
+                        </a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li>
+                                    <a data-action="reload" onclick="demIndex.init(demIndex.actionType.DailyInMonth)">
+                                        <i class="ft-rotate-cw"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <div id="quarterly-daily" class="height-300 BarChartShadow"></div>
                         </div>
                     </div>
                 </div>
-                <div class="row dem-category-card">                    
-                    <div class="col-md-3 dem-category-action">
-                        <div class="card dem-card dem-add-item" onclick="demIndex.clickEvent(this ,demIndex.actionType.Add)">
-                            <div class="card-content">
-                                <div class="card-body">
-                                    <div class="media d-flex">
-                                        <i class="icon-plus icon-opacity success font-large-4" style="margin: 0 auto;"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            <h1 class="success mb-0" style="text-align: center;">
-                                Thêm mới
-                            </h1>                            
+            </div>
+
+            <div class="col-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title dem-description expense-real-and-intended">Thực chi và kế hoạch chi</h4>
+                        <a class="heading-elements-toggle">
+                            <i class="la la-ellipsis-v font-medium-3"></i>
+                        </a>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li>
+                                    <a data-action="reload" onclick="demIndex.init(demIndex.actionType.ExpendedRealAndIntended)">
+                                        <i class="ft-rotate-cw"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body">
+                            <div id="dashboard-expense-real" class="height-300 BarChartShadow"></div>
                         </div>
                     </div>
                 </div>
@@ -107,8 +220,8 @@
         </div>
     </div>
 </div>
-<script>
-    setTimeout(function () {
-        $('#@Model.Item1[0].Name.ToLower()' + '.dem-root-category').click();
-    }, 1230);
-</script>
+
+@section script
+{
+    <script src="~/lib/app-assets/js/page/dem-home.js"></script>
+}

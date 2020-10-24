@@ -1,5 +1,5 @@
 ﻿var helper = {
-    createGUID: function() {
+    createGUID: function () {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
             var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
             return v.toString(16);
@@ -28,11 +28,12 @@
         }
 
         let _config = {
-            name :"k-window-custom-"+helper.createGUID(),
-            title : "Title-window",
-            draggable : true,
-            resizable : false,
+            name: "k-window-custom-" + helper.createGUID(),
+            title: "Title-window",
+            draggable: true,
+            resizable: false,
             width: "600px",
+            modal: true,
             actions: [
                 "Maximize",
                 "Close"
@@ -55,7 +56,7 @@
                 }
                 else if (key == 'activate') {
                     _config[key] = function (e) {
-                        value(e);   
+                        value(e);
                         e.sender.center();
                     }
                 }
@@ -100,13 +101,13 @@
                 else
                     _content = _data.content.find('input[required]');
             }
-            else{
+            else {
                 _content = (_data.content ? _data.content + " " : "") + "input[required]";
                 if (!_data.takeIgnore)
                     _content = _content + ':not([ignore])';
                 _content = $(_content);
             }
-            
+
             _content.each(function (i, dom) {
                 if (!$(dom).val()) {
                     if (!$(dom).next().hasClass('invalid-feedback')) {
@@ -161,7 +162,7 @@
         clearInput: function (obj) {
             let _data = {
                 content: "",
-                fieldExpel:[],
+                fieldExpel: [],
                 callback: undefined
             };
             if (obj) {
@@ -170,13 +171,13 @@
                 });
             }
 
-            let _inputString = 'input',_ignoreField = '';//$(temp1).find('input:not([name=Type], [name=Name])')
-            $.each(_data.fieldExpel, function (index,value) {
+            let _inputString = 'input', _ignoreField = '';//$(temp1).find('input:not([name=Type], [name=Name])')
+            $.each(_data.fieldExpel, function (index, value) {
                 _ignoreField += '[name=' + value + '],';
             });
             if (_ignoreField) {
                 _ignoreField = _ignoreField.substr(0, _ignoreField.length - 1);
-                _inputString += ':not(' + _ignoreField+')';
+                _inputString += ':not(' + _ignoreField + ')';
             }
 
             if (typeof (_data.content) == 'object') {
@@ -186,6 +187,19 @@
                 $(_data.content).find(_inputString).val('');
             }
             if (_data.callback) _data.callback(_data.content);
+        }
+    },
+    formatNumber: {
+        addCommas: function (nStr) {
+            nStr += '';
+            var x = nStr.split('.');
+            var x1 = x[0];
+            var x2 = x.length > 1 ? '.' + x[1] : '';
+            var rgx = /(\d+)(\d{3})/;
+            while (rgx.test(x1)) {
+                x1 = x1.replace(rgx, '$1' + ',' + '$2');
+            }
+            return x1 + x2;
         }
     }
 }

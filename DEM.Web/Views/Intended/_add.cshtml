@@ -1,0 +1,62 @@
+﻿@{
+    Layout = null;
+}
+@using DEM.App
+@model Tuple<ICollection<CategoryDto>,string>
+
+<section id="dem-intended-add" class="app-materialize">
+    <div class="card-content collpase show">
+        <div class="card-body">
+            <div class="row">
+                <input type="text" hidden="" name="RootCategory" value="@Model.Item2">
+                <div class="col s6">
+                    <div class='input-field input-group'>
+                        <input type='text' class="shawCalRanges" name="RangeTime" />
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <span class="ft-calendar"></span>
+                            </span>
+                        </div>
+                        <label for="RangeTime" class="active">Khoản thời gian</label>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 0px;">
+                <div class="input-field col s12">
+                    <textarea class="materialize-textarea" placeholder="Thông tin chi tiết" onchange="intendedAdd.changeEvent(this, intendedAdd.actionType.MapDescription)"></textarea>
+                    <input type="text" hidden="" name="Description">
+                    <label for="Description" class="active">Mô tả</label>
+                </div>
+            </div>
+            <div class="row dem-intended-category-total">
+                <div class="col s12 item">
+                    <span class="item-category-caption">Danh sách các khoản dự trù:</span>
+                    <div class="input-field inline">
+                        <input disabled name="Money" class="decimal-inputmask"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row dem-intended-categorys">
+                @foreach (var item in Model.Item1)
+                {
+                <div class="col s12 item">
+                    <span class="item-category-caption">&nbsp;&nbsp;@item.Name</span>
+                    <div class="input-field inline">
+                        <input name="Money" class="decimal-inputmask"                                
+                               onkeyup=" intendedAdd.keyupEvent(this, intendedAdd.actionType.EnterMoney)" 
+                               data-id="@item.Id"/>
+                    </div>
+                </div>
+                }
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <button class="btn waves-effect waves-light dem-action-submit" name="action" onclick="intendedAdd.clickEvent(this, intendedAdd.actionType.Save)">
+                        Lưu
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

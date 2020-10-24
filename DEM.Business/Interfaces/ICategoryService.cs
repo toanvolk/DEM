@@ -11,6 +11,6 @@ namespace DEM.App
         bool Edit(CategoryDto categoryDto);
         bool Delete(Guid id);
         CategoryDto FindId(Guid id);
-        bool ChangeStatu(Guid categoryId, bool notUse);
+        bool ChangeStatu(Guid categoryId, bool notUse);        
     }
 }

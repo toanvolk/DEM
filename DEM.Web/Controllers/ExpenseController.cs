@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DEM.App;
 using DEM.EF;
+using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DEM.Web.Controllers
@@ -17,17 +18,17 @@ namespace DEM.Web.Controllers
             _expenseService = expenseService;
             _categoryService = categoryService;
         }
-        public IActionResult Index(string categoryId)
+        public IActionResult Index(string rootCategoryType)
         {
-            var model = new Tuple<string>(categoryId);
+            var model = new Tuple<string>(rootCategoryType);
             return View(model);
         }
-        public IActionResult Add(Guid categoryId)
+        public IActionResult Add(string categoryType)
         {
             var payer = _expenseService.GetPayers();
-            var category = _categoryService.FindId(categoryId);
-            var categorys = _categoryService.LoadDatas(Enum.GetName(typeof(RootCategoryEnum),category.Type), false);
-            var model = new Tuple<Guid,List<Payer>, List<CategoryDto>>(categoryId, payer.ToList(), categorys);
+            var rootCategoryEnum = (RootCategoryEnum)Enum.Parse(typeof(RootCategoryEnum), categoryType);
+            var categorys = _categoryService.LoadDatas(Enum.GetName(typeof(RootCategoryEnum), rootCategoryEnum), false);
+            var model = new Tuple<List<Payer>, List<CategoryDto>>(payer.ToList(), categorys);
             return PartialView("_add", model);
         }
         public IActionResult Edit(Guid expenseId)
@@ -113,12 +114,13 @@ namespace DEM.Web.Controllers
                 throw;
             }
         }
-        public JsonResult LoadData(Guid categoryId, DateTime startTime, DateTime endTime)
+        public JsonResult LoadData(RootCategoryEnum rootCategoryType, DateTime startTime, DateTime endTime, [DataSourceRequest] DataSourceRequest request)
         {
-            var model = _expenseService.LoadData(categoryId, startTime, endTime);
+            var model = _expenseService.LoadData(rootCategoryType, startTime, endTime, request.Page, request.PageSize);
             var response = new DataResponeCommon<List<ExpenseDto>>()
             {
-                Data = model,
+                Data = model.Item1,
+                Total = model.Item2,
                 Message = "OK",
                 Statu = StatuCodeEnum.OK
             };

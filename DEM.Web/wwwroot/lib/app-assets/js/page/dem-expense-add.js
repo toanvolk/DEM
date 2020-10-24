@@ -156,7 +156,6 @@
                 {
                     field: "PayTime",
                     title: 'Ngày',
-                    template: "#= kendo.toString(Money, '\\#\\#,\\#') #",
                     template: "#= moment(PayTime).format('DD/MM/YYYY') #",
                     attributes: { class: "text-center" },
                     width: '12%'

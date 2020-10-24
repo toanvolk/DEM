@@ -40,27 +40,33 @@ namespace DEM.App
             _unitOfWorfkMedia.ExpenseRepository.Delete(expenseId);
             return _unitOfWorfkMedia.SaveChanges() > 0;
         }
-        public List<ExpenseDto> LoadData(Guid categoryId, DateTime startTime, DateTime endTime)
+        public Tuple<List<ExpenseDto>, int> LoadData(RootCategoryEnum rootCategoryType, DateTime startTime, DateTime endTime, int page, int pageSize)
         {
+            var rootCategory = Enum.GetName(typeof(RootCategoryEnum), rootCategoryType);
             var payers = _payerService.getData();
-            var model = (from expense in _unitOfWorfkMedia.Expenses
-                     join category in _unitOfWorfkMedia.Categories on expense.CategoryId equals category.Id
-                     join payer in _unitOfWorfkMedia.Payers on expense.Payer equals payer.Code
-                     where (expense.PayTime >= startTime.Date && expense.PayTime <= endTime.Date)
-                     select  new ExpenseDto
-                     {
-                         Id =expense.Id,
-                         CategoryId = category.Id,
-                         CategoryName = category.Name,
-                         Payer = payer.Code,
-                         PayerName = payer.Name,
-                         PayTime = expense.PayTime,
-                         Money = expense.Money,
-                         Description = expense.Description
-                     }
-                     ).ToList();
+            var query = (from expense in _unitOfWorfkMedia.Expenses
+                         join category in _unitOfWorfkMedia.Categories on expense.CategoryId equals category.Id
+                         join payer in _unitOfWorfkMedia.Payers on expense.Payer equals payer.Code
+                         where category.Type == rootCategory && (expense.PayTime >= startTime.Date && expense.PayTime <= endTime.Date)
+                         select new ExpenseDto
+                         {
+                             Id = expense.Id,
+                             CategoryId = category.Id,
+                             CategoryName = category.Name,
+                             Payer = payer.Code,
+                             PayerName = payer.Name,
+                             PayTime = expense.PayTime,
+                             Money = expense.Money,
+                             Description = expense.Description
+                         }
+                     );
+            var model = query
+                //.Skip((page - 1) * pageSize)
+                //.Take(pageSize)
+                .ToList();
+            var total = query.Count();
 
-            return model;
+            return new Tuple<List<ExpenseDto>, int>(model, total);
         }        
         public ICollection<Payer> GetPayers() => _payerService.getData();
 

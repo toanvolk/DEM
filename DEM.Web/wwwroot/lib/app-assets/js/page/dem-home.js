@@ -1,112 +1,41 @@
 ﻿var demIndex = {
     actionType: {
-        Add: "add",
-        ShowCaption: "show-caption",
-        GetDescription: "get-description",
-        DirectToCategoryPage: "to-category-page",
+        ToCategoryPage: "to-category-page",
+        ToExpensePage: "to-expense-page",
         AddExpense: "add-expense",
-        ExpenseList: "view-expense"
+        BuildIntended: "build-intended",
+        ExpendedRealAndIntended: "expended-real-and-intended",
+        DailyInMonth: "daily-in-month",
+        ExpenseStatistical: 'expense- statistical'
     },
     clickEvent: function (e, actionType) {
         let _handle = _demHandle();
-        if (actionType == demIndex.actionType.ShowCaption) demIndex.showCaption(e, _handle);
-        if (actionType == demIndex.actionType.Add) demIndex.showFormAdd(e, _handle);
-        if (actionType == demIndex.actionType.DirectToCategoryPage) demIndex.directToCategoryPage(e, _handle);
+        if (actionType == demIndex.actionType.ToCategoryPage) demIndex.toCategoryPage(e, _handle);
+        if (actionType == demIndex.actionType.ToExpensePage) demIndex.toExpensePage(e, _handle);
         if (actionType == demIndex.actionType.AddExpense) demIndex.addExpense(e, _handle);
-        if (actionType == demIndex.actionType.ExpenseList) demIndex.expenseList(e, _handle);
+        if (actionType == demIndex.actionType.BuildIntended) demIndex.buildIntended(e, _handle);
     },
     changeEvent: function (e, actionType) {
         let _handle = _demHandle();
-        if (actionType == demIndex.actionType.GetDescription) demIndex.getDescription(e, _handle);
     },
     //children event
-    showFormAdd: function (e, handle) {
-        let _rootCategoryType = $('#dem-category-for').data('setup')['rootCategoryType'];
-        helper.showDialog({
-            contentData: {
-                url: "/category/add",
-                data: {
-                    rootCategoryType: _rootCategoryType
-                }
-            },
-            config: {
-                title: "TẠO MỚI",
-                actions: ["Refresh", "Close"],
-                close: function (e) {
-                    let _idDom = _rootCategoryType.toLowerCase();
-                    $('#' + _idDom + '.dem-root-category').click();
-                },
-                refresh: function () {
-                    let _idDom = _rootCategoryType.toLowerCase();
-                    $('#' + _idDom + '.dem-root-category').click();
-                }
-            }
-        });
-    },
-    showCaption: function (e, handle) {
-        let _caption = $(e).data('caption');
-        let _handle = _demHandle();
-
-        $('.dem-category .dem-category-title').text('CÁC KHOẢN '+_caption);
-
-        //map data
-        let _data = $(e).data();
-        $('#dem-category-for').data('setup', _data);
-
-        //clear item old
-        $('.dem-category-card .dem-category-item').remove();
-
-        //change statu dem-category-caption
-        $('.dem-category-card .dem-category-action').find('i').removeClass('danger').removeClass('info').removeClass('warning').addClass(_data.style);
-        $('.dem-category-card .dem-category-action').find('h1').removeClass('danger').removeClass('info').removeClass('warning').addClass(_data.style);
-
-        //load data
-        _handle.loadCategorys(_data.rootCategoryType, function (data) {
-            if (Array.isArray(data)) {
-                data.forEach(function (item) {
-                    //addition root-category
-                    item['rootCategoryType'] = _data.rootCategoryType;
-                    //Get template
-                    let _template = $('#dem-category-template').html();
-
-                    //Map style of RootCategory
-                    let _styleRegex = new RegExp("{{style}}", "gi");
-                    _template = _template.replace(_styleRegex, _data.style);
-
-                    //Map icon of RootCategory
-                    let _iconRegex = new RegExp("{{icon}}", "gi");
-                    _template = _template.replace(_iconRegex, _data.iconCategory);
-
-                    //Map data
-                    let _categoryName = new RegExp("{{categoryName}}", "gi");
-                    let _description = new RegExp("{{description}}", "gi");
-
-                    _template = _template.replace(_categoryName, item.name);
-                    _template = _template.replace(_description, item.description);
-
-
-                    $('.dem-category-card').append($(_template).data('categoryData', item));
-                });
-            }
-        });
-    },
-    directToCategoryPage: function (e, handle) {
-        let _data = $('#dem-category-for').data('setup');
+    toCategoryPage: function (e, handle) {
+        let _data = $(e).closest('.dem-root-category').data();
         let _url = '/category?rootCategoryType=' + _data.rootCategoryType;
         open(_url);
     },
-    getDescription: function (e, handle) {
-        let _value = $(e).val();
-        $(e).next().val(_value);
-        console.log(_value);
+    toExpensePage: function (e, handle) {
+        let _data = $(e).closest('.dem-root-category').data();
+        let _url = '/expense?rootCategoryType=' + _data.rootCategoryType;
+        open(_url);
     },
     addExpense: function (e, handle) {
-        let _data = $(e).closest('.dem-category-item').data();
+        let _data = $(e).closest('.dem-root-category').data();
         helper.showDialog({
             contentData: {
                 url: "/expense/add",
                 data: {
-                    categoryId: _data.categoryData.id
+                    categoryType: _data.rootCategoryType
                 }
             },
             config: {
@@ -132,28 +61,163 @@
                         clearMaskOnLostFocus: false,
                         removeMaskOnSubmit: true
                     });
-                    
+
                 },
                 width: 920
             }
         });
     },
-    expenseList: function (e, handle) {
-        let _data = $(e).closest('.dem-category-item').data();
-        let _url = '/expense?categoryId=' + _data.categoryData.id;
+    buildIntended: function (e, handle) {
+        let _data = $(e).closest('.dem-root-category').data();
+        let _url = 'intended?rootCategory=' + _data.rootCategoryType;
         open(_url);
+    },
+    rDaily: function (dailys, moneys, handle) {
+        var data = {
+            labels: dailys,
+            series: moneys
+        };
+
+        var options = {
+            axisY: {
+                labelInterpolationFnc: function (value) {
+                    return handle.formatNumber(value / 1000) + 'k';
+                },
+                scaleMinSpace: 30,
+            },
+            axisX: {
+                showGrid: false,
+                labelInterpolationFnc: function (value, index) {
+                    return value;//index % 6 === 0 ? value : null;
+                }
+            },
+            plugins: [
+                Chartist.plugins.tooltip({
+                    appendToBody: true,
+                    pointClass: 'ct-point',
+                    currency: true,
+                    currencyFormatCallback: function (value, options) {
+                        return handle.formatNumber(value / 1000) + 'k';
+                    }
+                })
+            ],
+            seriesBarDistance: 10
+        };
+        let quarterlyDaily = Chartist.Bar('#quarterly-daily'
+            , data
+            , options
+        );
+        quarterlyDaily.on('draw', function (data) {
+            if (data.type === 'bar') {
+                let _colors = ["#fa626b", "#28afd0", "#fdb901"]; //Expense : #fa626b //Revenue: #28afd0 // Saving = #fdb901
+
+                data.element.attr({
+                    style: 'stroke-width: 10px; stroke:' + _colors[data.seriesIndex],
+                    y1: data.y1,
+                    x1: data.x1 + 0.001
+                });
+            }
+        });
+    },
+    rExpendedRealAndIntended: function (names, moneys, handle) {
+        var data = {
+            labels: names,
+            series: moneys
+        };
+
+        var options = {
+            axisY: {
+                labelInterpolationFnc: function (value) {
+                    return handle.formatNumber(value / 1000) + 'k';
+                },
+                scaleMinSpace: 30,
+            },
+            axisX: {
+                showGrid: false,
+                labelInterpolationFnc: function (value, index) {
+                    return value;//index % 6 === 0 ? value : null;
+                }
+            },
+            plugins: [
+                Chartist.plugins.tooltip({
+                    appendToBody: true,
+                    pointClass: 'ct-point',
+                    currency: true,
+                    currencyFormatCallback: function (value, options) {
+                        return handle.formatNumber(value / 1000) + 'k';
+                    }
+                })
+            ],
+            seriesBarDistance: 10
+        };
+        let expendedRealAndIntended = Chartist.Bar('#dashboard-expense-real'
+            , data
+            , options
+        );
+        expendedRealAndIntended.on('draw', function (data) {
+            if (data.type === 'bar') {
+                let _colors = ["#fa626b", "#3fc52f"]; //Expense : #fa626b //Intended: #3fc52f
+
+                data.element.attr({
+                    style: 'stroke-width: 10px; stroke:' + _colors[data.seriesIndex],
+                    y1: data.y1,
+                    x1: data.x1 + 0.001
+                });
+            }
+        });
+    },
+    rExpenseStatistical: function (obj,handle) {
+        let _$expenseSearch = $('.dem-expense-search');
+        _$expenseSearch.find('span.expense-max-name').text(obj.expenseMaxName);
+        _$expenseSearch.find('p.expense-max-money').text(handle.formatNumber(obj.expenseMaxMoney / 1000) + 'k' );
+        _$expenseSearch.find('p.money_total').text(handle.formatNumber(obj.money_Total / 1000) + 'k');
+        _$expenseSearch.find('p.money_vk').text(handle.formatNumber(obj.money_VK / 1000) + 'k');
+        _$expenseSearch.find('p.money_ck').text(handle.formatNumber(obj.money_CK / 1000) + 'k');
+    },
+    init: function (tag = "All") {
+        let _handle = _demHandle();
+        let _dailyInMonthUrl = 'home/getdailyinmonthcurrent_dashboard';
+        let _expendedRealAndIntendedUrl = 'home/getexpenserealandintended_dashboard';
+        let _expenseStatisticalUrl = 'home/getexpensestatistical_dashboard'
+
+        if (tag == "All" || tag == demIndex.actionType.DailyInMonth)
+            $.get(_dailyInMonthUrl, {}, function (res) {
+                demIndex.rDaily(res.dailys, res.moneys, _handle);
+            });
+        if (tag == "All" || tag == demIndex.actionType.ExpendedRealAndIntended)
+            $.get(_expendedRealAndIntendedUrl, {}, function (res) {
+                let _description = 'Thực chi và kế hoạch chi [' + res.description + ']';
+                $('#dem-home .dem-description.expense-real-and-intended').text(_description);
+                demIndex.rExpendedRealAndIntended(res.names, res.moneys, _handle);
+            });
+        if (tag == "All" || tag == demIndex.actionType.ExpenseStatistical) {
+            let _dateRange = $('#dem-home .shawCalRanges').data('daterangepicker');
+            let _fromdate = _dateRange.startDate._d.toJSON();
+            let _todate = _dateRange.endDate._d.toJSON();
+            $.get(_expenseStatisticalUrl,
+                {
+                    FromDate: _fromdate,
+                    ToDate: _todate,
+                },
+                function (res) {
+                    demIndex.rExpenseStatistical(res, _handle);
+                });
+        }
     }
 }
-let _demHandle = function () {    
-    let _loadCategorys = function (rootCategoryType,callback) {
+let _demHandle = function () {
+    let _loadCategorys = function (rootCategoryType, callback) {
         let _url = "/home/loaddatas"
         $.get(_url, { rootCategoryType: rootCategoryType }, function (res) {
             if (res.statu == 200) {
                 callback(res.data);
-            }        
+            }
         });
     }
     return {
-        loadCategorys: _loadCategorys
+        loadCategorys: _loadCategorys,
+        formatNumber: helper.formatNumber.addCommas
     }
 }
+
+demIndex.init();

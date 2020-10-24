@@ -9,7 +9,7 @@
     <meta name="description" content="Chameleon Admin is a modern Bootstrap 4 webapp &amp; admin dashboard html template with a large number of components, elegant design, clean and organized code.">
     <meta name="keywords" content="admin template, Chameleon admin template, dashboard template, gradient admin template, responsive admin template, webapp, eCommerce dashboard, analytic dashboard">
     <meta name="author" content="ThemeSelect">
-    <title>Dashboard eCommerce - Chameleon Admin - Modern Bootstrap 4 WebApp & Dashboard HTML Template + UI Kit</title>
+    <title>Happy Family - @ViewData["Title"]</title>
     <link rel="apple-touch-icon" href="~/lib/app-assets/images/ico/apple-icon-120.png">
     <link rel="shortcut icon" type="image/x-icon" href="~/lib/app-assets/images/ico/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Muli:300,300i,400,400i,600,600i,700,700i%7CComfortaa:300,400,700" rel="stylesheet">
@@ -38,6 +38,7 @@
     <link rel="stylesheet" type="text/css" href="~/lib/app-assets/css/pages/timeline.css">
     <link rel="stylesheet" type="text/css" href="~/lib/app-assets/css/plugins/file-uploaders/dropzone.css">
     <link rel="stylesheet" type="text/css" href="~/lib/app-assets/css/pages/dashboard-ecommerce.css">
+    <link href="~/lib/app-assets/css/pages/dashboard-analytics.css" rel="stylesheet" />
     <!-- BEGIN: Custom CSS-->
     <link href="~/lib/materialize/css/app-materialize.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="~/lib/assets/css/style.css">
@@ -87,6 +88,8 @@
     <link href="~/lib/app-assets/css/pages/dem-category-add.css" rel="stylesheet" />
     <link href="~/lib/app-assets/css/pages/dem-expense.css" rel="stylesheet" />
     <link href="~/lib/app-assets/css/pages/dem-expense-add.css" rel="stylesheet" />
+    <link href="~/lib/app-assets/css/pages/dem-intended-add.css" rel="stylesheet" />
+    <link href="~/lib/app-assets/css/pages/dem-intended-edit.css" rel="stylesheet" />
     <!-- END: Project JS-->
 
 </head>
@@ -95,6 +98,7 @@
 
 <body class="vertical-layout vertical-menu-modern 2-columns   fixed-navbar" data-open="click" data-menu="vertical-menu-modern" data-color="bg-chartbg" data-col="2-columns">
     <partial name="_header.cshtml">
+
         <div class="app-content content">
             @RenderBody()
         </div>
@@ -106,17 +110,13 @@
         <!-- END: Theme JS-->
         <!-- END: Page JS-->
         <script src="~/lib/materialize/js/materialize.js"></script>
+        <script src="~/lib/app-assets/vendors/js/charts/chartist.min.js"></script>
+        <script src="~/lib/app-assets/vendors/js/charts/chartist-plugin-tooltip.js"></script>
         <script src="~/lib/app-assets/vendors/js/forms/extended/inputmask/jquery.inputmask.bundle.min.js"></script>
         <script src="~/lib/app-assets/js/scripts/forms/extended/form-inputmask.js"></script>
         <script src="~/lib/app-assets/js/base/app-helper.js"></script>
         <!-- BEGIN: Project JS-->
-        <script src="~/lib/app-assets/js/page/dem-home.js"></script>
-        <script src="~/lib/app-assets/js/page/dem-category.js"></script>
-        <script src="~/lib/app-assets/js/page/dem-category-add.js"></script>
-        <script src="~/lib/app-assets/js/page/dem-category-edit.js"></script>
-        <script src="~/lib/app-assets/js/page/dem-expense.js"></script>
-        <script src="~/lib/app-assets/js/page/dem-expense-add.js"></script>
-        <script src="~/lib/app-assets/js/page/dem-expense-edit.js"></script>
+        @RenderSection("script",false)
         <!-- END: Project JS-->
 </body>
 <!-- END: Body-->

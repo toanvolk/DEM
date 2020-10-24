@@ -1,7 +1,7 @@
 ﻿var expenseIndex = {
     dom: {
         grid: "#dem-expense .grid",
-        categoryId: "#dem-expense input[name=CategoryId]"
+        rootCategoryType: "#dem-expense input[name=RootCategoryType]"
     },
     actionType: {
         Add: "add",
@@ -11,7 +11,7 @@
     },
     init: function () {
         let _handle = expenseHandle();
-        let _categoryId = $('#dem-expense input[name=CategoryId]').val();        
+        let _categoryId = $(expenseIndex.dom.rootCategoryType).val();
         let _startTime = new Date().toJSON(), _endTime = new Date().toJSON();
         $(expenseIndex.dom.grid).kendoGrid({
             dataSource: _handle.dataSourceKendo(_categoryId, _startTime, _endTime),
@@ -48,6 +48,11 @@
                     title: "Mô tả"
                 },
                 {
+                    field: "categoryName",
+                    title: "Khoản",
+                    width: "15%",
+                },
+                {
                     field: "money",
                     title: "Số tiền",
                     width: "15%",
@@ -65,7 +70,7 @@
                 }
             ]
         })
-      
+
     },
     loadTable: function (data) {
         if (data)
@@ -85,12 +90,12 @@
     },
     //children event
     showFormAdd: function (e, handle) {
-        let _data = $(expenseIndex.dom.categoryId).val();
+        let _data = $(expenseIndex.dom.rootCategoryType).val();
         helper.showDialog({
             contentData: {
                 url: "/expense/add",
                 data: {
-                    categoryId: _data
+                    rootCategoryType: _data
                 }
             },
             config: {
@@ -189,14 +194,14 @@
     dateRangeChanged: function (start, end) {
         let _handle = expenseHandle();
         expenseIndex.loadTable(_handle.dataSourceKendo(
-            $(expenseIndex.dom.categoryId).val(),
+            $(expenseIndex.dom.rootCategoryType).val(),
             start._d.toJSON(),
             end._d.toJSON())
         );
     }
 }
-var expenseHandle = function () {    
-    let _dataSourceKendo = function (categoryId, startTime, endTime) {
+var expenseHandle = function () {
+    let _dataSourceKendo = function (rootCategoryType, startTime, endTime) {
         let _url = "/expense/loadData";
         let _data = new kendo.data.DataSource({
             transport: {
@@ -205,7 +210,7 @@ var expenseHandle = function () {
                     dataType: "json",
                     type: "GET",
                     data: {
-                        categoryId: categoryId,
+                        rootCategoryType: rootCategoryType,
                         startTime: startTime,
                         endTime: endTime
                     }
@@ -229,7 +234,14 @@ var expenseHandle = function () {
                     ]
                 },
             ],
-            serverPaging: false
+            serverFiltering: true,
+            serverSorting: true,
+            //serverPaging: true,
+            //pageSize: 10,
+            sort: [
+                { field: "payerName", dir: "asc" },
+                { field: "payTime", dir: "desc" },
+            ]
         });
         return _data;
     }

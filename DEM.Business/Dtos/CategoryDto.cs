@@ -10,6 +10,10 @@ namespace DEM.App
         public string Name { get; set; }
         public string Description { get; set; }
         public RootCategoryEnum Type { get; set; }
+        public string TypeName { 
+            get {
+                return Enum.GetName(typeof(RootCategoryEnum), this.Type);
+            } }
         public bool NotUse { get; set; }
     }
 }

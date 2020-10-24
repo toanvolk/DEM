@@ -14,3 +14,9 @@
     height: 5rem;
     overflow: auto;
 }
+.dem-root-category .dem-reference-action{
+    margin: 0px 10px
+}
+.dem-root-category .dem-reference-action button{
+    margin: 2px
+}

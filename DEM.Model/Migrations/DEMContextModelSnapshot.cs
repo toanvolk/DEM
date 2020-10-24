@@ -58,55 +58,6 @@ namespace DEM.EF.Migrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("DEM.EF.Entities.Payer", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Code")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("nvarchar(20)")
-                        .HasMaxLength(20);
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Payer");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("a8f4a5bf-5adb-4ae7-936c-511c4ebc4ee1"),
-                            Code = "VK",
-                            CreatedBy = "ADMIN",
-                            CreatedDate = new DateTime(2020, 10, 15, 14, 23, 32, 307, DateTimeKind.Local).AddTicks(4552),
-                            Name = "Vợ"
-                        },
-                        new
-                        {
-                            Id = new Guid("6bf79644-5fda-4833-a5e2-9230be9ff17d"),
-                            Code = "CK",
-                            CreatedBy = "ADMIN",
-                            CreatedDate = new DateTime(2020, 10, 15, 14, 23, 32, 308, DateTimeKind.Local).AddTicks(5411),
-                            Name = "Chồng"
-                        });
-                });
-
             modelBuilder.Entity("DEM.EF.Expense", b =>
                 {
                     b.Property<Guid>("Id")
@@ -146,6 +97,114 @@ namespace DEM.EF.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Expense");
+                });
+
+            modelBuilder.Entity("DEM.EF.Intended", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(500)")
+                        .HasMaxLength(500);
+
+                    b.Property<DateTime>("FromDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("RootCategory")
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
+
+                    b.Property<DateTime>("ToDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Intended");
+                });
+
+            modelBuilder.Entity("DEM.EF.IntendedDetail", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("IntendedId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("Money")
+                        .HasColumnType("decimal(12, 2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("IntendedDetail");
+                });
+
+            modelBuilder.Entity("DEM.EF.Payer", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Payer");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("469aae12-7fa6-4a7c-89eb-56c81b9db369"),
+                            Code = "VK",
+                            CreatedBy = "ADMIN",
+                            CreatedDate = new DateTime(2020, 10, 24, 11, 17, 3, 454, DateTimeKind.Local).AddTicks(3160),
+                            Name = "Vợ"
+                        },
+                        new
+                        {
+                            Id = new Guid("c549d6af-68da-4235-93da-3c878f7348fd"),
+                            Code = "CK",
+                            CreatedBy = "ADMIN",
+                            CreatedDate = new DateTime(2020, 10, 24, 11, 17, 3, 455, DateTimeKind.Local).AddTicks(911),
+                            Name = "Chồng"
+                        });
                 });
 #pragma warning restore 612, 618
         }

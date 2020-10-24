@@ -1,0 +1,66 @@
+﻿@{
+    Layout = null;
+}
+@using DEM.App
+@model Tuple<ICollection<CategoryDto>, IntendedDto>
+
+<section id="dem-intended-edit" class="app-materialize">
+    <div class="card-content collpase show">
+        <div class="card-body">
+            <div class="row">
+                <input type="text" hidden="" name="RootCategory" value="@Model.Item2.RootCategory">
+                <input type="text" hidden="" name="Id" value="@Model.Item2.Id">
+                <div class="col s6">
+                    <div class='input-field input-group'>
+                        <input type='text' class="shawCalRanges" name="RangeTime" 
+                               data-from-date="@Model.Item2.FromDate.ToString()"
+                               data-to-date="@Model.Item2.ToDate.ToString()"/>
+                        <div class="input-group-append">
+                            <span class="input-group-text">
+                                <span class="ft-calendar"></span>
+                            </span>
+                        </div>
+                        <label for="RangeTime" class="active">Khoản thời gian</label>
+                    </div>
+
+                </div>
+            </div>
+            <div class="row" style="margin-bottom: 0px;">
+                <div class="input-field col s12">
+                    <textarea class="materialize-textarea" placeholder="Thông tin chi tiết" onchange="intendedEdit.changeEvent(this, intendedEdit.actionType.MapDescription)">@Model.Item2.Description</textarea>
+                    <input type="text" hidden="" name="Description" value="@Model.Item2.Description">
+                    <label for="Description" class="active">Mô tả</label>
+                </div>
+            </div>
+            <div class="row dem-intended-category-total">
+                <div class="col s12 item">
+                    <span class="item-category-caption">Danh sách các khoản dự trù:</span>
+                    <div class="input-field inline">
+                        <input disabled name="Money" class="decimal-inputmask" value="@Model.Item2.Details.Sum(o=>o.Money)"/>
+                    </div>
+                </div>
+            </div>
+            <div class="row dem-intended-categorys">
+                @foreach (var item in Model.Item1)
+                {
+                    <div class="col s12 item">
+                        <span class="item-category-caption">&nbsp;&nbsp;@item.Name</span>
+                        <div class="input-field inline">
+                            <input name="Money" class="decimal-inputmask"
+                                   onkeyup="intendedEdit.keyupEvent(this, intendedEdit.actionType.EnterMoney)"
+                                   data-id="@item.Id" 
+                                   value="@(Model.Item2.Details.FirstOrDefault(o=>o.CategoryId == item.Id)?.Money)"/>
+                        </div>
+                    </div>
+                }
+            </div>
+            <div class="row">
+                <div class="col s12">
+                    <button class="btn waves-effect waves-light dem-action-submit" name="action" onclick="intendedEdit.clickEvent(this, intendedEdit.actionType.Save)">
+                        Lưu
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
