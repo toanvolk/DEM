@@ -4,7 +4,7 @@
     ViewData["Title"] = Model.Item2;
 }
 
-<div class="content-wrapper">
+<div class="content-wrapper" id="dem-home">
     <div class="content-wrapper-before"></div>
     <div class="content-header row">
     </div>
@@ -80,7 +80,93 @@
                 </div>
             </div>
         </div>
-
+        <div class="row dem-expense-search">
+            <div class="col-md-12 col-lg-8">
+                <div class="card">
+                    <div class="card-header p-1">
+                        <div class="card-title float-left" style="padding-top: 0.6%; margin-right: 12px;">Thời gian </div>
+                        <div class="blue-grey lighten-2 font-small-2 mb-0 float-left">
+                            <div class='input-group'>
+                                <input type='text' class="form-control shawCalRanges" style=" font-size: 0.9rem;" />
+                                <div class="input-group-append">
+                                    <span class="input-group-text">
+                                        <span class="ft-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <script>
+                                $('#dem-home .shawCalRanges').daterangepicker({
+                                    startDate: moment().subtract('days', 7),
+                                    ranges: {
+                                        'Today': [moment(), moment()],
+                                        'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                                        'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                                        'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                                        'This Month': [moment().startOf('month'), moment().endOf('month')],
+                                        'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                                    },
+                                    alwaysShowCalendars: true,
+                                    locale: {
+                                        format: 'DD/MM/YYYY'
+                                    }
+                                },
+                                    function (start, end) {
+                                        return $('#dem-home a.expense-statistical[data-action=reload]').click();
+                                    });
+                            </script>
+                        </div>
+                        <div class="heading-elements">
+                            <ul class="list-inline mb-0">
+                                <li>
+                                    <a class="expense-statistical" data-action="reload" onclick="demIndex.init(demIndex.actionType.ExpenseStatistical)">
+                                        <i class="ft-rotate-cw"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-footer text-center p-1">
+                            <div class="row">
+                                <div class="col-md-3 col-12 border-right-blue-grey border-right-lighten-5 text-center">
+                                    <p class="blue-grey lighten-2 mb-0">Khoản chi nhiều nhất</p>
+                                    <p class="font-medium-5 text-bold-400 expense-max-money">26</p> [<span class="expense-max-name"></span>]
+                                </div>
+                                <div class="col-md-3 col-12 border-right-blue-grey border-right-lighten-5 text-center">
+                                    <p class="blue-grey lighten-2 mb-0">Tổng chi</p>
+                                    <p class="font-medium-5 text-bold-400 money_total">58%</p>
+                                </div>
+                                <div class="col-md-3 col-12 border-right-blue-grey border-right-lighten-5 text-center">
+                                    <p class="blue-grey lighten-2 mb-0">Vợ chi</p>
+                                    <p class="font-medium-5 text-bold-400 money_vk">42%</p>
+                                </div>
+                                <div class="col-md-3 col-12 text-center">
+                                    <p class="blue-grey lighten-2 mb-0">Chồng chi</p>
+                                    <p class="font-medium-5 text-bold-400 money_ck">4.5</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <span class="text-muted"><a href="#" class="danger darken-2">Expense</a> Statistics</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-4">
+                <div class="card pull-up border-top-info border-top-3 rounded-0">
+                    <div class="card-header">
+                        <h4 class="card-title">New Clients <span class="badge badge-pill badge-info float-right m-0">5+</span></h4>
+                    </div>
+                    <div class="card-content collapse show">
+                        <div class="card-body p-1">
+                            <h4 class="font-large-1 text-bold-400">18.5% <i class="ft-users float-right"></i></h4>
+                        </div>
+                        <div class="card-footer p-1">
+                            <span class="text-muted"><i class="la la-arrow-circle-o-up info"></i> 23.67% increase</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-8">
                 <div class="card">
@@ -110,7 +196,7 @@
             <div class="col-4">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Thực chi và kế hoạch chi</h4>
+                        <h4 class="card-title dem-description expense-real-and-intended">Thực chi và kế hoạch chi</h4>
                         <a class="heading-elements-toggle">
                             <i class="la la-ellipsis-v font-medium-3"></i>
                         </a>
@@ -134,3 +220,8 @@
         </div>
     </div>
 </div>
+
+@section script
+{
+    <script src="~/lib/app-assets/js/page/dem-home.js"></script>
+}

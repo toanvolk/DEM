@@ -60,7 +60,10 @@ namespace DEM.App
                              Description = expense.Description
                          }
                      );
-            var model = query.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            var model = query
+                //.Skip((page - 1) * pageSize)
+                //.Take(pageSize)
+                .ToList();
             var total = query.Count();
 
             return new Tuple<List<ExpenseDto>, int>(model, total);

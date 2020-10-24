@@ -5,7 +5,8 @@
         AddExpense: "add-expense",
         BuildIntended: "build-intended",
         ExpendedRealAndIntended: "expended-real-and-intended",
-        DailyInMonth: "daily-in-month"
+        DailyInMonth: "daily-in-month",
+        ExpenseStatistical: 'expense- statistical'
     },
     clickEvent: function (e, actionType) {
         let _handle = _demHandle();
@@ -96,7 +97,7 @@
                     pointClass: 'ct-point',
                     currency: true,
                     currencyFormatCallback: function (value, options) {
-                        return handle.formatNumber(value);
+                        return handle.formatNumber(value / 1000) + 'k';
                     }
                 })
             ],
@@ -143,7 +144,7 @@
                     pointClass: 'ct-point',
                     currency: true,
                     currencyFormatCallback: function (value, options) {
-                        return handle.formatNumber(value);
+                        return handle.formatNumber(value / 1000) + 'k';
                     }
                 })
             ],
@@ -165,10 +166,19 @@
             }
         });
     },
+    rExpenseStatistical: function (obj,handle) {
+        let _$expenseSearch = $('.dem-expense-search');
+        _$expenseSearch.find('span.expense-max-name').text(obj.expenseMaxName);
+        _$expenseSearch.find('p.expense-max-money').text(handle.formatNumber(obj.expenseMaxMoney / 1000) + 'k' );
+        _$expenseSearch.find('p.money_total').text(handle.formatNumber(obj.money_Total / 1000) + 'k');
+        _$expenseSearch.find('p.money_vk').text(handle.formatNumber(obj.money_VK / 1000) + 'k');
+        _$expenseSearch.find('p.money_ck').text(handle.formatNumber(obj.money_CK / 1000) + 'k');
+    },
     init: function (tag = "All") {
         let _handle = _demHandle();
         let _dailyInMonthUrl = 'home/getdailyinmonthcurrent_dashboard';
         let _expendedRealAndIntendedUrl = 'home/getexpenserealandintended_dashboard';
+        let _expenseStatisticalUrl = 'home/getexpensestatistical_dashboard'
 
         if (tag == "All" || tag == demIndex.actionType.DailyInMonth)
             $.get(_dailyInMonthUrl, {}, function (res) {
@@ -176,8 +186,23 @@
             });
         if (tag == "All" || tag == demIndex.actionType.ExpendedRealAndIntended)
             $.get(_expendedRealAndIntendedUrl, {}, function (res) {
+                let _description = 'Thực chi và kế hoạch chi [' + res.description + ']';
+                $('#dem-home .dem-description.expense-real-and-intended').text(_description);
                 demIndex.rExpendedRealAndIntended(res.names, res.moneys, _handle);
             });
+        if (tag == "All" || tag == demIndex.actionType.ExpenseStatistical) {
+            let _dateRange = $('#dem-home .shawCalRanges').data('daterangepicker');
+            let _fromdate = _dateRange.startDate._d.toJSON();
+            let _todate = _dateRange.endDate._d.toJSON();
+            $.get(_expenseStatisticalUrl,
+                {
+                    FromDate: _fromdate,
+                    ToDate: _todate,
+                },
+                function (res) {
+                    demIndex.rExpenseStatistical(res, _handle);
+                });
+        }
     }
 }
 let _demHandle = function () {

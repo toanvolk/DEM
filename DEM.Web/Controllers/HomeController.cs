@@ -56,7 +56,20 @@ namespace DEM.Web.Controllers
             return Json(new
             {
                 Names = model.Item1,
-                Moneys = model.Item2
+                Moneys = model.Item2,
+                Description = model.Item3
+            });
+        }
+        public JsonResult GetExpenseStatistical_Dashboard(DateTime fromDate, DateTime toDate)
+        {
+            var model = _homeService.GetExpenseStatistical(fromDate, toDate);
+            return Json(new
+            {
+                ExpenseMaxName = model.Item1,
+                ExpenseMaxMoney = model.Item2,
+                Money_Total = model.Item3,
+                Money_VK = model.Item4,
+                Money_CK = model.Item5
             });
         }
     }

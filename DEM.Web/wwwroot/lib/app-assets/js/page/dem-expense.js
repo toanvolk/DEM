@@ -11,11 +11,11 @@
     },
     init: function () {
         let _handle = expenseHandle();
-        let _categoryId = $(expenseIndex.dom.rootCategoryType).val();        
+        let _categoryId = $(expenseIndex.dom.rootCategoryType).val();
         let _startTime = new Date().toJSON(), _endTime = new Date().toJSON();
         $(expenseIndex.dom.grid).kendoGrid({
             dataSource: _handle.dataSourceKendo(_categoryId, _startTime, _endTime),
-            pageable: true,
+            pageable: false,
             groupable: true,
             groupExpand: function (e) {
                 for (let i = 0; i < e.group.items.length; i++) {
@@ -70,7 +70,7 @@
                 }
             ]
         })
-      
+
     },
     loadTable: function (data) {
         if (data)
@@ -200,7 +200,7 @@
         );
     }
 }
-var expenseHandle = function () {    
+var expenseHandle = function () {
     let _dataSourceKendo = function (rootCategoryType, startTime, endTime) {
         let _url = "/expense/loadData";
         let _data = new kendo.data.DataSource({
@@ -236,8 +236,12 @@ var expenseHandle = function () {
             ],
             serverFiltering: true,
             serverSorting: true,
-            serverPaging: true,
-            pageSize: 10,
+            //serverPaging: true,
+            //pageSize: 10,
+            sort: [
+                { field: "payerName", dir: "asc" },
+                { field: "payTime", dir: "desc" },
+            ]
         });
         return _data;
     }

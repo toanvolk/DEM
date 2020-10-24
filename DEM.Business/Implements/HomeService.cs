@@ -3,6 +3,7 @@ using DEM.Infrastructure;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 
@@ -40,24 +41,39 @@ namespace DEM.App
             collectMoneys.Add(collectMoney_SAVING);
             return new Tuple<ICollection<string>, List<List<decimal>>>(collectDaily, collectMoneys);
         }
-
-        public Tuple<ICollection<string>, List<List<decimal>>> GetExpenseRealAndIntended()
+        public Tuple<ICollection<string>, List<List<decimal>>, string> GetExpenseRealAndIntended()
         {
             var datas = _unitOfWorfkMedia.GetDynamicResult("sp_ExpenseRealAndIntended");
             var collectDaily = new List<string>();
             var collectMoneys = new List<List<decimal>>();
             var collectMoney_Expendse = new List<decimal>();
             var collectMoney_Intended = new List<decimal>();
+            var description = "";
             foreach (var item in datas)
             {
                 collectDaily.Add(item.Name);
                 collectMoney_Expendse.Add(item.MoneyExpense.Equals(DBNull.Value) ? 0 : item.MoneyExpense);
                 collectMoney_Intended.Add(item.MoneyIntended.Equals(DBNull.Value) ? 0 : item.MoneyIntended);
+                description = item.Description;
             }
 
             collectMoneys.Add(collectMoney_Expendse);
             collectMoneys.Add(collectMoney_Intended);
-            return new Tuple<ICollection<string>, List<List<decimal>>>(collectDaily, collectMoneys);
+            return new Tuple<ICollection<string>, List<List<decimal>>,string>(collectDaily, collectMoneys, description);
+        }
+        public Tuple<string, decimal, decimal, decimal,decimal> GetExpenseStatistical(DateTime formDate, DateTime toDate)
+        {
+            var datas = _unitOfWorfkMedia.GetDynamicResult("sp_ExpenseStatistical @p0, @p1",
+                new Microsoft.Data.SqlClient.SqlParameter("@p0", formDate),
+                new Microsoft.Data.SqlClient.SqlParameter("@p1", toDate));
+            var data = datas.FirstOrDefault();
+            return new Tuple<string, decimal, decimal, decimal, decimal>(
+                data.ExpenseMaxName.Equals(DBNull.Value) ? "": data.ExpenseMaxName,
+                data.ExpenseMaxMoney.Equals(DBNull.Value) ? 0 : data.ExpenseMaxMoney,
+                data.Money_Total.Equals(DBNull.Value) ? 0 : data.Money_Total,
+                data.Money_VK.Equals(DBNull.Value) ? 0 : data.Money_VK,
+                data.Money_CK.Equals(DBNull.Value) ? 0 : data.Money_CK
+                );
         }
     }
 }

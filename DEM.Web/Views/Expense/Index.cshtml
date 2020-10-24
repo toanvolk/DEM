@@ -50,7 +50,7 @@
                     </div>
                 </div>
                 <script>
-                    $('.shawCalRanges').daterangepicker({
+                    $('#dem-expense .shawCalRanges').daterangepicker({
                         //startDate: moment().subtract('days', 7),
                         ranges: {
                             'Today': [moment(), moment()],
@@ -81,3 +81,9 @@
         </div>
     </div>
 </div>
+
+@section script{
+    <script src="~/lib/app-assets/js/page/dem-expense.js"></script>
+    <script src="~/lib/app-assets/js/page/dem-expense-add.js"></script>
+    <script src="~/lib/app-assets/js/page/dem-expense-edit.js"></script>
+}
