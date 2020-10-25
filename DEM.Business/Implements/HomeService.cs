@@ -63,9 +63,13 @@ namespace DEM.App
         }
         public Tuple<string, decimal, decimal, decimal,decimal> GetExpenseStatistical(DateTime formDate, DateTime toDate)
         {
-            var datas = _unitOfWorfkMedia.GetDynamicResult("sp_ExpenseStatistical @p0, @p1",
-                new Microsoft.Data.SqlClient.SqlParameter("@p0", formDate),
-                new Microsoft.Data.SqlClient.SqlParameter("@p1", toDate));
+            var fromDateParam = new Microsoft.Data.SqlClient.SqlParameter("@p0", formDate);
+            fromDateParam.DbType = System.Data.DbType.DateTime2;
+
+            var toDateParam = new Microsoft.Data.SqlClient.SqlParameter("@p1", toDate);
+            toDateParam.DbType = System.Data.DbType.DateTime2;
+
+            var datas = _unitOfWorfkMedia.GetDynamicResult("sp_ExpenseStatistical @p0, @p1", fromDateParam, toDateParam);
             var data = datas.FirstOrDefault();
             return new Tuple<string, decimal, decimal, decimal, decimal>(
                 data.ExpenseMaxName.Equals(DBNull.Value) ? "": data.ExpenseMaxName,
