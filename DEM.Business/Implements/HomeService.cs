@@ -54,7 +54,7 @@ namespace DEM.App
                 collectDaily.Add(item.Name);
                 collectMoney_Expendse.Add(item.MoneyExpense.Equals(DBNull.Value) ? 0 : item.MoneyExpense);
                 collectMoney_Intended.Add(item.MoneyIntended.Equals(DBNull.Value) ? 0 : item.MoneyIntended);
-                description = item.Description;
+                description = item.Description.Equals(DBNull.Value) ? "" : item.Description;
             }
 
             collectMoneys.Add(collectMoney_Expendse);
